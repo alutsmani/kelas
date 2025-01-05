@@ -153,7 +153,7 @@ async function tampilkanData() {
   
       // Loop melalui data dan tampilkan menggunakan addProductRow
       data.forEach(item => {
-        const imageUrl = item.IDS.startsWith('1') ? '/gambar/iconlk.webp' : '/gambar/iconpr.webp';
+        const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
         addProductRow(
           item.IDS, // IDS
           item.Nama, // Nama
