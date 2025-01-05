@@ -1,25 +1,30 @@
 
 //Pertama, buat fungsi untuk membuka atau membuat database IndexedDB.
 function openDatabase(dbName, storeName) {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(dbName, 1);
-  
-      request.onupgradeneeded = function (event) {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains(storeName)) {
-          db.createObjectStore(storeName, { keyPath: 'IDS' });
-        }
-      };
-  
-      request.onsuccess = function (event) {
-        resolve(event.target.result);
-      };
-  
-      request.onerror = function (event) {
-        reject('Error opening database');
-      };
-    });
-  }
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName, 1); // Ensure version is incremented if needed
+
+    request.onupgradeneeded = function (event) {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(storeName)) {
+        db.createObjectStore(storeName, { keyPath: 'IDS' });
+        console.log(`Object store '${storeName}' created.`);
+      }
+    };
+
+    request.onsuccess = function (event) {
+      const db = event.target.result;
+      console.log(`Database '${dbName}' opened successfully.`);
+      console.log(`Object stores: ${Array.from(db.objectStoreNames).join(', ')}`);
+      resolve(db);
+    };
+
+    request.onerror = function (event) {
+      console.error('Error opening database:', event.target.error);
+      reject('Error opening database');
+    };
+  });
+}
 
   //Buat fungsi untuk menyimpan atau memperbarui data di IndexedDB berdasarkan IDS.
   async function saveOrUpdateData(dbName, storeName, jsonData) {
