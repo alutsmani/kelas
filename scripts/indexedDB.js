@@ -2,68 +2,92 @@
 //Pertama, buat fungsi untuk membuka atau membuat database IndexedDB.
 function openDatabase(dbName, storeName) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(dbName, 1); // Ensure version is incremented if needed
+      const request = indexedDB.open(dbName);
 
-    request.onupgradeneeded = function (event) {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains(storeName)) {
-        db.createObjectStore(storeName, { keyPath: 'IDS' });
-        console.log(`Object store '${storeName}' created.`);
-      }
-    };
+      request.onsuccess = function (event) {
+          const db = event.target.result;
 
-    request.onsuccess = function (event) {
-      const db = event.target.result;
-      console.log(`Database '${dbName}' opened successfully.`);
-      console.log(`Object stores: ${Array.from(db.objectStoreNames).join(', ')}`);
-      resolve(db);
-    };
+          // Cek apakah object store sudah ada
+          if (!db.objectStoreNames.contains(storeName)) {
+              // Jika belum ada, tutup database dan buka kembali dengan versi yang lebih tinggi
+              db.close();
+              const upgradeRequest = indexedDB.open(dbName, db.version + 1);
 
-    request.onerror = function (event) {
-      console.error('Error opening database:', event.target.error);
-      reject('Error opening database');
-    };
+              upgradeRequest.onupgradeneeded = function (event) {
+                  const db = event.target.result;
+                  db.createObjectStore(storeName, { keyPath: 'IDS' });
+                  console.log(`Object store '${storeName}' created.`);
+              };
+
+              upgradeRequest.onsuccess = function (event) {
+                  const db = event.target.result;
+                  console.log(`Database '${dbName}' upgraded successfully.`);
+                  resolve(db);
+              };
+
+              upgradeRequest.onerror = function (event) {
+                  console.error('Error upgrading database:', event.target.error);
+                  reject('Error upgrading database');
+              };
+          } else {
+              // Jika object store sudah ada, langsung resolve
+              console.log(`Database '${dbName}' opened successfully.`);
+              resolve(db);
+          }
+      };
+
+      request.onerror = function (event) {
+          console.error('Error opening database:', event.target.error);
+          reject('Error opening database');
+      };
   });
 }
+
 
   //Buat fungsi untuk menyimpan atau memperbarui data di IndexedDB berdasarkan IDS.
   async function saveOrUpdateData(dbName, storeName, jsonData) {
     const db = await openDatabase(dbName, storeName);
-  
+
     return new Promise((resolve, reject) => {
-      const transaction = db.transaction(storeName, 'readwrite');
-      const store = transaction.objectStore(storeName);
-  
-      // Loop melalui data yang diterima
-      jsonData.db.forEach(item => {
-        const request = store.get(item.IDS);
-  
-        request.onsuccess = function (event) {
-          const existingData = event.target.result;
-  
-          if (existingData) {
-            // Jika data dengan IDS sudah ada, update data
-            store.put({ ...existingData, ...item });
-          } else {
-            // Jika data dengan IDS belum ada, tambahkan data baru
-            store.add(item);
-          }
+        // Pastikan object store ada
+        if (!db.objectStoreNames.contains(storeName)) {
+            reject(`Object store '${storeName}' not found in database '${dbName}'.`);
+            return;
+        }
+
+        const transaction = db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+
+        // Loop melalui data yang diterima
+        jsonData.db.forEach(item => {
+            const request = store.get(item.IDS);
+
+            request.onsuccess = function (event) {
+                const existingData = event.target.result;
+
+                if (existingData) {
+                    // Jika data dengan IDS sudah ada, update data
+                    store.put({ ...existingData, ...item });
+                } else {
+                    // Jika data dengan IDS belum ada, tambahkan data baru
+                    store.add(item);
+                }
+            };
+
+            request.onerror = function (event) {
+                console.error('Error checking data:', event.target.error);
+            };
+        });
+
+        transaction.oncomplete = function () {
+            resolve('Data saved or updated successfully');
         };
-  
-        request.onerror = function (event) {
-          console.error('Error checking data:', event.target.error);
+
+        transaction.onerror = function (event) {
+            reject('Error saving or updating data');
         };
-      });
-  
-      transaction.oncomplete = function () {
-        resolve('Data saved or updated successfully');
-      };
-  
-      transaction.onerror = function (event) {
-        reject('Error saving or updating data');
-      };
     });
-  }
+}
 
   //4. Fungsi Utama untuk Menyimpan Data JSON
 //Buat fungsi utama yang akan memanggil fungsi di atas untuk menyimpan data JSON ke IndexedDB.
