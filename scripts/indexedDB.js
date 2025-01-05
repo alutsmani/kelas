@@ -45,11 +45,14 @@ function openDatabase(dbName, storeName) {
 
 
   //Buat fungsi untuk menyimpan atau memperbarui data di IndexedDB berdasarkan IDS.
-  async function saveOrUpdateData(dbName, storeName, jsonData) {
+async function saveOrUpdateData(dbName, storeName, jsonData) {
+    if (!Array.isArray(jsonData.db)) {
+        throw new Error("Invalid jsonData: 'db' must be an array.");
+    }
+
     const db = await openDatabase(dbName, storeName);
 
     return new Promise((resolve, reject) => {
-        // Pastikan object store ada
         if (!db.objectStoreNames.contains(storeName)) {
             reject(`Object store '${storeName}' not found in database '${dbName}'.`);
             return;
@@ -58,18 +61,20 @@ function openDatabase(dbName, storeName) {
         const transaction = db.transaction(storeName, 'readwrite');
         const store = transaction.objectStore(storeName);
 
-        // Loop melalui data yang diterima
         jsonData.db.forEach(item => {
+            if (!item.IDS) {
+                console.error("Missing 'IDS' property in item:", item);
+                return;
+            }
+
             const request = store.get(item.IDS);
 
             request.onsuccess = function (event) {
                 const existingData = event.target.result;
 
                 if (existingData) {
-                    // Jika data dengan IDS sudah ada, update data
                     store.put({ ...existingData, ...item });
                 } else {
-                    // Jika data dengan IDS belum ada, tambahkan data baru
                     store.add(item);
                 }
             };
