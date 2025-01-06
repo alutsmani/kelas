@@ -169,3 +169,54 @@ async function tampilkanData() {
     }
   }
 
+function Percobaan() {
+  GetData('db', '1430207', 'formData');
+}
+
+
+
+function GetData(NamaTabel, IDS, idForm) {
+  // Panggil openDatabase untuk membuka database
+  openDatabase('Santri', NamaTabel).then(db => {
+      let transaction = db.transaction([NamaTabel], 'readonly');
+      let store = transaction.objectStore(NamaTabel);
+      let getRequest = store.get(IDS);
+
+      getRequest.onsuccess = function(event) {
+          let data = event.target.result;
+
+          if (data) {
+              // Ambil form berdasarkan idForm
+              let form = document.getElementById(idForm);
+
+              if (form) {
+                  // Iterasi semua input/select dalam form
+                  Array.from(form.elements).forEach(element => {
+                      let headerName = element.id;
+                      if (headerName && data.hasOwnProperty(headerName)) {
+                          if (element.tagName === 'INPUT') {
+                              if (element.type === 'checkbox' || element.type === 'radio') {
+                                  element.checked = data[headerName] === true;
+                              } else {
+                                  element.value = data[headerName];
+                              }
+                          } else if (element.tagName === 'SELECT') {
+                              element.value = data[headerName];
+                          }
+                      }
+                  });
+              } else {
+                  console.error(`Form with id "${idForm}" not found.`);
+              }
+          } else {
+              console.error(`No data found for IDS "${IDS}" in table "${NamaTabel}".`);
+          }
+      };
+
+      getRequest.onerror = function() {
+          console.error('Failed to retrieve data from IndexedDB.');
+      };
+  }).catch(error => {
+      console.error('Failed to open database:', error);
+  });
+}

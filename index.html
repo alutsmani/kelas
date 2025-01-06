@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <title>Al-Utsmani</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="./style.css">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./styles/ofcanvass.css">
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -176,14 +179,64 @@
 
       </div>
       
-
-     
-
-
+    </div>
+    <!-- Button to Open Offcanvas 
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Percobaan()">
+      Toggle bottom offcanvas
+    </button>-->
+  
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%; max-width: 400px;">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasBottomLabel">Formulir Data</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <form id="formData">
+            <!-- Input Nama -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control custom-input" id="Nama" placeholder="Masukkan Nama">
+              <label for="Nama">Nama</label>
+            </div>
+            <!-- Input Kelas -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control custom-input" id="Diniyah" placeholder="Masukkan Kelas">
+              <label for="Diniyah">Kelas</label>
+            </div>
+            <!-- Input Kamar -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control custom-input" id="Daerah" placeholder="Masukkan Kamar">
+              <label for="Daerah">Kamar</label>
+            </div>
+            <!-- Input Alamat -->
+            <div class="form-floating mb-3">
+              <textarea class="form-control custom-input" id="Dusun" placeholder="Masukkan Alamat" style="height: 100px;"></textarea>
+              <label for="Dusun">Dusun</label>
+            </div>
+          </form>
+        </div>
+        <div class="offcanvas-footer d-flex justify-content-end gap-2">
+          <!-- Tombol Hapus -->
+          <button type="button" class="btn btn-danger btn-icon">
+            <i class="bi bi-trash"></i> Hapus
+          </button>
+          <!-- Tombol Simpan -->
+          <button type="submit" class="btn btn-success btn-icon">
+            <i class="bi bi-save"></i> Simpan
+          </button>
+        </div>
+      </div>
     </div>
   </div>
+
 </div>
 <!-- partial -->
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
   <script  src="./script.js"></script>
   <script  src="./scripts/online.js"></script>
   <script  src="./scripts/indexedDB.js"></script>

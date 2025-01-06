@@ -431,6 +431,8 @@ body {
   height: 32px;
   border-radius: 6px;
   margin-right: 6px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 @media screen and (max-width: 780px) {
   .tableView .product-cell {
@@ -441,6 +443,7 @@ body {
   }
 
   .tableView .product-cell.image {
+
     flex: 0.2;
   }
 }

@@ -1,0 +1,88 @@
+/* Warna Latar dan Teks sesuai Tema */
+.offcanvas {
+  background-color: var(--app-bg, #121212); /* Latar belakang tema gelap */
+  color: var(--app-content-main-color, #f0f0f0); /* Teks terang */
+}
+
+.offcanvas-header {
+  border-bottom: 1px solid var(--table-border, #333); /* Garis pemisah */
+  background-color: var(--sidebar, #1c1c1c); /* Latar sidebar */
+  color: var(--sidebar-main-color, #f0f0f0); /* Teks sidebar */
+}
+
+.offcanvas-footer {
+  border-top: 1px solid var(--table-border, #333); /* Garis pemisah */
+  padding: 1rem;
+  background-color: var(--sidebar, #1c1c1c); /* Latar sidebar */
+  color: var(--sidebar-main-color, #f0f0f0); /* Teks footer */
+}
+
+.btn-close {
+  color: var(--app-content-main-color, #f0f0f0); /* Teks tombol tutup */
+}
+
+/* Floating Label Input */
+.custom-input {
+  background-color: var(--app-bg, #121212); /* Latar input */
+  color: var(--app-content-main-color, #f0f0f0); /* Teks input */
+  border: none; /* Hilangkan border */
+  border-bottom: 1px solid var(--sidebar-link, #555); /* Garis bawah */
+  border-radius: 0; /* Hilangkan border-radius */
+  transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+  border-bottom: 1px solid var(--action-color, #ff9800); /* Garis fokus */
+  outline: none;
+  box-shadow: none; /* Hilangkan bayangan fokus */
+}
+
+textarea.custom-input {
+  resize: none; /* Hilangkan resize */
+}
+
+/* Atur posisi label saat input kosong */
+.form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 1rem 0.75rem; /* Sesuaikan padding jika diperlukan */
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+/* Atur posisi label saat input fokus atau terisi */
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-control:focus ~ label {
+  transform: translateY(-1em) scale(0.85); /* Ubah nilai translateY untuk lebih tinggi */
+  opacity: 0.65;
+}
+
+
+/* Tombol */
+.btn-icon i {
+  margin-right: 0.5rem;
+}
+
+.btn-danger {
+  background-color: var(--filter-reset, #d9534f); /* Warna default */
+  border: none;
+  color: #fff; /* Warna teks putih */
+}
+
+.btn-danger:hover {
+  background-color: #c92a2a; /* Warna merah lebih cerah */
+}
+
+.btn-success {
+  background-color: var(--action-color, #4caf50); /* Hijau */
+  border: none;
+  color: #fff; /* Teks putih */
+}
+
+.btn-success:hover {
+  background-color: var(--action-color-hover, #45a049); /* Hijau gelap */
+}
