@@ -131,7 +131,7 @@
         <div class="product-cell status-cell">Status<button class="sort-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
           </button></div>
-        <div class="product-cell sales">IDS<button class="sort-button">
+        <div class="product-cell sales">Price<button class="sort-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
           </button></div>
         <div class="product-cell stock">Kamar<button class="sort-button">
@@ -185,49 +185,108 @@
       Toggle bottom offcanvas
     </button>-->
   
-    <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%; max-width: 400px;">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasBottomLabel">Formulir Data</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <form id="formData">
-            <!-- Input Nama -->
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control custom-input" id="Nama" placeholder="Masukkan Nama">
-              <label for="Nama">Nama</label>
+    
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%; max-width: 400px;">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Formulir Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form id="formData">
+          <!-- Input Nama -->
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control custom-input" id="Nama" placeholder="Masukkan Nama">
+            <label for="Nama">Nama</label>
+          </div>
+
+          <!-- Daerah dan No Kamar -->
+          <div class="d-flex gap-2" style="padding-top: 30px;">
+            <div class="form-floating flex-grow-1">
+              <input type="text" class="form-control custom-input" id="Daerah" placeholder="Daerah">
+              <label for="Daerah">Daerah</label>
             </div>
-            <!-- Input Kelas -->
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control custom-input" id="Diniyah" placeholder="Masukkan Kelas">
-              <label for="Diniyah">Kelas</label>
+            <div class="form-floating flex-grow-1">
+              <input type="text" class="form-control custom-input" id="NoKamar" placeholder="No Kamar">
+              <label for="NoKamar">No Kamar</label>
             </div>
-            <!-- Input Kamar -->
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control custom-input" id="Daerah" placeholder="Masukkan Kamar">
-              <label for="Daerah">Kamar</label>
+          </div>
+
+          <!-- Diniyah, Kelas, Kel -->
+          <div class="d-flex gap-2" style="padding-top: 30px;">
+            <div class="form-floating flex-grow-1">
+              <input type="text" class="form-control custom-input" id="Diniyah" placeholder="Diniyah">
+              <label for="Diniyah">Diniyah</label>
             </div>
-            <!-- Input Alamat -->
-            <div class="form-floating mb-3">
-              <textarea class="form-control custom-input" id="Dusun" placeholder="Masukkan Alamat" style="height: 100px;"></textarea>
+            <div class="form-floating" style="max-width: 50px;">
+              <input type="text" class="form-control custom-input" id="KelasMD" placeholder="Kelas">
+              <label for="KelasMD">Kelas</label>
+            </div>
+            <div class="form-floating" style="max-width: 50px;">
+              <input type="text" class="form-control custom-input" id="KelMD" placeholder="Kel">
+              <label for="KelMD">Kel</label>
+            </div>
+          </div>
+    
+
+    
+          <!-- Dusun, RT, RW -->
+          <div class="d-flex gap-2" style="padding-top: 30px; padding-bottom: 20px;">
+            <div class="form-floating flex-grow-1">
+              <input type="text" class="form-control custom-input" id="Dusun" placeholder="Dusun">
               <label for="Dusun">Dusun</label>
             </div>
-          </form>
-        </div>
-        <div class="offcanvas-footer d-flex justify-content-end gap-2">
-          <!-- Tombol Hapus -->
-          <button type="button" class="btn btn-danger btn-icon">
-            <i class="bi bi-trash"></i> Hapus
-          </button>
-          <!-- Tombol Simpan -->
-          <button type="submit" class="btn btn-success btn-icon">
-            <i class="bi bi-save"></i> Simpan
-          </button>
-        </div>
+            <div class="form-floating" style="max-width: 50px;">
+              <input type="text" class="form-control custom-input" id="RT" placeholder="RT">
+              <label for="RT">RT</label>
+            </div>
+            <div class="form-floating" style="max-width: 50px;">
+              <input type="text" class="form-control custom-input" id="RW" placeholder="RW">
+              <label for="RW">RW</label>
+            </div>
+          </div>
+    
+          <!-- Desa -->
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control custom-input" id="Desa" placeholder="Desa">
+            <label for="Desa">Desa</label>
+          </div>
+    
+          <!-- Kecamatan -->
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control custom-input" id="Kecamatan" placeholder="Kecamatan">
+            <label for="Kecamatan">Kecamatan</label>
+          </div>
+    
+          <!-- Kabupaten dan Kode Pos -->
+          <div class="d-flex gap-2">
+            <div class="form-floating flex-grow-1">
+              <input type="text" class="form-control custom-input" id="Kabupaten" placeholder="Kabupaten">
+              <label for="Kabupaten">Kabupaten</label>
+            </div>
+            <div class="form-floating" style="max-width: 100px;">
+              <input type="text" class="form-control custom-input" id="KodePos" placeholder="Kode Pos">
+              <label for="KodePos">Kode Pos</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="offcanvas-footer d-flex justify-content-end gap-2">
+        <!-- Tombol Hapus -->
+        <button type="button" class="btn btn-danger btn-icon">
+          <i class="bi bi-trash"></i> Hapus
+        </button>
+        <!-- Tombol Simpan -->
+        <button type="submit" class="btn btn-success btn-icon">
+          <i class="bi bi-save"></i> Simpan
+        </button>
       </div>
     </div>
-  </div>
+    
+    
+
+
+    </div>
+
 
 </div>
 <!-- partial -->

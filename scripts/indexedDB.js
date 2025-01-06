@@ -170,53 +170,57 @@ async function tampilkanData() {
   }
 
 function Percobaan() {
-  GetData('db', '1430207', 'formData');
+  MasukkanData('Santri', 'db', '1430207', 'formData');
 }
 
 
+function MasukkanData(dbName, storeName, IDS, formId) {
+  return new Promise((resolve, reject) => {
+      const request = indexedDB.open(dbName);
 
-function GetData(NamaTabel, IDS, idForm) {
-  // Panggil openDatabase untuk membuka database
-  openDatabase('Santri', NamaTabel).then(db => {
-      let transaction = db.transaction([NamaTabel], 'readonly');
-      let store = transaction.objectStore(NamaTabel);
-      let getRequest = store.get(IDS);
+      request.onsuccess = function (event) {
+          const db = event.target.result;
+          const transaction = db.transaction(storeName, 'readonly');
+          const store = transaction.objectStore(storeName);
+          const getRequest = store.get(IDS);
 
-      getRequest.onsuccess = function(event) {
-          let data = event.target.result;
+          getRequest.onsuccess = function (event) {
+              const data = event.target.result;
 
-          if (data) {
-              // Ambil form berdasarkan idForm
-              let form = document.getElementById(idForm);
+              if (data) {
+                  const form = document.getElementById(formId);
 
-              if (form) {
-                  // Iterasi semua input/select dalam form
-                  Array.from(form.elements).forEach(element => {
-                      let headerName = element.id;
-                      if (headerName && data.hasOwnProperty(headerName)) {
-                          if (element.tagName === 'INPUT') {
-                              if (element.type === 'checkbox' || element.type === 'radio') {
-                                  element.checked = data[headerName] === true;
-                              } else {
-                                  element.value = data[headerName];
-                              }
-                          } else if (element.tagName === 'SELECT') {
-                              element.value = data[headerName];
+                  if (!form) {
+                      reject(`Form with ID '${formId}' not found`);
+                      return;
+                  }
+
+                  // Iterate through the keys of the data object
+                  Object.keys(data).forEach((key) => {
+                      const inputElement = form.querySelector(`#${key}`);
+
+                      if (inputElement) {
+                          if (inputElement.tagName === 'INPUT' || inputElement.tagName === 'TEXTAREA') {
+                              inputElement.value = data[key];
+                          } else if (inputElement.tagName === 'SELECT') {
+                              inputElement.value = data[key];
                           }
                       }
                   });
+
+                  resolve(`Data successfully populated in form '${formId}'`);
               } else {
-                  console.error(`Form with id "${idForm}" not found.`);
+                  reject(`No data found for IDS '${IDS}'`);
               }
-          } else {
-              console.error(`No data found for IDS "${IDS}" in table "${NamaTabel}".`);
-          }
+          };
+
+          getRequest.onerror = function () {
+              reject('Error fetching data from IndexedDB');
+          };
       };
 
-      getRequest.onerror = function() {
-          console.error('Failed to retrieve data from IndexedDB.');
+      request.onerror = function () {
+          reject('Error opening database');
       };
-  }).catch(error => {
-      console.error('Failed to open database:', error);
   });
 }

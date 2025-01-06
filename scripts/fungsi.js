@@ -26,7 +26,7 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
     `;
 
     newRow.addEventListener('click', () => {
-        GetData('db', ids, 'formData');
+        MasukkanData('Santri', 'db', ids, 'formData');
         
         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
         offcanvas.show();
