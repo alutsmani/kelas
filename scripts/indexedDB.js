@@ -144,6 +144,10 @@ function getAllDataFromIndexedDB(dbName, storeName) {
 //2. Fungsi untuk Menampilkan Data
 //Buat fungsi untuk menampilkan data yang diambil dari IndexedDB menggunakan fungsi addProductRow.
 async function tampilkanData() {
+    const productsArea = document.querySelector('.products-area-wrapper');
+    productsArea.innerHTML = ''; // Bersihkan isi sebelum menampilkan data baru
+    addHeader(); // Tambahkan header tabel
+    
     const dbName = 'Santri'; // Nama database
     const storeName = 'db'; // Nama tabel (object store)
   
