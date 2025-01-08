@@ -37,6 +37,27 @@ function DownloadDiniyah() {
     
 };
 
+function DownloadDiniyahIkhtibar() {
+  // Contoh penggunaan
+  const LabelDownload = document.getElementById('ReloadIcon');
+  const LoadingDownload = document.getElementById('LoadingReload');
+
+  LabelDownload.style.display = 'none';
+  LoadingDownload.style.display = 'block';
+
+
+  const filterDiniyah = document.getElementById('filterDiniyah').value;
+  const filters = { Ikhtibar: { Diniyah: filterDiniyah } }; // Kriteria filter
+  
+  GetData(url, filters).then(data => {
+      console.log("Data received for saving:", data); // Log the data before saving
+      saveDataToIndexedDBIkhtibar(data);
+
+      LabelDownload.style.display = 'block';
+      LoadingDownload.style.display = 'none';
+  })
+  
+};
 
 const url = 'https://script.google.com/macros/s/AKfycbx3y-MQIjhWvJN1t6qUdIjpQ6XhG-syYbI_pyI1TD85sgSFuQ5ghXu65nNLJW_0NaK8/exec';
 

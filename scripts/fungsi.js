@@ -26,6 +26,9 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
     `;
 
     newRow.addEventListener('click', () => {
+        SelectDiniyah();
+        SelectFormal();
+      
         MasukkanData('Santri', 'db', ids, 'formData');
         
         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
@@ -234,80 +237,192 @@ function Sembunyikan(id, callback) {
 }
 
 
-function ubahSelect() {
-  const Diniyah = document.getElementById('filterDiniyah');
-  isiSelect('filterKel', arrayKel);
 
-  if (Diniyah.value == 'Ula') {
-    isiSelect('filterKelas', arrayUla);
-  } else if (Diniyah.value == "Isti'dadiyah") {
-    isiSelect('filterKelas', []);
-    isiSelect('filterKel', arrayIst);
-  } else {
-    isiSelect('filterKelas', arrayUlya);
-  }
-}
+function ComboDiniyah(diniyahElement, kelasElement, kelElement) {
+  // Clear existing options
 
+  kelasElement.innerHTML = "";
+  kelElement.innerHTML = "";
 
-const arrayUla = [
-  { value: '', text: 'All' },
-  { value: 1, text: 'Kelas 1' },
-  { value: 2, text: 'Kelas 2' },
-  { value: 3, text: 'Kelas 3' },
-  { value: 4, text: 'Kelas 4' },
-  { value: 5, text: 'Kelas 5' },
-  { value: 6, text: 'Kelas 6' }
-];
+  // Add "All" option for kelasElement
+  const allOptionKelas = document.createElement("option");
+  allOptionKelas.value = "";
+  allOptionKelas.textContent = "-";
+  kelasElement.appendChild(allOptionKelas);
 
-const arrayUlya = [
-  { value: '', text: 'All' },
-  { value: 1, text: 'Kelas 1' },
-  { value: 2, text: 'Kelas 2' },
-  { value: 3, text: 'Kelas 3' }
-];
+  // Add "All" option for kelElement
+  const allOptionKel = document.createElement("option");
+  allOptionKel.value = "";
+  allOptionKel.textContent = "-";
+  kelElement.appendChild(allOptionKel);
 
-const arrayKel = [
-  { value: '', text: 'All' },
-  { value: 'A', text: 'A' },
-  { value: 'B', text: 'B' },
-  { value: 'C', text: 'C' },
-  { value: 'D', text: 'D' },
-  { value: 'E', text: 'E' },
-  { value: 'F', text: 'F' },
-  { value: 'G', text: 'G' },
-  { value: 'H', text: 'H' },
-  { value: 'I', text: 'I' },
-  { value: 'J', text: 'J' }
-];
+  const diniyah = diniyahElement.value.toUpperCase();
 
-const arrayIst = [
-  { value: '', text: 'All' },
-  { value: 'A', text: 'A' },
-  { value: 'B', text: 'B' },
-  { value: 'C1', text: 'C1' },
-  { value: 'C2', text: 'C2' },
-  { value: 'C3', text: 'C3' },
-  { value: 'D', text: 'D' },
-  { value: 'E', text: 'E' },
-  { value: 'F1', text: 'F1' },
-  { value: 'F2', text: 'F2' },
-  { value: 'F3', text: 'F3' }
-];
+  if (diniyah === "ISTI'DADIYAH") {
+      // Add option 0 to kelasElement
+      const option = document.createElement("option");
+      option.value = 0;
+      option.textContent = 0;
+      kelasElement.appendChild(option);
 
-function isiSelect(idSelect, data) {
-  const select = document.getElementById(idSelect);
-  if (!select) {
-      console.error(`Select dengan ID ${idSelect} tidak ditemukan.`);
+      // Add custom options for kelElement
+      const kelOptions = ["A", "B", "C1", "C2", "C3", "D", "E", "F1", "F2", "F3"];
+      kelOptions.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item;
+          option.textContent = item;
+          kelElement.appendChild(option);
+      });
+  } else if (diniyah === "ULA") {
+      diniyahElement.value = "Ula";
+      for (let i = 1; i <= 6; i++) {
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = i;
+          kelasElement.appendChild(option);
+      }
+  } else if (diniyah === "WUSTHA") {
+      diniyahElement.value = "Wustha";
+      for (let i = 1; i <= 3; i++) {
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = i;
+          kelasElement.appendChild(option);
+      }
+  } else if (diniyah === "ULYA") {
+      diniyahElement.value = "Ulya";
+      for (let i = 1; i <= 3; i++) {
+          const option = document.createElement("option");
+          option.value = i;
+          option.textContent = i;
+          kelasElement.appendChild(option);
+      }
+  } else if (diniyah === "GURU TUGAS") {
+      diniyahElement.value = "Guru Tugas";
+      ["Pertama", "Kedua"].forEach(item => {
+          const option = document.createElement("option");
+          option.value = item;
+          option.textContent = item;
+          kelasElement.appendChild(option);
+      });
+  } else if (diniyah === "TIDAK SEKOLAH") {
+      diniyahElement.value = "Tidak Sekolah";
+      kelasElement.innerHTML = ""; // Clear kelas
+      kelElement.innerHTML = ""; // Clear kel
+      // Add "All" options back for Tidak Sekolah
+      kelasElement.appendChild(allOptionKelas.cloneNode(true));
+      kelElement.appendChild(allOptionKel.cloneNode(true));
       return;
   }
 
-  // Hapus pilihan sebelumnya
-  select.innerHTML = ''; // Kosongkan isi select
-
-  data.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item.value;
-      option.textContent = item.text;
-      select.appendChild(option);
-  });
+  // Add default options A-U for "Kel" if not "ISTI'DADIYAH"
+  if (diniyah !== "ISTI'DADIYAH") {
+      for (let i = 65; i <= 85; i++) {
+          const option = document.createElement("option");
+          option.value = String.fromCharCode(i);
+          option.textContent = String.fromCharCode(i);
+          kelElement.appendChild(option);
+      }
+  }
 }
+
+
+
+function ComboFormal(Formal, Kelas, Kel) {
+  // Jika parameter clear bernilai true, kosongkan Kelas dan Kel
+
+  Kelas.innerHTML = "";
+  Kel.innerHTML = "";
+
+
+  // Menambahkan opsi "All" untuk Kelas jika kosong
+
+  const allOptionKelas = document.createElement("option");
+  allOptionKelas.value = "";
+  allOptionKelas.textContent = "-";
+  Kelas.appendChild(allOptionKelas);
+
+
+  // Menentukan opsi berdasarkan nilai Formal
+  if (Formal.toUpperCase() === "PAUD") {
+    const option = document.createElement("option");
+    option.value = 0;
+    option.textContent = "0";
+    Kelas.appendChild(option);
+  } else if (Formal.toUpperCase() === "MTS") {
+    Formal = "MTs";
+    ["VII", "VIII", "IX"].forEach(level => {
+      const option = document.createElement("option");
+      option.value = level;
+      option.textContent = level;
+      Kelas.appendChild(option);
+    });
+  } else if (Formal.toUpperCase() === "SMP") {
+    ["VII", "VIII", "IX"].forEach(level => {
+      const option = document.createElement("option");
+      option.value = level;
+      option.textContent = level;
+      Kelas.appendChild(option);
+    });
+  } else if (Formal.toUpperCase() === "SMAI") {
+    ["X", "XI", "XII"].forEach(level => {
+      const option = document.createElement("option");
+      option.value = level;
+      option.textContent = level;
+      Kelas.appendChild(option);
+    });
+  } else if (Formal.toUpperCase() === "STAI") {
+    ["MPI", "ES"].forEach(level => {
+      const option = document.createElement("option");
+      option.value = level;
+      option.textContent = level;
+      Kelas.appendChild(option);
+    });
+  } else if (Formal === "Tidak Sekolah") {
+      Kelas.innerHTML = "";
+      Kel.innerHTML = "";
+    return;
+  }
+
+  // Menambahkan opsi "All" untuk Kel jika kosong
+
+    const allOptionKel = document.createElement("option");
+    allOptionKel.value = "";
+    allOptionKel.textContent = "-";
+    Kel.appendChild(allOptionKel);
+
+
+  // Menentukan opsi untuk Kel berdasarkan nilai Formal
+  if (Formal.toUpperCase() === "PAUD") {
+    ["Besar", "Kecil"].forEach(group => {
+      const option = document.createElement("option");
+      option.value = group;
+      option.textContent = group;
+      Kel.appendChild(option);
+    });
+  } else if (Formal.toUpperCase() === "MTS" || Formal.toUpperCase() === "SMP") {
+    for (let i = 65; i <= 75; i++) {
+      const option = document.createElement("option");
+      option.value = String.fromCharCode(i);
+      option.textContent = String.fromCharCode(i);
+      Kel.appendChild(option);
+    }
+  } else if (Formal.toUpperCase() === "SMAI") {
+    for (let i = 1; i <= 10; i++) {
+      ["IPS", "IPA"].forEach(group => {
+        const option = document.createElement("option");
+        option.value = `${group} ${i}`;
+        option.textContent = `${group} ${i}`;
+        Kel.appendChild(option);
+      });
+    }
+  } else if (Formal.toUpperCase() === "STAI") {
+    for (let i = 1; i <= 8; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = i;
+      Kel.appendChild(option);
+    }
+  }
+}
+

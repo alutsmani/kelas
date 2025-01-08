@@ -1,4 +1,4 @@
-/* Warna Latar dan Teks sesuai Tema */
+/* Backup of ofcanvass.css */
 .offcanvas {
   background-color: var(--app-bg, #121212); /* Latar belakang tema gelap */
   color: var(--app-content-main-color, #f0f0f0); /* Teks terang */
@@ -23,16 +23,18 @@
 
 /* Floating Label Input */
 .custom-input {
-  background-color: var(--app-content-secondary-color); /* Update to match collapse.css */
-  color: var(--app-content-main-color); /* Update to match collapse.css */
-  border: 1px solid var(--table-border); /* Update to match collapse.css */
-  border-radius: 4px; /* Update to match collapse.css */
+  background-color: var(--app-bg, #121212); /* Latar input */
+  color: var(--app-content-main-color, #f0f0f0); /* Teks input */
+  border: none; /* Hilangkan border */
+  border-bottom: 1px solid var(--sidebar-link, #555); /* Garis bawah */
+  border-radius: 0; /* Hilangkan border-radius */
+  transition: all 0.3s ease;
 }
 
 .custom-input:focus {
-  border-color: var(--action-color); /* Update to match collapse.css */
-  box-shadow: 0 0 0 0.2rem rgba(40, 105, 255, 0.25); /* Update to match collapse.css */
+  border-bottom: 1px solid var(--action-color, #ff9800); /* Garis fokus */
   outline: none;
+  box-shadow: none; /* Hilangkan bayangan fokus */
 }
 
 textarea.custom-input {

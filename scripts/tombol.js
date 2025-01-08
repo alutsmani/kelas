@@ -21,4 +21,34 @@ async function simpan() {
     }
 }
 
+function SelectFilter() {
+  const Diniyah = document.getElementById('filterDiniyah');
+  const Kelas = document.getElementById('filterKelas');
+  const Kel = document.getElementById('filterKel');
+
+  ComboDiniyah(Diniyah, Kelas, Kel);
+}
+
+function SelectDiniyah() {
+  const Diniyah = document.getElementById('Diniyah');
+  const Kelas = document.getElementById('KelasMD');
+  const Kel = document.getElementById('KelMD');
+
+  ComboDiniyah(Diniyah, Kelas, Kel);
+}
+
+function SelectFormal() {
+  const Formal = document.getElementById('Formal').value;
+  const Kelas = document.getElementById('KelasFormal');
+  const Kel = document.getElementById('KelFormal');
+
+  ComboFormal(Formal, Kelas, Kel);
+}
+
 document.getElementById('filterCariNama').addEventListener('input', tampilkanData);
+document.getElementById('filterDiniyah').addEventListener('change', tampilkanData);
+
+
+function reload() {
+  DownloadDiniyahIkhtibar();
+}

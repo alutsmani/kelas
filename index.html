@@ -5,11 +5,15 @@
   <title>Al-Utsmani</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <link rel="icon" href="logo.png" type="image/x-icon">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./styles/ofcanvass.css">
+  <link rel="stylesheet" href="./styles/collapse.css">
 
 </head>
 <body>
@@ -72,34 +76,46 @@
           <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
         </svg>
       </button>
-      <button class="app-content-headerButton" onclick="Tampilkan('MenuLembaga')">Add</button>
+      <button class="app-content-headerButton" onclick="reload()" style="display: none">
+        <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
+        <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+      </button>
+        
     </div>
+    
+    
+    
+    
 
     <div id="DataTabel">
       <div class="app-content-actions">
         <input id="filterCariNama" class="search-bar" placeholder="Search..." type="text">
         
         <div class="app-content-actions-wrapper">
+          
+          
+          <select class="action-button" id="filterDiniyah" onchange="SelectFilter()">
+            <option value="Isti'dadiyah">Isti'dadiyah</option>
+            <option value="Ula">Ula</option>
+            <option value="Wustha">Wustha</option>
+            <option value="Ulya">Ulya</option>
+            <option value="Tidak">Tidak Sekolah</option>
+          </select>
+          <button id="btnDownload" class="action-button" type="button" style="width: 40px;" onclick="DownloadDiniyah()">
+            <svg id="LabelDownload" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download" style="display: flex;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span id="LoadingDownload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+          </button>
+          
+          
           <div class="filter-button-wrapper">
-            <button class="action-button filter jsFilter" onclick="ubahSelect()"><span>Filter</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
+            <button class="action-button filter jsFilter"><span>Filter</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
             <div class="filter-menu">
               <label>Lembaga</label>
-              <div class="input-group" style="max-width: 300px;">
-                <select class="form-select" id="filterDiniyah" onchange="ubahSelect()">
-                  <option value="Isti'dadiyah">Isti'dadiyah</option>
-                  <option value="Ula">Ula</option>
-                  <option value="Wustha">Wustha</option>
-                  <option value="Ulya">Ulya</option>
-                </select>
-                <button id="btnDownload" class="btn btn-success btn-sm filter-button" type="button" style="width: 40px;" onclick="DownloadDiniyah()">
-                  <svg id="LabelDownload" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download" style="display: flex;">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span id="LoadingDownload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-                </button>
-              </div>
+              
 
 
               
@@ -208,12 +224,31 @@
             <input type="text" class="form-control custom-input" id="IDS" placeholder="IDS">
             <label for="IDS">IDS</label>
           </div>
+          <dl class="row">
+            
+            <dt class="col-sm-3">Nama</dt>
+            <dd class="col-sm-9">Percobaan</dd>
 
-          <!-- Input Nama -->
+            <dt class="col-sm-3">Ayah</dt>
+            <dd class="col-sm-9">Percobaan</dd>
+
+            <dt class="col-sm-3">Ibu</dt>
+            <dd class="col-sm-9">Percobaan</dd>
+
+            <dt class="col-sm-3"></dt>
+            <dd class="col-sm-9"></dd>
+
+            <dt class="col-sm-3">Ikhtibar</dt>
+            <dd class="col-sm-9">Rp. 0</dd>
+
+            <dt class="col-sm-3">Uwata</dt>
+            <dd class="col-sm-9">Rp. 0</dd>
+          </dl>
+          <!-- Input Nama 
           <div class="form-floating mb-3">
             <input type="text" class="form-control custom-input" id="Nama" placeholder="Masukkan Nama">
             <label for="Nama">Nama</label>
-          </div>
+          </div>-->
   
           <!-- Daerah dan No Kamar -->
           <div class="d-flex gap-2" style="padding-top: 30px;">
@@ -230,15 +265,23 @@
           <!-- Diniyah, Kelas, Kel -->
           <div class="d-flex gap-2" style="padding-top: 30px;">
             <div class="form-floating flex-grow-1">
-              <input type="text" class="form-control custom-input" id="Diniyah" placeholder="Diniyah">
+              <select class="form-select form-control custom-input" id="Diniyah" onchange="SelectDiniyah()">
+                <option value="Isti'dadiyah">Isti'dadiyah</option>
+                <option value="Ula">Ula</option>
+                <option value="Wustha">Wustha</option>
+                <option value="Ulya">Ulya</option>
+                <option value="Tidak">Tidak Sekolah</option>
+              </select>
               <label for="Diniyah">Diniyah</label>
             </div>
-            <div class="form-floating" style="max-width: 50px;">
-              <input type="text" class="form-control custom-input" id="KelasMD" placeholder="Kelas">
+            <div class="form-floating" style="width: 70px;">
+              <select class="form-select form-control custom-input" id="KelasMD">
+              </select>
               <label for="KelasMD">Kelas</label>
             </div>
-            <div class="form-floating" style="max-width: 50px;">
-              <input type="text" class="form-control custom-input" id="KelMD" placeholder="Kel">
+            <div class="form-floating" style="width: 70px;">
+              <select class="form-select form-control custom-input" id="KelMD">
+              </select>
               <label for="KelMD">Kel</label>
             </div>
           </div>
@@ -246,58 +289,75 @@
           <!-- Formal, Kelas, Kel -->
           <div class="d-flex gap-2" style="padding-top: 30px;">
             <div class="form-floating flex-grow-1">
-              <input type="text" class="form-control custom-input" id="Formal" placeholder="Formal">
+              <select class="form-select form-control custom-input" id="Formal" onchange="SelectFormal()">
+                <option value="Paud">Paud</option>
+                <option value="MTs">MTs</option>
+                <option value="SMP">SMP</option>
+                <option value="SMAI">SMAI</option>
+                <option value="STAI">STAI</option>
+                <option value="Tidak">Tidak Sekolah</option>
+              </select>
               <label for="Formal">Formal</label>
             </div>
-            <div class="form-floating" style="max-width: 50px;">
-              <input type="text" class="form-control custom-input" id="KelasFormal" placeholder="Kelas">
+            <div class="form-floating" style="width: 70px;">
+              <select class="form-select form-control custom-input" id="KelasFormal">
+              </select>
               <label for="KelasFormal">Kelas</label>
             </div>
-            <div class="form-floating" style="max-width: 50px;">
-              <input type="text" class="form-control custom-input" id="KelFormal" placeholder="Kel">
+            <div class="form-floating" style="width: 70px;">
+              <select class="form-select form-control custom-input" id="KelFormal">
+              </select>
               <label for="KelFormal">Kel</label>
             </div>
           </div>
-    
-          <!-- Dusun, RT, RW -->
-          <div class="d-flex gap-2" style="padding-top: 50px; padding-bottom: 20px;">
-            <div class="form-floating flex-grow-1">
-              <input type="text" class="form-control custom-input" id="Dusun" placeholder="Dusun">
-              <label for="Dusun">Dusun</label>
-            </div>
-            <div class="form-floating" style="max-width: 50px;">
-              <input type="text" class="form-control custom-input" id="RT" placeholder="RT">
-              <label for="RT">RT</label>
-            </div>
-            <div class="form-floating" style="max-width: 50px;">
-              <input type="text" class="form-control custom-input" id="RW" placeholder="RW">
-              <label for="RW">RW</label>
+          <br>
+          <p class="d-inline-flex gap-1">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Alamat
+            </button>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              <!-- Dusun, RT, RW -->
+              <div class="d-flex gap-2" style="padding-top: 20px; padding-bottom: 20px;">
+                <div class="form-floating flex-grow-1">
+                  <input type="text" class="form-control custom-input" id="Dusun" placeholder="Dusun">
+                  <label for="Dusun">Dusun</label>
+                </div>
+                <div class="form-floating" style="max-width: 50px;">
+                  <input type="text" class="form-control custom-input" id="RT" placeholder="RT">
+                  <label for="RT">RT</label>
+                </div>
+                <div class="form-floating" style="max-width: 50px;">
+                  <input type="text" class="form-control custom-input" id="RW" placeholder="RW">
+                  <label for="RW">RW</label>
+                </div>
+              </div>
+              <!-- Desa -->
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control custom-input" id="Desa" placeholder="Desa">
+                <label for="Desa">Desa</label>
+              </div>
+              <!-- Kecamatan -->
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control custom-input" id="Kecamatan" placeholder="Kecamatan">
+                <label for="Kecamatan">Kecamatan</label>
+              </div>
+              <!-- Kabupaten dan Kode Pos -->
+              <div class="d-flex gap-2">
+                <div class="form-floating flex-grow-1">
+                  <input type="text" class="form-control custom-input" id="Kabupaten" placeholder="Kabupaten">
+                  <label for="Kabupaten">Kabupaten</label>
+                </div>
+                <div class="form-floating" style="max-width: 100px;">
+                  <input type="text" class="form-control custom-input" id="KodePos" placeholder="Kode Pos">
+                  <label for="KodePos">Kode Pos</label>
+                </div>
+              </div>
             </div>
           </div>
-    
-          <!-- Desa -->
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control custom-input" id="Desa" placeholder="Desa">
-            <label for="Desa">Desa</label>
-          </div>
-    
-          <!-- Kecamatan -->
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control custom-input" id="Kecamatan" placeholder="Kecamatan">
-            <label for="Kecamatan">Kecamatan</label>
-          </div>
-    
-          <!-- Kabupaten dan Kode Pos -->
-          <div class="d-flex gap-2">
-            <div class="form-floating flex-grow-1">
-              <input type="text" class="form-control custom-input" id="Kabupaten" placeholder="Kabupaten">
-              <label for="Kabupaten">Kabupaten</label>
-            </div>
-            <div class="form-floating" style="max-width: 100px;">
-              <input type="text" class="form-control custom-input" id="KodePos" placeholder="Kode Pos">
-              <label for="KodePos">Kode Pos</label>
-            </div>
-          </div>
+
+          
         </form>
       </div>
       <div class="offcanvas-footer d-flex justify-content-end gap-2">

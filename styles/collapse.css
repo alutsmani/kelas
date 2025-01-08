@@ -1,0 +1,81 @@
+/* General button styling */
+.btn-primary {
+    background-color: var(--action-color);
+    border: none;
+    color: var(--app-content-main-color);
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--action-color-hover);
+    color: var(--sidebar-main-color);
+  }
+  
+  /* Collapsible card styling */
+  .card {
+    
+    border: none;
+    color: var(--sidebar-main-color);
+    box-shadow: var(--filter-shadow);
+  }
+  
+  .card-body {
+    background-color: var(--sidebar);
+    color: var(--sidebar-main-color);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  /* Input styling */
+  .form-control.custom-input {
+    background-color: var(--app-content-secondary-color);
+    color: var(--app-content-main-color);
+    border: 1px solid var(--table-border);
+    border-radius: 4px;
+  }
+  
+  .form-control.custom-input:focus {
+    background-color: var(--app-content-secondary-color);
+    border-color: var(--action-color);
+    box-shadow: 0 0 0 0.2rem rgba(40, 105, 255, 0.25);
+    color: var(--app-content-main-color);
+  }
+  
+  /* Floating labels */
+  .form-floating label {
+    color: var(--app-content-main-color);
+  }
+  
+  .form-floating .form-control:focus + label {
+    color: var(--action-color);
+  }
+  
+  /* Dark mode specific tweaks */
+  :root {
+    /* Adjust card and input hover effects */
+    --card-hover-bg: rgba(21, 30, 47, 0.9);
+    --input-hover-bg: rgba(29, 40, 60, 1);
+  }
+  
+  .card:hover {
+    background-color: var(--card-hover-bg);
+  }
+  
+  .form-control.custom-input:hover {
+    background-color: var(--input-hover-bg);
+  }
+  
+  /* Light mode specific tweaks */
+  .light:root {
+    --card-hover-bg: rgba(243, 246, 253, 0.9);
+    --input-hover-bg: #ffffff;
+  }
+  
+  .light .card:hover {
+    background-color: var(--card-hover-bg);
+  }
+  
+  .light .form-control.custom-input:hover {
+    background-color: var(--input-hover-bg);
+  }
+  

@@ -135,6 +135,7 @@ async function saveDataToIndexedDB(jsonData) {
 
 
 
+
   //1. Fungsi untuk Mengambil Data dari IndexedDB
 //Buat fungsi untuk mengambil semua data dari tabel (object store) di IndexedDB.
 function getAllDataFromIndexedDB(dbName, storeName) {
@@ -160,10 +161,9 @@ function getAllDataFromIndexedDB(dbName, storeName) {
         reject('Error opening database');
       };
     });
-  }
+}
 
 //2. Fungsi untuk Menampilkan Data
-//Buat fungsi untuk menampilkan data yang diambil dari IndexedDB menggunakan fungsi addProductRow.
 async function tampilkanData() {
     const productsArea = document.querySelector('.products-area-wrapper');
     productsArea.innerHTML = ''; // Bersihkan isi sebelum menampilkan data baru
@@ -176,8 +176,11 @@ async function tampilkanData() {
       // Ambil semua data dari IndexedDB
       const data = await getFilteredFromIndexedDB(dbName, storeName);
   
+      // Batasi jumlah data yang ditampilkan
+      const limitedData = data.slice(0, 100);
+  
       // Loop melalui data dan tampilkan menggunakan addProductRow
-      data.forEach(item => {
+      limitedData.forEach(item => {
         const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
         addProductRow(
           item.IDS, // IDS
