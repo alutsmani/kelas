@@ -1,53 +1,64 @@
 
-//Pertama, buat fungsi untuk membuka atau membuat database IndexedDB.
+
 function openDatabase(dbName, storeName) {
-  return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const request = indexedDB.open(dbName);
-
+  
+      request.onupgradeneeded = function (event) {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: 'IDS' });
+          console.log(`Object store '${storeName}' created during upgrade.`);
+        }
+      };
+  
       request.onsuccess = function (event) {
-          const db = event.target.result;
-
-          // Cek apakah object store sudah ada
-          if (!db.objectStoreNames.contains(storeName)) {
-              // Jika belum ada, tutup database dan buka kembali dengan versi yang lebih tinggi
-              db.close();
-              const upgradeRequest = indexedDB.open(dbName, db.version + 1);
-
-              upgradeRequest.onupgradeneeded = function (event) {
-                  const db = event.target.result;
-                  db.createObjectStore(storeName, { keyPath: 'IDS' });
-                  console.log(`Object store '${storeName}' created.`);
-              };
-
-              upgradeRequest.onsuccess = function (event) {
-                  const db = event.target.result;
-                  console.log(`Database '${dbName}' upgraded successfully.`);
-                  resolve(db);
-              };
-
-              upgradeRequest.onerror = function (event) {
-                  console.error('Error upgrading database:', event.target.error);
-                  reject('Error upgrading database');
-              };
-          } else {
-              // Jika object store sudah ada, langsung resolve
-              console.log(`Database '${dbName}' opened successfully.`);
-              resolve(db);
-          }
+        const db = event.target.result;
+  
+        // Cek apakah object store ada
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.close();
+  
+          // Buka dengan versi yang lebih tinggi untuk membuat object store baru
+          const upgradeRequest = indexedDB.open(dbName, db.version + 1);
+  
+          upgradeRequest.onupgradeneeded = function (event) {
+            const upgradedDb = event.target.result;
+            upgradedDb.createObjectStore(storeName, { keyPath: 'IDS' });
+            console.log(`Object store '${storeName}' created in version upgrade.`);
+          };
+  
+          upgradeRequest.onsuccess = function (event) {
+            const upgradedDb = event.target.result;
+            console.log(`Database '${dbName}' upgraded successfully.`);
+            resolve(upgradedDb);
+          };
+  
+          upgradeRequest.onerror = function (event) {
+            console.error('Error upgrading database:', event.target.error);
+            reject('Error upgrading database');
+          };
+        } else {
+          console.log(`Database '${dbName}' opened successfully.`);
+          resolve(db);
+        }
       };
-
+  
       request.onerror = function (event) {
-          console.error('Error opening database:', event.target.error);
-          reject('Error opening database');
+        console.error('Error opening database:', event.target.error);
+        reject('Error opening database');
       };
-  });
-}
+    });
+  }
+  
 
 
   //Buat fungsi untuk menyimpan atau memperbarui data di IndexedDB berdasarkan IDS.
-async function saveOrUpdateData(dbName, storeName, jsonData) {
+  async function saveOrUpdateData(dbName, storeName, jsonData) {
+    // Pastikan `db` adalah array
     if (!Array.isArray(jsonData.db)) {
-        throw new Error("Invalid jsonData: 'db' must be an array.");
+        console.warn("Property 'db' is not an array. Converting to array.");
+        jsonData.db = [jsonData.db];
     }
 
     const db = await openDatabase(dbName, storeName);
@@ -94,20 +105,30 @@ async function saveOrUpdateData(dbName, storeName, jsonData) {
     });
 }
 
+
+
   //4. Fungsi Utama untuk Menyimpan Data JSON
 //Buat fungsi utama yang akan memanggil fungsi di atas untuk menyimpan data JSON ke IndexedDB.
 
 async function saveDataToIndexedDB(jsonData) {
-    const dbName = 'Santri'; // Nama database
-    const storeName = 'db'; // Nama tabel (object store)
-  
-    try {
+  const dbName = 'Santri'; // Nama database
+  const storeName = 'db'; // Nama tabel (object store)
+
+  if (!jsonData || !jsonData.db) {
+      console.error("Invalid input: JSON data is required and must include 'db'.");
+      return;
+  }
+
+  console.log("Data received for saving:", jsonData);
+
+  try {
       const result = await saveOrUpdateData(dbName, storeName, jsonData);
       console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
+  } catch (error) {
+      console.error("Error saving data to IndexedDB:", error);
   }
+}
+
 
 
 
@@ -153,7 +174,7 @@ async function tampilkanData() {
   
     try {
       // Ambil semua data dari IndexedDB
-      const data = await getAllDataFromIndexedDB(dbName, storeName);
+      const data = await getFilteredFromIndexedDB(dbName, storeName);
   
       // Loop melalui data dan tampilkan menggunakan addProductRow
       data.forEach(item => {
@@ -161,10 +182,10 @@ async function tampilkanData() {
         addProductRow(
           item.IDS, // IDS
           item.Nama, // Nama
-          item.Kelas || '', // Kelas (jika ada)
+          item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
           item.Status || '', // Status (jika ada)
           item.Ikhtibar || '', // Ikhtibar (jika ada)
-          item.Kamar || '', // Kamar (jika ada)
+          item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
           imageUrl // URL gambar berdasarkan IDS
         );
       });
@@ -178,6 +199,49 @@ function Percobaan() {
 }
 
 
+function getFilteredFromIndexedDB(dbName, storeName) {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName);
+
+    request.onsuccess = function (event) {
+      const db = event.target.result;
+      const transaction = db.transaction(storeName, 'readonly');
+      const store = transaction.objectStore(storeName);
+      const getAllRequest = store.getAll();
+
+      getAllRequest.onsuccess = function (event) {
+        const data = event.target.result;
+
+        const filterDiniyah = document.getElementById('filterDiniyah').value;
+        const filterKelas = document.getElementById('filterKelas').value;
+        const filterKel = document.getElementById('filterKel').value;
+        const filterStatusSantri = document.getElementById('filterStatusSantri').value;
+
+        const filteredData = data.filter(item => {
+        return (filterDiniyah === '' || item.Diniyah.toLowerCase().includes(filterDiniyah.toLowerCase())) &&
+                (filterKelas === '' || item.KelasMD.toLowerCase().includes(filterKelas.toLowerCase())) &&
+                (filterKel === '' || item.KelMD.toLowerCase().includes(filterKel.toLowerCase())) &&
+                (filterStatusSantri === '' || item.StatusSantri.toLowerCase().includes(filterStatusSantri.toLowerCase()));
+        });
+
+        resolve(filteredData);
+      };
+
+      getAllRequest.onerror = function (event) {
+        reject('Error fetching data from IndexedDB');
+      };
+    };
+
+    request.onerror = function (event) {
+      reject('Error opening database');
+    };
+  });
+}
+
+
+
+
+//-------------------------- uNTUK  EDIT DATA ------------------------------
 function MasukkanData(dbName, storeName, IDS, formId) {
   return new Promise((resolve, reject) => {
       const request = indexedDB.open(dbName);

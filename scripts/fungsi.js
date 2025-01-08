@@ -19,9 +19,9 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
         <div class="product-cell category"><span class="cell-label">Kelas:</span>${kelas || '-'}</div>
         <div class="product-cell status-cell">
           <span class="cell-label">Status:</span>
-          <span class="status ${status === 'Lunas' ? 'active' : 'disabled'}">${status || '-'}</span>
+          <span class="status disabled">Belum</span>
         </div>
-        <div class="product-cell sales"><span class="cell-label">Ikhtibar:</span>${ikhtibar || '-'}</div>
+        <div class="product-cell sales"><span class="cell-label">Ikhtibar:</span>0</div>
         <div class="product-cell stock"><span class="cell-label">Kamar:</span>${kamar || '-'}</div>
     `;
 
@@ -199,4 +199,115 @@ function generateJSON(keyName) {
 
   return JSON.stringify(jsonData); // Kembalikan JSON dalam bentuk string
 
+}
+
+
+
+
+
+//--------------------------------------- Fungsi Tampilkan / Sembunyikan dan tampilan teks header ----------------------------------------------
+function Tampilkan(id) {
+  const elem = document.getElementById(id);
+  if (elem) {
+      elem.classList.remove('fade-out');
+      elem.classList.add('fade-in');
+      elem.style.display = "block"; // Tampilkan elemen
+  } else {
+      console.error(`Elemen dengan id "${id}" tidak ditemukan.`);
+  }
+}
+
+function Sembunyikan(id, callback) {
+  const elem = document.getElementById(id);
+  if (elem) {
+      elem.classList.remove('fade-in');
+      elem.classList.add('fade-out');
+      setTimeout(() => {
+          elem.style.display = "none"; // Sembunyikan elemen sepenuhnya setelah animasi selesai
+          if (callback) {
+              callback(); // Panggil callback setelah selesai disembunyikan
+          }
+      }, 800); // Sesuaikan waktu sesuai durasi animasi (800ms)
+  } else {
+      console.error(`Elemen dengan id "${id}" tidak ditemukan.`);
+  }
+}
+
+
+function ubahSelect() {
+  const Diniyah = document.getElementById('filterDiniyah');
+  isiSelect('filterKel', arrayKel);
+
+  if (Diniyah.value == 'Ula') {
+    isiSelect('filterKelas', arrayUla);
+  } else if (Diniyah.value == "Isti'dadiyah") {
+    isiSelect('filterKelas', []);
+    isiSelect('filterKel', arrayIst);
+  } else {
+    isiSelect('filterKelas', arrayUlya);
+  }
+}
+
+
+const arrayUla = [
+  { value: '', text: 'All' },
+  { value: 1, text: 'Kelas 1' },
+  { value: 2, text: 'Kelas 2' },
+  { value: 3, text: 'Kelas 3' },
+  { value: 4, text: 'Kelas 4' },
+  { value: 5, text: 'Kelas 5' },
+  { value: 6, text: 'Kelas 6' }
+];
+
+const arrayUlya = [
+  { value: '', text: 'All' },
+  { value: 1, text: 'Kelas 1' },
+  { value: 2, text: 'Kelas 2' },
+  { value: 3, text: 'Kelas 3' }
+];
+
+const arrayKel = [
+  { value: '', text: 'All' },
+  { value: 'A', text: 'A' },
+  { value: 'B', text: 'B' },
+  { value: 'C', text: 'C' },
+  { value: 'D', text: 'D' },
+  { value: 'E', text: 'E' },
+  { value: 'F', text: 'F' },
+  { value: 'G', text: 'G' },
+  { value: 'H', text: 'H' },
+  { value: 'I', text: 'I' },
+  { value: 'J', text: 'J' }
+];
+
+const arrayIst = [
+  { value: '', text: 'All' },
+  { value: 'A', text: 'A' },
+  { value: 'B', text: 'B' },
+  { value: 'C1', text: 'C1' },
+  { value: 'C2', text: 'C2' },
+  { value: 'C3', text: 'C3' },
+  { value: 'D', text: 'D' },
+  { value: 'E', text: 'E' },
+  { value: 'F1', text: 'F1' },
+  { value: 'F2', text: 'F2' },
+  { value: 'F3', text: 'F3' }
+];
+
+function isiSelect(idSelect, data) {
+  const select = document.getElementById(idSelect);
+  if (!select) {
+      console.error(`Select dengan ID ${idSelect} tidak ditemukan.`);
+      return;
+  }
+
+  // Hapus pilihan sebelumnya
+  select.innerHTML = ''; // Kosongkan isi select
+
+  data.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.value;
+      option.textContent = item.text;
+      select.appendChild(option);
+  });
 }

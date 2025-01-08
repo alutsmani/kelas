@@ -1,0 +1,46 @@
+
+
+.hidden {
+    display: none; /* Hilangkan elemen dari tata letak */
+}
+
+.visible {
+    display: block; /* Tampilkan elemen di dalam tata letak */
+}
+
+
+/* ---------------- Animasi Transisi ------------------------------ */
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    animation: fadeInAnimation 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-out {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    animation: fadeOutAnimation 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeOutAnimation {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+}

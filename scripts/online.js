@@ -15,57 +15,30 @@ async function GetData(url, json) {
     }
 }
   
-function GetContoh() {
+function DownloadDiniyah() {
     // Contoh penggunaan
-   const filters = { db: { IDS: '1430235' } }; // Kriteria filter
+    const LabelDownload = document.getElementById('LabelDownload');
+    const LoadingDownload = document.getElementById('LoadingDownload');
+
+    LabelDownload.style.display = 'none';
+    LoadingDownload.style.display = 'block';
+
+
+    const filterDiniyah = document.getElementById('filterDiniyah').value;
+    const filters = { db: { Diniyah: filterDiniyah } }; // Kriteria filter
     
     GetData(url, filters).then(data => {
-        console.log(data); // Data JSON yang sudah difilter
+        console.log("Data received for saving:", data); // Log the data before saving
         saveDataToIndexedDB(data);
+
+        LabelDownload.style.display = 'block';
+        LoadingDownload.style.display = 'none';
     })
     
 };
 
 
 const url = 'https://script.google.com/macros/s/AKfycbx3y-MQIjhWvJN1t6qUdIjpQ6XhG-syYbI_pyI1TD85sgSFuQ5ghXu65nNLJW_0NaK8/exec';
-//https://script.google.com/macros/s/AKfycbx3y-MQIjhWvJN1t6qUdIjpQ6XhG-syYbI_pyI1TD85sgSFuQ5ghXu65nNLJW_0NaK8/exec
-// -------------------Post Data-------------------
-/**
- * Mengirim data JSON menggunakan metode POST.
- * @param {Object} jsonData - Data JSON yang akan dikirim.
- * @returns {Promise<Object>} Respons JSON dari server.
- */
-async function sendPost(jsonData) {
-  try {
-    // Cek koneksi internet
-    if (!navigator.onLine) {
-      throw new Error("Tidak ada koneksi internet.");
-    }
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json' // Menyatakan bahwa data dikirim dalam format JSON
-      },
-      body: JSON.stringify({
-        action: "Post",  // Menambahkan parameter action jika diperlukan di server
-        json: jsonData   // Mengirimkan data JSON yang diberikan
-      })
-    });
-
-    // Jika response tidak berhasil (status bukan 2xx)
-    if (!response.ok) {
-      throw new Error(`Respons jaringan tidak OK: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Kesalahan saat mengirim data:", error);
-    throw error;
-  }
-}
-
 
 
 // -------------------Post Data-------------------
@@ -111,4 +84,47 @@ function encodeData(data) {
   return Object.keys(data)
       .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
       .join("&");
+}
+
+
+
+//--------------------------------------------Belum dipakai --------------------------------------------
+
+
+//https://script.google.com/macros/s/AKfycbx3y-MQIjhWvJN1t6qUdIjpQ6XhG-syYbI_pyI1TD85sgSFuQ5ghXu65nNLJW_0NaK8/exec
+// -------------------Post Data-------------------
+/**
+ * Mengirim data JSON menggunakan metode POST.
+ * @param {Object} jsonData - Data JSON yang akan dikirim.
+ * @returns {Promise<Object>} Respons JSON dari server.
+ */
+async function sendPost(jsonData) {
+  try {
+    // Cek koneksi internet
+    if (!navigator.onLine) {
+      throw new Error("Tidak ada koneksi internet.");
+    }
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json' // Menyatakan bahwa data dikirim dalam format JSON
+      },
+      body: JSON.stringify({
+        action: "Post",  // Menambahkan parameter action jika diperlukan di server
+        json: jsonData   // Mengirimkan data JSON yang diberikan
+      })
+    });
+
+    // Jika response tidak berhasil (status bukan 2xx)
+    if (!response.ok) {
+      throw new Error(`Respons jaringan tidak OK: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Kesalahan saat mengirim data:", error);
+    throw error;
+  }
 }

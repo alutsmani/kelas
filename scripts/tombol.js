@@ -14,9 +14,10 @@ async function simpan() {
     }
 
     try {
-      const response = await sendPost(jsonData);
+      const response = await sendPostWithGet(jsonData);
       console.log("Respons dari server:", response);
     } catch (error) {
         console.error("Kesalahan saat memproses data:", error);
     }
 }
+
