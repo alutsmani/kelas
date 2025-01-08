@@ -76,7 +76,7 @@
           <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
         </svg>
       </button>
-      <button class="app-content-headerButton" onclick="reload()" style="display: none">
+      <button class="app-content-headerButton" onclick="DownloadIkhtibar()">
         <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
         <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
       </button>
@@ -99,9 +99,9 @@
             <option value="Ula">Ula</option>
             <option value="Wustha">Wustha</option>
             <option value="Ulya">Ulya</option>
-            <option value="Tidak">Tidak Sekolah</option>
+            <option value="Tidak">Tidak Sekolah *</option>
           </select>
-          <button id="btnDownload" class="action-button" type="button" style="width: 40px;" onclick="DownloadDiniyah()">
+          <button id="btnDownload" class="action-button" type="button" style="width: 40px; margin-left: -20px;" onclick="DownloadDiniyah()">
             <svg id="LabelDownload" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download" style="display: flex;">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
@@ -114,11 +114,6 @@
           <div class="filter-button-wrapper">
             <button class="action-button filter jsFilter"><span>Filter</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
             <div class="filter-menu">
-              <label>Lembaga</label>
-              
-
-
-              
 
               <div class="input-group" style="max-width: 300px;">
                   <!-- Kelas -->
@@ -140,7 +135,7 @@
               </select>
 
               <div class="filter-menu-buttons">
-                <button class="filter-button reset" onclick="tampilkanData()">
+                <button class="filter-button reset" onclick="">
                   Reset
                 </button>
                 <button class="filter-button apply" onclick="tampilkanData()">
@@ -164,7 +159,7 @@
       <div class="products-area-wrapper tableView">
         <div class="products-header">
           <div class="product-cell image">
-            Nama
+            &nbsp;&nbsp;&nbsp;&nbsp;Nama
             <button class="sort-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
             </button>
@@ -238,10 +233,6 @@
         </div>-->
 
       </div>
-      <!-- Button to Open Offcanvas 
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Percobaan()">
-        Toggle bottom offcanvas
-      </button>-->
     </div>
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%; max-width: 400px;">
       <div class="offcanvas-header">
@@ -269,17 +260,28 @@
             <dd class="col-sm-9"></dd>
 
             <dt class="col-sm-3">Ikhtibar</dt>
-            <dd id="Ikhtibar" class="col-sm-9">Rp. 0</dd>
+            <dd id="KeteranganIkhtibar" class="col-sm-9">Rp. 0</dd>
 
-            <dt class="col-sm-3">Uwata</dt>
-            <dd id="Uwata" class="col-sm-9">Rp. 0</dd>
+            <dt class="col-sm-3">---</dt>
+            <dd id="KeteranganUwata" class="col-sm-9"></dd>
           </dl>
           <!-- Input Nama 
           <div class="form-floating mb-3">
             <input type="text" class="form-control custom-input" id="Nama" placeholder="Masukkan Nama">
             <label for="Nama">Nama</label>
           </div>-->
-  
+
+          <div class="form-floating flex-grow-1">
+            <select class="form-select form-control custom-input" id="StatusSantri">
+              <option value="Mukim / Mondok">Mukim / Mondok</option>
+              <option value="Boyong">Boyong</option>
+              <option value="Khoriji / Nyulok">Khoriji / Nyulok</option>
+              <option value="Guru Tugas">Guru Tugas</option>
+            </select>
+            <label for="StatusSantri">Status Santri</label>
+          </div>
+
+
           <!-- Daerah dan No Kamar -->
           <div class="d-flex gap-2" style="padding-top: 30px;">
             <div class="form-floating flex-grow-1">
@@ -341,51 +343,62 @@
             </div>
           </div>
           <br>
-          <p class="d-inline-flex gap-1">
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Alamat
-            </button>
-          </p>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-              <!-- Dusun, RT, RW -->
-              <div class="d-flex gap-2" style="padding-top: 20px; padding-bottom: 20px;">
-                <div class="form-floating flex-grow-1">
-                  <input type="text" class="form-control custom-input" id="Dusun" placeholder="Dusun">
-                  <label for="Dusun">Dusun</label>
-                </div>
-                <div class="form-floating" style="max-width: 50px;">
-                  <input type="text" class="form-control custom-input" id="RT" placeholder="RT">
-                  <label for="RT">RT</label>
-                </div>
-                <div class="form-floating" style="max-width: 50px;">
-                  <input type="text" class="form-control custom-input" id="RW" placeholder="RW">
-                  <label for="RW">RW</label>
-                </div>
-              </div>
-              <!-- Desa -->
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control custom-input" id="Desa" placeholder="Desa">
-                <label for="Desa">Desa</label>
-              </div>
-              <!-- Kecamatan -->
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control custom-input" id="Kecamatan" placeholder="Kecamatan">
-                <label for="Kecamatan">Kecamatan</label>
-              </div>
-              <!-- Kabupaten dan Kode Pos -->
-              <div class="d-flex gap-2">
-                <div class="form-floating flex-grow-1">
-                  <input type="text" class="form-control custom-input" id="Kabupaten" placeholder="Kabupaten">
-                  <label for="Kabupaten">Kabupaten</label>
-                </div>
-                <div class="form-floating" style="max-width: 100px;">
-                  <input type="text" class="form-control custom-input" id="KodePos" placeholder="Kode Pos">
-                  <label for="KodePos">Kode Pos</label>
+
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  Alamat
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="card card-body">
+
+                          <!-- Dusun, RT, RW -->
+                          <div class="d-flex gap-2" style="padding-top: 20px; padding-bottom: 20px;">
+                            <div class="form-floating flex-grow-1">
+                              <input type="text" class="form-control custom-input" id="Dusun" placeholder="Dusun">
+                              <label for="Dusun">Dusun</label>
+                            </div>
+                            <div class="form-floating" style="max-width: 50px;">
+                              <input type="text" class="form-control custom-input" id="RT" placeholder="RT">
+                              <label for="RT">RT</label>
+                            </div>
+                            <div class="form-floating" style="max-width: 50px;">
+                              <input type="text" class="form-control custom-input" id="RW" placeholder="RW">
+                              <label for="RW">RW</label>
+                            </div>
+                          </div>
+                          <!-- Desa -->
+                          <div class="form-floating mb-3">
+                            <input type="text" class="form-control custom-input" id="Desa" placeholder="Desa">
+                            <label for="Desa">Desa</label>
+                          </div>
+                          <!-- Kecamatan -->
+                          <div class="form-floating mb-3">
+                            <input type="text" class="form-control custom-input" id="Kecamatan" placeholder="Kecamatan">
+                            <label for="Kecamatan">Kecamatan</label>
+                          </div>
+                          <!-- Kabupaten dan Kode Pos -->
+                          <div class="d-flex gap-2">
+                            <div class="form-floating flex-grow-1">
+                              <input type="text" class="form-control custom-input" id="Kabupaten" placeholder="Kabupaten">
+                              <label for="Kabupaten">Kabupaten</label>
+                            </div>
+                            <div class="form-floating" style="max-width: 100px;">
+                              <input type="text" class="form-control custom-input" id="KodePos" placeholder="Kode Pos">
+                              <label for="KodePos">Kode Pos</label>
+                            </div>
+                          </div>
+                        </div>
+                  
                 </div>
               </div>
             </div>
+
           </div>
+
 
           
         </form>

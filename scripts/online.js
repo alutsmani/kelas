@@ -15,52 +15,79 @@ async function GetData(url, json) {
     }
 }
   
-function DownloadDiniyah() {
-    // Contoh penggunaan
-    const LabelDownload = document.getElementById('LabelDownload');
-    const LoadingDownload = document.getElementById('LoadingDownload');
+async function DownloadDiniyah() {
+  // Menampilkan indikator loading
+  const LabelDownload = document.getElementById('LabelDownload');
+  const LoadingDownload = document.getElementById('LoadingDownload');
 
-    LabelDownload.style.display = 'none';
-    LoadingDownload.style.display = 'block';
+  LabelDownload.style.display = 'none';
+  LoadingDownload.style.display = 'block';
 
+  const filterDiniyah = document.getElementById('filterDiniyah').value;
+  const filters = { db: { Diniyah: filterDiniyah } }; // Kriteria filter
+  
+  try {
+    // Menunggu data selesai didapat
+    const data = await GetData(url, filters);
+    console.log("Data received for saving:", data); // Log the data before saving
 
-    const filterDiniyah = document.getElementById('filterDiniyah').value;
-    const filters = { db: { Diniyah: filterDiniyah } }; // Kriteria filter
+    // Menyimpan data ke IndexedDB dan menunggu hingga selesai
+    await saveDataToIndexedDB("db", data, "IDS");
+
+    // Menampilkan data setelah selesai disimpan
+    await tampilkanData();
+
+    // Mengubah tampilan indikator loading
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+
+  } catch (error) {
+    console.error("Terjadi kesalahan:", error);
     
-    GetData(url, filters).then(data => {
-        console.log("Data received for saving:", data); // Log the data before saving
-        saveDataToIndexedDB(data);
+    // Menyembunyikan indikator loading jika terjadi error
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+  }
+}
 
-        LabelDownload.style.display = 'block';
-        LoadingDownload.style.display = 'none';
-    })
-    
-};
 
-function DownloadDiniyahIkhtibar() {
-  // Contoh penggunaan
+async function DownloadIkhtibar() {
+  // Menampilkan indikator loading
   const LabelDownload = document.getElementById('ReloadIcon');
   const LoadingDownload = document.getElementById('LoadingReload');
 
   LabelDownload.style.display = 'none';
   LoadingDownload.style.display = 'block';
 
-
   const filterDiniyah = document.getElementById('filterDiniyah').value;
   const filters = { Ikhtibar: { Diniyah: filterDiniyah } }; // Kriteria filter
   
-  GetData(url, filters).then(data => {
-      console.log("Data received for saving:", data); // Log the data before saving
-      saveDataToIndexedDBIkhtibar(data);
+  try {
+    const data = await GetData(url, filters); // Menunggu data selesai didapat
+    console.log("Data received for saving:", data); // Log the data before saving
 
-      LabelDownload.style.display = 'block';
-      LoadingDownload.style.display = 'none';
-  })
-  
-};
+    // Menyimpan data ke IndexedDB dan menunggu hingga selesai
+    await saveDataToIndexedDB("Ikhtibar", data, "ID");
+
+    // Menampilkan data setelah selesai disimpan
+    await tampilkanData();
+    
+    // Mengubah tampilan indikator loading
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+
+  } catch (error) {
+    console.error("Terjadi kesalahan:", error);
+    
+    // Menyembunyikan indikator loading jika terjadi error
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+  }
+}
+
 
 const url = 'https://script.google.com/macros/s/AKfycbx3y-MQIjhWvJN1t6qUdIjpQ6XhG-syYbI_pyI1TD85sgSFuQ5ghXu65nNLJW_0NaK8/exec';
-
+const urlUWATA = 'https://script.google.com/macros/s/AKfycbwf3kFQ7rAgZf9g8gZDg6HpVE7lh8OKpeXtswAJ4nj-5rhublZbHwc5UJrf6v7fCSqbjA/exec';
 
 // -------------------Post Data-------------------
 /**

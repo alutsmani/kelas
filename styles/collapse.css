@@ -1,3 +1,31 @@
+/* Style untuk Accordion */
+.accordion-button {
+  background-color: var(--sidebar); /* Warna latar belakang tombol accordion */
+  color: var(--sidebar-main-color); /* Warna teks tombol */
+  border: 1px solid var(--table-border); /* Border untuk tombol */
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(40, 105, 255, 0.25); /* Shadow saat fokus */
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--sidebar-active-link); /* Warna saat tombol aktif */
+  color: var(--sidebar-main-color); /* Warna teks saat aktif */
+}
+
+.accordion-header {
+  border-bottom: 1px solid var(--table-border); /* Border bawah untuk header */
+}
+
+/* Style untuk accordion body */
+.accordion-body {
+  background-color: var(--app-bg); /* Warna latar belakang body */
+  color: var(--app-content-main-color); /* Warna teks dalam body */
+  padding: 0px;
+}
+
+
 /* General button styling */
 .btn-primary {
     background-color: var(--action-color);

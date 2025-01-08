@@ -46,7 +46,7 @@ function SelectFormal() {
 }
 
 document.getElementById('filterCariNama').addEventListener('input', tampilkanData);
-document.getElementById('filterDiniyah').addEventListener('change', tampilkanData);
+document.getElementById('filterDiniyah').addEventListener('click', tampilkanData);
 
 
 function reload() {
