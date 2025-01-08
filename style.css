@@ -254,6 +254,7 @@ body {
   background-repeat: no-repeat;
   background-position: left 10px center;
   width: 100%;
+  min-width: none;
   max-width: 320px;
   transition: 0.2s;
 }
@@ -426,13 +427,21 @@ body {
 
 .products-area-wrapper {
   width: 100%; /* Agar kontainer mengisi lebar parent */
-  max-height: calc(100vh - 200px); /* Menyesuaikan tinggi area produk, mengurangi 100px (misalnya untuk header atau margin) */
+  max-height: 75vh; /*calc(100vh - 30vh); /* Menyesuaikan tinggi area produk, mengurangi 100px (misalnya untuk header atau margin) */
   overflow-y: auto; /* Mengaktifkan scroll vertikal */
   overflow-x: hidden; /* Menonaktifkan scroll horizontal */
   padding: 0 4px; /* Spasi kanan kiri */
   display: block; /* Pastikan ini adalah block element */
 }
 
+
+
+
+/*----------------------Tabel view----------------------*/
+.tableView {
+  width: 100%; /* Pastikan tabel mengambil seluruh lebar kontainer */
+  overflow-x: auto; /* Tabel bisa digulir jika diperlukan */
+}
 
 
 .tableView .products-header {
@@ -443,11 +452,14 @@ body {
   position: sticky;
   top: 0;
 }
+
 .tableView .products-row {
   display: flex;
+  width: 100%;
   align-items: center;
   border-radius: 4px;
 }
+
 .tableView .products-row:hover {
   box-shadow: var(--filter-shadow);
   background-color: var(--app-content-secondary-color);
@@ -455,6 +467,7 @@ body {
 .tableView .products-row .cell-more-button {
   display: none;
 }
+
 .tableView .product-cell {
   flex: 1;
   padding: 8px 16px;
@@ -463,6 +476,8 @@ body {
   display: flex;
   align-items: center;
 }
+
+
 .tableView .product-cell img {
   width: 32px;
   height: 32px;
@@ -471,38 +486,8 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
 }
-@media screen and (max-width: 780px) {
-  .tableView .product-cell {
-    font-size: 12px;
-  }
-  .tableView .product-cell.image span {
-    display: none;
-  }
 
-  .tableView .product-cell.image {
 
-    flex: 0.2;
-  }
-}
-@media screen and (max-width: 520px) {
-  .tableView .product-cell.category, .tableView .product-cell.sales {
-    display: none;
-  }
-  .tableView .product-cell.status-cell {
-    flex: 0.4;
-  }
-  .tableView .product-cell.stock, .tableView .product-cell.nama {
-    flex: 0.2;
-  }
-}
-@media screen and (max-width: 480px) {
-  .tableView .product-cell.stock {
-    display: none;
-  }
-  .tableView .product-cell.nama {
-    flex: 0.4;
-  }
-}
 .tableView .sort-button {
   padding: 0;
   background-color: transparent;
@@ -530,6 +515,7 @@ body {
   padding: 4px 8px;
   font-size: 12px;
 }
+
 .status:before {
   content: "";
   width: 4px;
@@ -552,11 +538,96 @@ body {
   background-color: #59719d;
 }
 
+.tableView .product-cell.image {
+  flex: 3; /* Proporsi lebih besar untuk gambar */
+  display: flex;
+  align-items: center;
+}
+
+.tableView .product-cell.image span {
+  flex:3;
+  overflow: hidden;
+}
+
+.tableView .product-cell.price,
+.tableView .product-cell.status-cell,
+.tableView .product-cell.stock,
+.tableView .product-cell.category,
+.tableView .product-cell.sales {
+  flex: 1; /* Kolom price dan status sama lebar */
+}
+
+
+@media screen and (max-width: 780px) {
+  .tableView .product-cell {
+    font-size: 12px; /* Ukuran font lebih kecil */
+  }
+  
+  .tableView .product-cell.image {
+    flex: 3; /* Proporsi lebih besar untuk gambar */
+    display: flex;
+    align-items: center;
+  }
+
+  .tableView .product-cell.image span {
+    flex:3;
+    overflow: hidden;
+  }
+  
+  .tableView .product-cell.stock {
+    display: none; /* Kolom price dan status sama lebar */
+  }
+
+  .tableView .product-cell.price,
+  .tableView .product-cell.status-cell {
+    flex: 1; /* Kolom price dan status sama lebar */
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .tableView .product-cell.category,
+  .tableView .product-cell.sales {
+    display: none; /* Hilangkan kolom kategori dan penjualan */
+  }
+  
+  .tableView .product-cell.image {
+    width: 40%; /* Gambar tetap prioritas */
+  }
+  
+  .tableView .product-cell.price,
+  .tableView .product-cell.status-cell {
+    width: 15%; /* Price dan status sedikit diperbesar */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tableView .product-cell.stock {
+    display: none; /* Hilangkan kolom stock */
+  }
+
+  .tableView .product-cell.image {
+    width: 50%; /* Prioritas untuk gambar */
+  }
+
+  .tableView .product-cell.price,
+  .tableView .product-cell.status-cell {
+    width: 20%; /* Price dan status lebih kecil */
+  }
+}
+
+
+
+
+
+
+/*----------------------Grid view----------------------*/
+
 .gridView {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -8px;
 }
+
 @media screen and (max-width: 520px) {
   .gridView {
     margin: 0;
@@ -566,6 +637,8 @@ body {
   display: none;
 }
 .gridView .products-row {
+  display: flex;
+  flex-direction: column; /* Mengatur elemen secara vertikal di dalam grid */
   margin: 8px;
   width: calc(25% - 16px);
   background-color: var(--app-content-secondary-color);
@@ -575,6 +648,8 @@ body {
   transition: transform 0.2s;
   position: relative;
 }
+
+
 .gridView .products-row:hover {
   transform: scale(1.01);
   box-shadow: var(--filter-shadow);

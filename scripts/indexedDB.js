@@ -269,19 +269,27 @@ function MasukkanData(dbName, storeName, IDS, formId) {
                       reject(`Form with ID '${formId}' not found`);
                       return;
                   }
-
+                  
                   // Iterate through the keys of the data object
                   Object.keys(data).forEach((key) => {
-                      const inputElement = form.querySelector(`#${key}`);
+                    const inputElement = form.querySelector(`#${key}`);
 
-                      if (inputElement) {
-                          if (inputElement.tagName === 'INPUT' || inputElement.tagName === 'TEXTAREA') {
-                              inputElement.value = data[key];
-                          } else if (inputElement.tagName === 'SELECT') {
-                              inputElement.value = data[key];
-                          }
-                      }
+                    if (inputElement) {
+                        // Jika elemen adalah input atau textarea
+                        if (inputElement.tagName === 'INPUT' || inputElement.tagName === 'TEXTAREA') {
+                            inputElement.value = data[key];
+                        } 
+                        // Jika elemen adalah select
+                        else if (inputElement.tagName === 'SELECT') {
+                            inputElement.value = data[key];
+                        } 
+                        // Jika elemen adalah dd
+                        else if (inputElement.tagName === 'DD') {
+                            inputElement.textContent = data[key]; // Ganti value dengan textContent
+                        }
+                    }
                   });
+
 
                   resolve(`Data successfully populated in form '${formId}'`);
               } else {
