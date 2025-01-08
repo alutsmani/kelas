@@ -217,11 +217,15 @@ function getFilteredFromIndexedDB(dbName, storeName) {
         const filterKel = document.getElementById('filterKel').value;
         const filterStatusSantri = document.getElementById('filterStatusSantri').value;
 
+        const filterCariNama = document.getElementById('filterCariNama').value;
+
         const filteredData = data.filter(item => {
         return (filterDiniyah === '' || item.Diniyah.toLowerCase().includes(filterDiniyah.toLowerCase())) &&
                 (filterKelas === '' || item.KelasMD.toLowerCase().includes(filterKelas.toLowerCase())) &&
                 (filterKel === '' || item.KelMD.toLowerCase().includes(filterKel.toLowerCase())) &&
-                (filterStatusSantri === '' || item.StatusSantri.toLowerCase().includes(filterStatusSantri.toLowerCase()));
+                (filterStatusSantri === '' || item.StatusSantri.toLowerCase().includes(filterStatusSantri.toLowerCase())) &&
+                
+                (filterCariNama === '' || item.Nama.toLowerCase().includes(filterCariNama.toLowerCase()));
         });
 
         resolve(filteredData);

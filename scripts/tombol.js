@@ -21,3 +21,4 @@ async function simpan() {
     }
 }
 
+document.getElementById('filterCariNama').addEventListener('input', tampilkanData);

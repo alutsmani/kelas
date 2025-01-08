@@ -77,7 +77,7 @@
 
     <div id="DataTabel">
       <div class="app-content-actions">
-        <input class="search-bar" placeholder="Search..." type="text">
+        <input id="filterCariNama" class="search-bar" placeholder="Search..." type="text">
         
         <div class="app-content-actions-wrapper">
           <div class="filter-button-wrapper">
@@ -118,6 +118,7 @@
 
               <label>Status Santri</label>
               <select id="filterStatusSantri">
+                <option value="">All</option>
                 <option value="Mukim">Mukim / Mondok</option>
                 <option value="Khoriji">Khoriji / Nyulok</option>                     
               </select>
@@ -141,6 +142,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           </button>
         </div>
+
       </div>
 
       <div class="products-area-wrapper tableView">
