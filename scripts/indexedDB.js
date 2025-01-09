@@ -170,58 +170,67 @@ function getAllDataFromIndexedDB(storeName) {
 
 
 //2. Fungsi untuk Menampilkan Data
-async function tampilkanData() {
-  const productsArea = document.querySelector('.products-area-wrapper');
+function tampilkanData() {
+  const productsArea = document.getElementById('SantriArea');
   productsArea.innerHTML = ''; // Bersihkan isi sebelum menampilkan data baru
   addHeader(); // Tambahkan header tabel
 
-  const dbName = 'Santri'; // Nama database
   const storeName = 'db'; // Nama tabel (object store)
   const ikhtibarStoreName = 'Ikhtibar'; // Nama tabel Ikhtibar
 
-  try {
-    // Ambil semua data dari IndexedDB
-    const data = await getFilteredFromIndexedDB(storeName);
+  // Ambil semua data dari IndexedDB
+  getFilteredFromIndexedDB(storeName)
+    .then(function (data) {
+      // Batasi jumlah data yang ditampilkan
+      const limitedData = data.slice(0, 100);
 
-    // Batasi jumlah data yang ditampilkan
-    const limitedData = data.slice(0, 100);
+      // Loop melalui data dan tampilkan menggunakan addProductRow
+      limitedData.forEach(function (item) {
+        getDataByIDSantri(item.IDS, ikhtibarStoreName, 'ID')
+          .then(function (ikhtibarData) {
+            if (ikhtibarData) {
+              item.Ikhtibar = ikhtibarData.Ikhtibar.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+              item.Status = ikhtibarData.Ket;
+            } else {
+              item.Ikhtibar = '-';
+              item.Status = 'Belum';
+            }
 
-    // Loop melalui data dan tampilkan menggunakan addProductRow
-    for (const item of limitedData) {
-      const ikhtibarData = await getDataByIDSantri(item.IDS, ikhtibarStoreName);
-      if (ikhtibarData) {
-        item.Ikhtibar = ikhtibarData.Ikhtibar.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
-        item.Status = ikhtibarData.Ket;
-      } else {
-        item.Ikhtibar = 'Belum Bayar'
-        item.Status = 'Belum';
-      }
-
-      const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
-      addProductRow(
-        item.IDS, // IDS
-        item.Nama, // Nama
-        item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
-        item.Status || '', // Status (jika ada)
-        item.Ikhtibar || '', // Ikhtibar (jika ada)
-        item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
-        imageUrl // URL gambar berdasarkan IDS
-      );
-    }
-  } catch (error) {
-    console.error('Error displaying data:', error);
-  }
+            const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
+            addProductRow(
+              item.IDS, // IDS
+              item.Nama, // Nama
+              item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
+              item.Status || '', // Status (jika ada)
+              item.Ikhtibar || '', // Ikhtibar (jika ada)
+              item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
+              imageUrl // URL gambar berdasarkan IDS
+            );
+          })
+          .catch(function (error) {
+            console.error('Error fetching Ikhtibar data:', error);
+          });
+      });
+    })
+    .catch(function (error) {
+      console.error('Error fetching data from IndexedDB:', error);
+    });
 }
 
-
-async function getDataByIDSantri(IDSantri, storeName) {
+//storeName, jsonData, primaryKey = 'IDS'
+async function getDataByIDSantri(IDSantri, storeName, primaryKey = 'IDS') {
   const dbName = 'Santri'; // Nama database tetap 'Santri'
 
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(dbName);
+  try {
+    // Pastikan OpenDatabase ada
+    if (typeof openDatabase !== 'function') {
+      throw new Error('OpenDatabase function is not defined');
+    }
 
-    request.onsuccess = function (event) {
-      const db = event.target.result;
+    // Memastikan database dibuka dengan store yang benar
+    const db = await openDatabase(storeName, primaryKey);
+
+    return new Promise((resolve, reject) => {
       const transaction = db.transaction(storeName, 'readonly');
       const store = transaction.objectStore(storeName);
       
@@ -245,13 +254,14 @@ async function getDataByIDSantri(IDSantri, storeName) {
       cursorRequest.onerror = function () {
         reject('Error fetching data from IndexedDB');
       };
-    };
-
-    request.onerror = function () {
-      reject('Error opening database');
-    };
-  });
+    });
+  } catch (error) {
+    console.error('Error: ', error);  // Untuk debugging lebih lanjut
+    throw new Error('Error opening or ensuring database: ' + error.message);
+  }
 }
+
+
     
 
 
@@ -356,7 +366,7 @@ function MasukkanData(storeName, IDS, formId) {
           resolve(`Data successfully populated in form '${formId}'`);
 
           // Mengambil data Ikhtibar setelah data utama ditemukan
-          const ikhtibarData = await getDataByIDSantri(IDS, "Ikhtibar");
+          const ikhtibarData = await getDataByIDSantri(IDS, "Ikhtibar", 'ID');
           const KetIkhtibar = document.getElementById('KeteranganIkhtibar');
 
           if (ikhtibarData && KetIkhtibar) {

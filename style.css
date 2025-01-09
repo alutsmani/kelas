@@ -361,6 +361,7 @@ body {
 .filter-menu.active {
   visibility: visible;
   opacity: 1;
+  margin-right: 100%;
   top: calc(100% + 8px);
 }
 .filter-menu label {
@@ -524,13 +525,23 @@ body {
   border-radius: 50%;
   margin-right: 4px;
 }
+
 .status.active {
-  color: #2ba972;
-  background-color: rgba(43, 169, 114, 0.2);
+  color: #34C759;
+  background-color: rgba(52, 199, 89, 0.2);
 }
 .status.active:before {
-  background-color: #2ba972;
+  background-color: #34C759;
 }
+
+.status.kurang {
+  color: #F7DC6F;
+  background-color: rgba(247, 220, 111, 0.2);
+}
+.status.kurang:before {
+  background-color: #F7DC6F;
+}
+
 .status.disabled {
   color: #59719d;
   background-color: rgba(89, 113, 157, 0.2);
@@ -538,6 +549,7 @@ body {
 .status.disabled:before {
   background-color: #59719d;
 }
+
 
 .tableView .product-cell.image {
   flex: 3; /* Proporsi lebih besar untuk gambar */
@@ -556,7 +568,11 @@ body {
 .tableView .product-cell.category,
 .tableView .product-cell.sales {
   flex: 1; /* Kolom price dan status sama lebar */
+  white-space: nowrap; /* Mencegah teks membungkus */
+  overflow: hidden; /* Menyembunyikan teks yang melebihi batas */
+  text-overflow: ellipsis; /* Menambahkan elipsis pada teks yang terpotong */
 }
+
 
 
 @media screen and (max-width: 780px) {
@@ -579,9 +595,12 @@ body {
     display: none; /* Kolom price dan status sama lebar */
   }
 
-  .tableView .product-cell.price,
-  .tableView .product-cell.status-cell {
-    flex: 1; /* Kolom price dan status sama lebar */
+  .tableView .product-cell.price {
+    flex: 0.6;
+  }
+
+  .tableView .product-cell.category {
+    flex: 1;
   }
 }
 
@@ -592,12 +611,14 @@ body {
   }
   
   .tableView .product-cell.image {
-    width: 40%; /* Gambar tetap prioritas */
+    flex: 1.5; /* Prioritas untuk gambar */
   }
   
-  .tableView .product-cell.price,
+  .tableView .product-cell.price {
+    flex: 0.3;
+  }
   .tableView .product-cell.status-cell {
-    width: 15%; /* Price dan status sedikit diperbesar */
+    flex: 0.7; /* Price dan status sedikit diperbesar */
   }
 }
 
@@ -607,12 +628,14 @@ body {
   }
 
   .tableView .product-cell.image {
-    width: 50%; /* Prioritas untuk gambar */
+    flex: 1; /* Prioritas untuk gambar */
   }
 
-  .tableView .product-cell.price,
+  .tableView .product-cell.price {
+    flex: 0.2;
+  }
   .tableView .product-cell.status-cell {
-    width: 20%; /* Price dan status lebih kecil */
+    flex: 0.5; /* Price dan status lebih kecil */
   }
 }
 

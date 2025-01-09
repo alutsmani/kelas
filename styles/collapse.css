@@ -107,3 +107,45 @@
     background-color: var(--input-hover-bg);
   }
   
+  /* Style untuk modal */
+.modal-content {
+  background-color: var(--app-bg);
+  color: var(--app-content-main-color);
+  border: none;
+  border-radius: 8px;
+  box-shadow: var(--filter-shadow);
+}
+
+.modal-header {
+  background-color: var(--sidebar);
+  color: var(--sidebar-main-color);
+  border-bottom: 1px solid var(--table-border);
+}
+
+.modal-title {
+  color: var(--sidebar-main-color);
+}
+
+.modal-body {
+  background-color: var(--app-bg);
+  color: var(--app-content-main-color);
+  padding: 20px;
+}
+
+.modal-footer {
+  background-color: var(--app-bg);
+  color: var(--app-content-main-color);
+  border-top: 1px solid var(--table-border);
+}
+
+.modal-footer .btn-primary {
+  background-color: var(--action-color);
+  border: none;
+  color: var(--app-content-main-color);
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: var(--action-color-hover);
+  color: var(--sidebar-main-color);
+}
