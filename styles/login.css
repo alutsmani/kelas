@@ -8,7 +8,7 @@
 /* Body and Background Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background: url('/gambar/bg.webp') no-repeat center center/cover;
+    background: url('../gambar/bg.webp') no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
