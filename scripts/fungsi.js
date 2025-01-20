@@ -41,7 +41,8 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
         SelectFormal();
       
         MasukkanData('db', ids, 'formData');
-        
+        DownloadIDS(ids);
+
         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
         offcanvas.show();
     });
@@ -115,44 +116,39 @@ function Buat() {
 
 
 function moveHtmlContent(sourceUrl, sourceDivId, targetDivId) {
-  // Ambil elemen target di mana konten akan dipindahkan
   const targetDiv = document.getElementById(targetDivId);
   if (!targetDiv) {
-      console.error(`Target div dengan ID ${targetDivId} tidak ditemukan.`);
-      return;
+    console.error(`Target div dengan ID ${targetDivId} tidak ditemukan.`);
+    return;
   }
 
-  // Fetch HTML dari URL yang diberikan
   fetch(sourceUrl)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error(`Gagal memuat halaman: ${response.statusText}`);
-          }
-          return response.text();
-      })
-      .then(htmlText => {
-          // Buat elemen dummy untuk memparsing HTML yang diambil
-          const parser = new DOMParser();
-          const htmlDocument = parser.parseFromString(htmlText, 'text/html');
-          const sourceDiv = htmlDocument.getElementById(sourceDivId);
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Gagal memuat halaman: ${response.statusText}`);
+      }
+      return response.text();
+    })
+    .then(htmlText => {
+      const parser = new DOMParser();
+      const htmlDocument = parser.parseFromString(htmlText, 'text/html');
+      const sourceDiv = htmlDocument.getElementById(sourceDivId);
 
-          // Pastikan sourceDiv ditemukan
-          if (!sourceDiv) {
-              console.error(`Div dengan ID ${sourceDivId} tidak ditemukan di halaman sumber.`);
-              return;
-          }
+      if (!sourceDiv) {
+        console.error(`Div dengan ID ${sourceDivId} tidak ditemukan di halaman sumber.`);
+        return;
+      }
 
-          // Pindahkan isi dari sourceDiv (.modal-content) ke target modal di index.html
-          const targetContent = targetDiv.querySelector('.modal-content');
-          if (targetContent) {
-              targetContent.innerHTML = sourceDiv.innerHTML;
-          } else {
-              console.error('Target modal tidak memiliki elemen .modal-content.');
-          }
-      })
-      .catch(error => {
-          console.error('Error saat memindahkan konten:', error);
-      });
+      const targetContent = targetDiv.querySelector('.modal-content');
+      if (targetContent) {
+        targetContent.innerHTML = sourceDiv.innerHTML;
+      } else {
+        console.error('Target modal tidak memiliki elemen .modal-content.');
+      }
+    })
+    .catch(error => {
+      console.error('Error saat memindahkan konten:', error);
+    });
 }
 
 function BuatJson(header, idForm) {

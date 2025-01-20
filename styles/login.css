@@ -1,0 +1,189 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('/gambar/bg.webp') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Wrapper Styles */
+.wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(0, 0, 0, 0.278);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px); /* Efek blur hanya di area ini */
+    animation: slideIn 1s ease-out;
+    margin: 25px;
+    border: 2px solid #ffffff3b;
+}
+
+/* Logo Styles */
+.logo img {
+    display: block;
+    max-width: 80px;
+    margin: 0 auto 20px;
+    animation: zoomIn 1.2s ease-out;
+}
+
+/* Name Styles */
+.name {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+    animation: fadeIn 1.5s ease-out;
+}
+
+/* Form Field Styles */
+.form-field {
+    position: relative;
+    margin-bottom: 20px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.form-field span {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #003e03;
+    font-size: 18px;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.form-field input:focus {
+    border-color: #1b8520;
+    box-shadow: 0 0 5px rgba(37, 158, 45, 0.8);
+}
+
+/* Button Styles */
+.btn {
+    width: 100%;
+    background-color: #036b07;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 30px;
+}
+
+.btn:disabled {
+    background-color: #212121;
+    color: rgb(88, 88, 88);
+    cursor: not-allowed;
+}
+
+.btn:hover {
+    background-color: #2E7D32;
+    transform: translateY(-2px);
+}
+
+
+p {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+
+/* Loading Animation */
+.loading-animation {
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-animation.active {
+    display: flex;
+}
+
+.spinner {
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #4CAF50;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -20,15 +20,32 @@ async function simpan() {
     }
 }
 
+async function naikkelas() {
+  const jsonData = BuatJson('db', 'formData');
+  console.log(jsonData);
+  const storeName = 'db'; // Nama tabel (object store)
 
+  try {
+    const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
+    console.log(result);
+    tampilkanData();
+    //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
+  } catch (error) {
+    console.error(error);
+  }
 
-function SelectFilter() {
-  const Diniyah = document.getElementById('filterDiniyah');
-  const Kelas = document.getElementById('filterKelas');
-  const Kel = document.getElementById('filterKel');
-
-  ComboDiniyah(Diniyah, Kelas, Kel);
+  try {
+    const response = await sendPostWithGet(jsonData);
+    console.log("Respons dari server:", response);
+  } catch (error) {
+      console.error("Kesalahan saat memproses data:", error);
+  }
 }
+
+
+
+
+
 
 function SelectDiniyah() {
   const Diniyah = document.getElementById('Diniyah');
@@ -47,7 +64,7 @@ function SelectFormal() {
 }
 
 document.getElementById('filterCariNama').addEventListener('input', tampilkanData);
-document.getElementById('filterDiniyah').addEventListener('click', tampilkanData);
+document.getElementById('filterDiniyah').addEventListener('change', tampilkanData);
 
 
 function reload() {

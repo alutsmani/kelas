@@ -389,6 +389,7 @@ body {
   margin-bottom: 16px;
   width: 100%;
 }
+
 .filter-menu select option {
   font-size: 14px;
 }
@@ -404,6 +405,25 @@ body {
   border-color: var(--action-color);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232869ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
+
+
+.filter-menu input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  padding: 8px 24px 8px 8px;
+  background-position: right 4px center;
+  border: 1px solid var(--app-content-main-color);
+  border-radius: 4px;
+  color: var(--app-content-main-color);
+  font-size: 12px;
+  background-color: transparent;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
 
 .filter-menu-buttons {
   display: flex;
@@ -423,7 +443,8 @@ body {
   background-color: var(--action-color);
 }
 .filter-button.reset {
-  background-color: var(--filter-reset);
+  /*background-color: var(--filter-reset);*/
+  background-color:#c30303;
 }
 
 .products-area-wrapper {
