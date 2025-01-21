@@ -4,7 +4,6 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
     newRow.classList.add('products-row');
 
     newRow.innerHTML = `
-    
       <button class="cell-more-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
           <circle cx="12" cy="12" r="1"></circle>
@@ -12,48 +11,37 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
           <circle cx="12" cy="19" r="1"></circle>
         </svg>
       </button>
-  
       <div class="product-cell image">
         <img src="${imageUrl || 'https://via.placeholder.com/150'}" alt="product">
         <span>${nama || ''}</span>
       </div>
-  
       <div class="product-cell stock">
         <span class="cell-label">IDS:</span>${ids || '-'}</div>
-
       <div class="product-cell price">
         <span class="cell-label">Kamar:</span>${kamar || '-'}</div>
-
       <div class="product-cell category">
         <span class="cell-label">Kelas:</span>${kelas || '-'}</div>
-      
-        <div class="product-cell sales">
+      <div class="product-cell sales">
         <span class="cell-label">Bayar Ikhtibar:</span>${ikhtibar || '0'}</div>
-
       <div class="product-cell status-cell">
         <span class="cell-label">Status:</span>
         <span class="status ${status.startsWith('Kurang') ? 'kurang' : status === 'Belum' ? 'disabled' : 'active'}">${status || '-'}</span>
       </div>
-  `;
-  
+    `;
+
     newRow.addEventListener('click', () => {
         SelectDiniyah();
         SelectFormal();
-      
         MasukkanData('db', ids, 'formData');
 
         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
         offcanvas.show();
-        document.addEventListener('backbutton', function(){
-            if(offcanvas._isShown){
-                offcanvas.hide();
-                return;
-            }
-        });
+
     });
 
     productsArea.appendChild(newRow);
 }
+
 
 
 function addHeader() {
