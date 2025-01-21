@@ -1,5 +1,12 @@
-document.querySelector(".jsFilter").addEventListener("click", function () {
+document.querySelector(".jsFilter").addEventListener("click", function (e) {
+  e.stopPropagation();
   document.querySelector(".filter-menu").classList.toggle("active");
+});
+
+document.addEventListener("click", function (e) {
+  if (!e.target.closest(".filter-menu") && !e.target.classList.contains("jsFilter")) {
+    document.querySelector(".filter-menu").classList.remove("active");
+  }
 });
 
 document.querySelector(".grid").addEventListener("click", function () {

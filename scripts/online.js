@@ -31,7 +31,7 @@ async function DownloadDiniyah() {
   
   try {
     // Menunggu data selesai didapat
-    const data = await GetData(url, filters);
+    const data = await GetData(urlLogin, filters);
     console.log("Data received for saving:", data); // Log the data before saving
 
     // Menyimpan data ke IndexedDB dan menunggu hingga selesai
@@ -123,6 +123,7 @@ async function DownloadIkhtibar() {
   }
 }
 
+const urlLogin = 'https://script.google.com/macros/s/AKfycbwj1K6lkk5qU6BNPgIU1svQn8aqFQpZS8TvdxuigmkR37CunuZ-ataXIjPv0VnXs9M0/exec';
 
 const url = 'https://script.google.com/macros/s/AKfycbx3y-MQIjhWvJN1t6qUdIjpQ6XhG-syYbI_pyI1TD85sgSFuQ5ghXu65nNLJW_0NaK8/exec';
 const urlUWATA = 'https://script.google.com/macros/s/AKfycbwf3kFQ7rAgZf9g8gZDg6HpVE7lh8OKpeXtswAJ4nj-5rhublZbHwc5UJrf6v7fCSqbjA/exec';

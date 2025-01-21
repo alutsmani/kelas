@@ -41,10 +41,15 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
         SelectFormal();
       
         MasukkanData('db', ids, 'formData');
-        DownloadIDS(ids);
 
         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
         offcanvas.show();
+        document.addEventListener('backbutton', function(){
+            if(offcanvas._isShown){
+                offcanvas.hide();
+                return;
+            }
+        });
     });
 
     productsArea.appendChild(newRow);
