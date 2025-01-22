@@ -61,8 +61,7 @@ body {
 }
 
 .sidebar {
-  flex-basis: 200px;
-  max-width: 200px;
+  max-width: 300px;
   flex-shrink: 0;
   background-color: var(--sidebar);
   display: flex;
@@ -110,10 +109,79 @@ body {
   height: 100%;
   width: 4px;
 }
+
+
 @media screen and (max-width: 1024px) {
-  .sidebar {
+  /*.sidebar {
     display: none;
   }
+
+     Sidebar style */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Sidebar dimulai di luar layar */
+    bottom: 0;
+    width: 100%;
+    background-color: #2f4f4f;
+    transition: left 0.3s ease; /* Animasi untuk sidebar */
+
+    background-color: var(--sidebar);
+    z-index: 1;
+
+  }
+
+  /* Ketika sidebar terlihat */
+  .sidebar.open {
+    left: 0; /* Sidebar akan pindah ke posisi terlihat */
+  }
+
+  /* Style untuk header */
+  .menu-sidebar {
+    display: block;
+    cursor: pointer; /* Agar tampak bisa diklik */
+    z-index: 2;
+  }
+}
+
+.menu-akun {
+  display: none; /* Default disembunyikan */
+  position: absolute; /* Agar bisa diatur posisi relatif terhadap parent */
+  top: calc(100% - 200px);
+  right: 10px; /* Geser ke kanan */
+  background-color: var(--sidebar); /* Warna latar belakang menu */
+  color: var(--sidebar-main-color); /* Warna teks */
+  border: 1px solid var(--table-border); /* Garis pembatas */
+  border-radius: 8px; /* Sudut membulat */
+  box-shadow: var(--filter-shadow); /* Efek bayangan */
+  z-index: 1000; /* Pastikan berada di depan elemen lain */
+  width: 200px; /* Lebar menu */
+}
+
+.menu-akun ul {
+  list-style: none; /* Hilangkan bullet points */
+  margin: 0;
+  padding: 0;
+}
+
+.menu-akun li {
+  padding: 10px 15px; /* Spasi dalam */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out; /* Animasi hover */
+}
+
+
+.menu-akun li:hover {
+  background-color: var(--sidebar-hover-link); /* Warna hover */
+}
+
+
+.menu-akun.hidden {
+  display: none; /* Sembunyikan menu jika ada kelas "hidden" */
+}
+
+.menu-akun {
+  display: block; /* Tampilkan menu */
 }
 
 
@@ -138,6 +206,7 @@ body {
 }
 
 .account-info {
+  cursor: pointer;
   display: flex;
   align-items: center;
   padding: 16px;
@@ -195,6 +264,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 4px;
+  margin-left: -30px;
 }
 .app-content-headerText {
   color: var(--app-content-main-color);
@@ -214,6 +284,8 @@ body {
   transition: 0.2s;
   cursor: pointer;
 }
+
+
 .app-content-headerButton:hover {
   background-color: var(--action-color-hover);
 }
@@ -445,8 +517,7 @@ body {
   background-color: var(--action-color);
 }
 .filter-button.reset {
-  /*background-color: var(--filter-reset);*/
-  background-color:#c30303;
+  background-color: var(--filter-reset);
 }
 
 .products-area-wrapper {

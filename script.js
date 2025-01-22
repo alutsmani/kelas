@@ -16,7 +16,7 @@ document.querySelector(".grid").addEventListener("click", function () {
   document.getElementById('SantriArea').classList.add("gridView");
   document.getElementById('SantriArea').classList.remove("tableView");
 
-
+  localStorage.setItem('viewMode', 'grid');
 });
 
 document.querySelector(".list").addEventListener("click", function () {
@@ -26,130 +26,81 @@ document.querySelector(".list").addEventListener("click", function () {
   document.getElementById('SantriArea').classList.remove("gridView");
   document.getElementById('SantriArea').classList.add("tableView");
 
+  localStorage.setItem('viewMode', 'list');
 });
-
-var modeSwitch = document.querySelector('.mode-switch');
-modeSwitch.addEventListener('click', function () {document.documentElement.classList.toggle('light');
- modeSwitch.classList.toggle('active');
-});
-
-
-
-// Fungsi untuk menghapus semua cache dari situs ini
-function clearSiteCache() {
-  // Hapus semua data dari localStorage
-  localStorage.clear();
-
-  // Hapus semua data dari sessionStorage jika Anda menggunakannya
-  sessionStorage.clear();
-
-  // Jika Anda menyimpan data di IndexedDB atau tempat lain, Anda perlu menghapusnya juga
-
-  // Opsi tambahan: Hapus cookie jika diperlukan
-  // JavaScript memiliki keterbatasan dalam menghapus cookie dengan domain dan path tertentu
-  // Berikut adalah contoh untuk menghapus semua cookie yang dapat dijangkau oleh JavaScript
-  document.cookie.split(";").forEach(function(c) { 
-      document.cookie = c.replace(/^ +/, "")
-                         .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
-  });
-
-  // Tampilkan pesan konfirmasi atau reload halaman
-  alert("Halaman akan dimuat ulang.");
-  location.reload();
-}
-
 
 window.addEventListener('load', function() {
-  if (localStorage.getItem('ID') === null || localStorage.getItem('ID') === '') {
-    window.location.href = 'login.html';
-    } else {
-    selectUser()
-    tampilkanData();
-    disableBackButton();
+  const storedViewMode = localStorage.getItem('viewMode');
+  if (storedViewMode === 'grid') {
+    document.querySelector(".grid").classList.add("active");
+    document.querySelector(".list").classList.remove("active");
+    document.getElementById('SantriArea').classList.add("gridView");
+    document.getElementById('SantriArea').classList.remove("tableView");
+  } else if (storedViewMode === 'list') {
+    document.querySelector(".list").classList.add("active");
+    document.querySelector(".grid").classList.remove("active");
+    document.getElementById('SantriArea').classList.remove("gridView");
+    document.getElementById('SantriArea').classList.add("tableView");
   }
-  
 });
 
-async function selectUser() {
-  const id = localStorage.getItem('ID');
-  if (!id) {
-      console.log("ID tidak ditemukan di localStorage");
-      return;
+// Ambil elemen tombol dan menu akun
+const moreButton = document.querySelector('.account-info-more');
+const menuAkun = document.querySelector('.menu-akun');
+
+console.log('More button:', moreButton);
+console.log('Menu:', menuAkun);
+moreButton.addEventListener('click', () => {
+  console.log('Button clicked'); // Ini harus muncul di konsol setiap kali tombol ditekan
+  menuAkun.classList.toggle('hidden');
+});
+
+
+// Tutup menu jika pengguna mengklik di luar menu
+document.addEventListener('click', (event) => {
+  if (!moreButton.contains(event.target) && !menuAkun.contains(event.target)) {
+    menuAkun.classList.add('hidden'); // Tambahkan kembali kelas 'hidden'
   }
+});
 
-  console.log("ID pengguna: ", id);
 
-  const dbName = 'Santri';
-  const storeName = 'Asatidz';
 
-  try {
-      const db = await openIndexedDB(dbName);
-      const userData = await getDataFromStore(db, storeName, id);
+var modeSwitch = document.querySelector('.mode-switch');
+modeSwitch.addEventListener('click', function () {
+  document.documentElement.classList.toggle('light');
+  modeSwitch.classList.toggle('active');
+  localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+});
 
-      if (!userData) {
-          console.log("Data pengguna tidak ditemukan");
-          return;
-      }
-
-      console.log("Data pengguna:", userData);
-
-      populateSelect('filterDiniyah', userData.Diniyah);
-      populateSelect('filterKelas', userData.KelasMD);
-      populateSelect('filterKel', userData.KelMD);
-
-      document.getElementById('NamaAkun').innerHTML = userData.Nama;
-  } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+window.addEventListener('load', function() {
+  const storedTheme = localStorage.getItem('theme');
+  if (storedTheme) {
+    document.documentElement.classList.add(storedTheme);
+    modeSwitch.classList.toggle('active', storedTheme === 'light');
   }
-}
+});
 
-function openIndexedDB(dbName) {
-  return new Promise((resolve, reject) => {
-      const request = indexedDB.open(dbName);
 
-      request.onsuccess = event => resolve(event.target.result);
-      request.onerror = () => reject(request.error);
-  });
-}
+// Ambil elemen yang relevan
+const sidebar = document.querySelector('.sidebar');
+const header = document.querySelector('.menu-sidebar');
 
-function getDataFromStore(db, storeName, key) {
-  return new Promise((resolve, reject) => {
-      const transaction = db.transaction(storeName, 'readonly');
-      const store = transaction.objectStore(storeName);
-      const request = store.get(key);
+// Tambahkan event listener pada header untuk membuka sidebar
+header.addEventListener('click', () => {
+  sidebar.classList.toggle('open'); // Toggle kelas 'open' pada sidebar
+});
 
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-  });
-}
-
-function populateSelect(selectId, data = "") {
-  const selectElement = document.getElementById(selectId);
-  if (!selectElement) {
-      console.warn(`Elemen dengan ID "${selectId}" tidak ditemukan`);
-      return;
+// Tambahkan event listener untuk menutup sidebar jika diklik di luar
+document.addEventListener('click', (event) => {
+  if (!header.contains(event.target) && !sidebar.contains(event.target)) {
+    sidebar.classList.remove('open'); // Hapus kelas 'open' jika diklik di luar
   }
-
-  selectElement.innerHTML = ""; // Kosongkan elemen sebelumnya
-  
-  // Pisahkan string berdasarkan koma dan proses setiap item
-  const items = data.split(',').map(item => item.trim());
-  
-  items.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item;
-      option.textContent = item;
-      selectElement.appendChild(option);
-  });
-}
+});
 
 
-
-
-//Fungsi untuk menonaktifkan tombol kembali
 function disableBackButton() {
-  window.history.pushState(null, "", window.location.href);
+  //window.history.pushState(null, "", window.location.href);
   window.onpopstate = function () {
-      window.history.pushState(null, "", window.location.href);
+    window.location.reload();
   };
 }
