@@ -262,10 +262,6 @@ async function getDataByIDSantri(IDSantri, storeName, primaryKey = 'IDS') {
 }
 
 
-    
-
-
-
 function Percobaan() {
   MasukkanData('db', '1430207', 'formData');
 }

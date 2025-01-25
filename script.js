@@ -98,6 +98,33 @@ document.addEventListener('click', (event) => {
 });
 
 
+// Pilih semua elemen dengan kelas 'sidebar-list-item'
+const sidebarItems = document.querySelectorAll('.sidebar-list-item');
+
+// Fungsi untuk mengatur elemen aktif
+function setActive(targetItem) {
+  // Loop melalui semua elemen untuk menghapus kelas 'active'
+  sidebarItems.forEach(item => {
+    item.classList.remove('active');
+  });
+
+  // Tambahkan kelas 'active' ke elemen target
+  if (targetItem) {
+    targetItem.classList.add('active');
+  }
+}
+
+// Tambahkan event listener pada setiap elemen sidebar
+sidebarItems.forEach(item => {
+  item.addEventListener('click', () => {
+    setActive(item);
+  });
+});
+
+
+
+
+
 function disableBackButton() {
   //window.history.pushState(null, "", window.location.href);
   window.onpopstate = function () {

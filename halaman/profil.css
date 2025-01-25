@@ -326,7 +326,7 @@ p {
   }
   100% {
     width: 440px;
-    height: 280px;
+    height: auto;
     background: #FFFFFF;
     -webkit-border-radius: 4px;
   }
@@ -341,7 +341,7 @@ p {
   }
   100% {
     width: 440px;
-    height: 280px;
+    height: auto;
     background: #FFFFFF;
     border-radius: 4px;
   }

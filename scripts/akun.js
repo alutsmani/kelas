@@ -25,10 +25,13 @@ function clearSiteCache() {
   
   
   window.addEventListener('load', function() {
-    if (localStorage.getItem('ID') === null || localStorage.getItem('ID') === '') {
+    if (localStorage.getItem('IDS') === null || localStorage.getItem('IDS') === '') {
       window.location.href = 'login.html';
       } else {
-      selectUser()
+      moveHtmlContent('/halaman/halaman.html', 'formData', 'formData');
+      moveHtmlContent('/halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
+      
+      selectUser();
       tampilkanData();
       disableBackButton();
     }
@@ -36,13 +39,13 @@ function clearSiteCache() {
   });
   
   async function selectUser() {
-    const id = localStorage.getItem('ID');
+    const id = localStorage.getItem('IDS');
     if (!id) {
         console.log("ID tidak ditemukan di localStorage");
         return;
     }
   
-    console.log("ID pengguna: ", id);
+    console.log("IDS pengguna: ", id);
   
     const dbName = 'Santri';
     const storeName = 'Asatidz';

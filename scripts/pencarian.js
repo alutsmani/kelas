@@ -78,7 +78,6 @@ function CariData() {
       });
 }
 
-document.getElementById('CariNama').addEventListener('input', CariData);
 
 async function tambahkan() {
   const jsonData = BuatJson('db', 'formDataModal');
@@ -149,6 +148,33 @@ function addCariRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
 function addHeaderCari() {
     const productsArea = document.getElementById('CariArea');
     const existingHeader = productsArea.querySelector('.products-header');
+
+    const listItems = document.querySelectorAll('.sidebar-list-item');
+
+    let kelas = 'Kelas';
+let kamar = 'Kamar';
+
+const activeItem = document.querySelector('.sidebar-list-item.active');
+if (activeItem) {
+  const itemName = activeItem.querySelector('span')?.textContent; // Safe navigation operator
+  switch (itemName) {
+    case 'Asatidz': {
+      const listItems = document.querySelectorAll('.sidebar-list-item'); // Ensure listItems is defined
+      if (listItems.length > 0) {
+        kelas = activeItem === listItems[0] ? 'Akses' : 'Kelas';
+        kamar = activeItem === listItems[0] ? 'Status' : 'Kamar';
+      }
+      break;
+    }
+    default:
+      // Default case to handle other values
+      break;
+  }
+}
+
+
+
+
     if (!existingHeader) { // Prevent adding duplicate headers
         const newRow = document.createElement('div');
         newRow.classList.add('products-header');
@@ -157,21 +183,24 @@ function addHeaderCari() {
               <div class="product-cell image">
                 &nbsp;&nbsp;&nbsp;&nbsp;Nama
                 <button class="sort-button">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
+                  <i class="bi bi-sort-alpha-down"></i>
                 </button>
               </div>
 
-              <div class="product-cell stock">IDS<button class="sort-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-                </button></div>
+              <div class="product-cell stock">
+                IDS
+                <button class="sort-button">
+                  <i class="bi bi-sort-alpha-down"></i>
+                </button>
+              </div>
 
-              <div class="product-cell price">Kamar<button class="sort-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-                </button></div>
+              <div class="product-cell price">${kamar}<button class="sort-button">
+                <i class="bi bi-sort-alpha-down"></i>
+              </button></div>
 
-              <div class="product-cell category">Kelas<button class="sort-button">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-                  </button></div>
+              <div class="product-cell category">${kelas}<button class="sort-button">
+                <i class="bi bi-sort-alpha-down"></i>
+              </button></div>
  
         `;
         productsArea.appendChild(newRow);

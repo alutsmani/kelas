@@ -25,6 +25,9 @@ async function naikkelas() {
   console.log(jsonData);
   const storeName = 'db'; // Nama tabel (object store)
 
+  jsonData.KelasMD = "";
+  jsonData.KelMD = "";
+
   try {
     const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
     console.log(result);
@@ -34,12 +37,6 @@ async function naikkelas() {
     console.error(error);
   }
 
-  try {
-    const response = await sendPostWithGet(jsonData);
-    console.log("Respons dari server:", response);
-  } catch (error) {
-      console.error("Kesalahan saat memproses data:", error);
-  }
 }
 
 
@@ -63,10 +60,26 @@ function SelectFormal() {
   ComboFormal(Formal, Kelas, Kel);
 }
 
-document.getElementById('filterCariNama').addEventListener('input', tampilkanData);
-document.getElementById('filterDiniyah').addEventListener('change', tampilkanData);
+document.getElementById('filterCariNama').addEventListener('input', PilihTampilanData);
+document.getElementById('filterDiniyah').addEventListener('change', PilihTampilanData);
+
 
 
 function reload() {
   DownloadDiniyahIkhtibar();
+}
+
+
+function Download() {
+  const listItems = document.querySelectorAll('.sidebar-list-item');
+  listItems.forEach(function (item) {
+    if (item.classList.contains('active')) {
+      const itemName = item.querySelector('span').textContent;
+      if (itemName === 'Asatidz') {
+        DownloadDiniyahAsatidz();
+      } else if (itemName === 'Santri') {
+        DownloadDiniyah();
+      }
+    }
+  });
 }

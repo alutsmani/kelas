@@ -1,8 +1,8 @@
 const urlLogin = 'https://script.google.com/macros/s/AKfycbwj1K6lkk5qU6BNPgIU1svQn8aqFQpZS8TvdxuigmkR37CunuZ-ataXIjPv0VnXs9M0/exec';
 
-async function loginserver(url, ID, pw) {
+async function loginserver(url, IDS, pw) {
     try {
-        const fullUrl = `${url}?action=login&ID=${ID}&pw=${pw}`;
+        const fullUrl = `${url}?action=login&IDS=${IDS}&pw=${pw}`;
         const response = await fetch(fullUrl);
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -17,7 +17,7 @@ async function loginserver(url, ID, pw) {
 async function loginaplikasi(event) {
     event.preventDefault(); // Prevent the default form submission
 
-    const ID = document.getElementById('ID').value;
+    const IDS = document.getElementById('IDS').value;
     const pw = document.getElementById('pw').value;
 
     const btnLogin = document.getElementById('btnLogin');
@@ -27,7 +27,7 @@ async function loginaplikasi(event) {
     LoadingDownload.style.display = 'flex'; // Corrected display to flex
 
     try {
-        const data = await loginserver(urlLogin, ID, pw); // Use urlLogin instead of url
+        const data = await loginserver(urlLogin, IDS, pw); // Use urlLogin instead of url
         if (data.success) {
             console.log("Login berhasil");
             console.log("Data Asatidz:", data.Asatidz);
@@ -44,8 +44,8 @@ async function loginaplikasi(event) {
         }
 
         console.log("Data received for saving:", data);
-        await saveDataToIndexedDB("Asatidz", data, "ID");
-        localStorage.setItem('ID', ID);
+        await saveDataToIndexedDB("Asatidz", data, "IDS");
+        localStorage.setItem('IDS', IDS);
         window.location.href = 'index.html';
         LoadingDownload.style.display = 'none';
         btnLogin.disabled = false;

@@ -107,7 +107,6 @@ function Buat() {
     )
 };
 
-
 function moveHtmlContent(sourceUrl, sourceDivId, targetDivId) {
   const targetDiv = document.getElementById(targetDivId);
   if (!targetDiv) {
@@ -132,17 +131,13 @@ function moveHtmlContent(sourceUrl, sourceDivId, targetDivId) {
         return;
       }
 
-      const targetContent = targetDiv.querySelector('.modal-content');
-      if (targetContent) {
-        targetContent.innerHTML = sourceDiv.innerHTML;
-      } else {
-        console.error('Target modal tidak memiliki elemen .modal-content.');
-      }
+      targetDiv.innerHTML = sourceDiv.innerHTML;
     })
     .catch(error => {
       console.error('Error saat memindahkan konten:', error);
     });
 }
+
 
 function BuatJson(header, idForm) {
     // Ambil elemen form berdasarkan ID
