@@ -79,15 +79,15 @@ function PilihTampilanData() {
     if (item.classList.contains('active')) {
       const itemName = item.querySelector('span').textContent;
       if (itemName === 'Asatidz') {
-        moveHtmlContent('/halaman/halaman.html', 'formDataAsatidz', 'formData');
-        moveHtmlContent('/halaman/halaman.html', 'ofcanvassCariAsatidz', 'ofcanvassCari');
-        moveHtmlContent('/halaman/halaman.html', 'formDataModalAsatidz', 'formDataModal');
+        moveHtmlContent('./halaman/halaman.html', 'formDataAsatidz', 'formData');
+        moveHtmlContent('./halaman/halaman.html', 'ofcanvassCariAsatidz', 'ofcanvassCari');
+        moveHtmlContent('./halaman/halaman.html', 'formDataModalAsatidz', 'formDataModal');
         
         tampilkanAsatidz();
       } else if (itemName === 'Santri') {
-        moveHtmlContent('/halaman/halaman.html', 'formData', 'formData');
-        moveHtmlContent('/halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
-        moveHtmlContent('/halaman/halaman.html', 'formDataModal', 'formDataModal');
+        moveHtmlContent('./halaman/halaman.html', 'formData', 'formData');
+        moveHtmlContent('./halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
+        moveHtmlContent('./halaman/halaman.html', 'formDataModal', 'formDataModal');
 
         tampilkanData();
       }
