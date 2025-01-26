@@ -76,6 +76,7 @@ function tampilkanAsatidz() {
 function PilihTampilanData() {
   const listItems = document.querySelectorAll('.sidebar-list-item');
   const naikkelas = document.getElementById('NaikKelas');
+  const filterGrupInput = document.getElementById('filterGrupInput')
 
   listItems.forEach(function (item) {
     if (item.classList.contains('active')) {
@@ -86,6 +87,7 @@ function PilihTampilanData() {
         moveHtmlContent('./halaman/halaman.html', 'formDataModalAsatidz', 'formDataModal');
         
         naikkelas.style.display = 'none';
+        filterGrupInput.style.display = 'none';
 
         tampilkanAsatidz();
         
@@ -95,12 +97,17 @@ function PilihTampilanData() {
         moveHtmlContent('./halaman/halaman.html', 'formDataModal', 'formDataModal');
         
         naikkelas.style.display = 'block';
+        filterGrupInput.style.display = 'flex';
 
         tampilkanData();
       }
     }
   });
 }
+
+
+
+
 
 
 // tambahkan event listener untuk menjalankan fungsi deteksiAktif saat list item di klik

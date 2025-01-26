@@ -1,11 +1,42 @@
-function updateKelasMD() {
-  // Ambil semua checkbox yang ada di dalam formDataModal
-  const checkboxes = document.querySelectorAll('#formData .form-check-input');
+async function selectDiniyah() {
+  const id = localStorage.getItem('IDS');
+  if (!id) {
+      console.log("ID tidak ditemukan di localStorage");
+      return;
+  }
 
-  // Filter checkbox yang dicentang, ambil ID-nya, dan hanya ambil angka dari ID
+  console.log("IDS pengguna: ", id);
+
+  const dbName = 'Santri';
+  const storeName = 'Asatidz';
+
+  try {
+      const db = await openIndexedDB(dbName);
+      const userData = await getDataFromStore(db, storeName, id);
+
+      if (!userData) {
+          console.log("Data pengguna tidak ditemukan");
+          return;
+      }
+
+      console.log("Data pengguna:", userData);
+
+      populateSelect('Diniyah', userData.Diniyah);
+
+      document.getElementById('NamaAkun').innerHTML = userData.Nama;
+  } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+  }
+}
+
+function updateKelasMD() {
+  // Ambil checkbox khusus untuk kelas
+  const checkboxes = document.querySelectorAll('#formData .kelas-checkbox');
+
+  // Filter checkbox yang dicentang dan proses ID-nya
   const selectedValues = Array.from(checkboxes)
     .filter((checkbox) => checkbox.checked)
-    .map((checkbox) => checkbox.id.replace('kelas', '')) // Menghapus kata 'kelas' dari ID
+    .map((checkbox) => checkbox.id.replace('kelas', '')) // Hapus kata 'kelas'
     .join(', ');
 
   // Tampilkan hasil ke textbox dengan id KelasMD
@@ -16,13 +47,13 @@ function updateKelasMD() {
 }
 
 function updateKelMD() {
-  // Ambil semua checkbox yang ada di dalam formDataModal untuk Kelompok
-  const checkboxes = document.querySelectorAll('#formData .form-check-input');
+  // Ambil checkbox khusus untuk kelompok
+  const checkboxes = document.querySelectorAll('#formData .kel-checkbox');
 
-  // Filter checkbox yang dicentang, ambil ID-nya, dan hanya ambil huruf dari ID
+  // Filter checkbox yang dicentang dan proses ID-nya
   const selectedValues = Array.from(checkboxes)
     .filter((checkbox) => checkbox.checked)
-    .map((checkbox) => checkbox.id) // Mengambil langsung ID checkbox (A, B, C, dst.)
+    .map((checkbox) => checkbox.id) // Ambil langsung ID
     .join(', ');
 
   // Tampilkan hasil ke textbox dengan id KelMD

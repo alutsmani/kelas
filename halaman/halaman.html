@@ -31,7 +31,7 @@
             <option value="Ulya">Ulya</option>
           </select>
           
-          <button id="btnDownloadCari" onclick="DownloadDiniyahCari()" class="action-button" type="button" style="margin-left: -20px;">
+          <button id="btnDownloadCari" onclick="DownloadDiniyahCariMultiple()" class="action-button" type="button" style="margin-left: -20px;">
             <svg id="LabelDownloadCari" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download" style="display: flex;">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
@@ -331,7 +331,7 @@
     <form id="formDataAsatidz">
         <div class="d-flex gap-2">
             <div class="form-floating flex-grow-1">
-                <input type="text" class="form-control custom-input" id="IDS" placeholder="Daerah">
+                <input type="text" class="form-control custom-input" id="IDS" placeholder="Daerah" disabled>
                 <label for="IDS">IDS</label>
             </div>
             <!--
@@ -363,19 +363,28 @@
             <label for="StatusSantri">Status</label>
         </div>
         
+        <br>
+        <div class="form-floating flex-grow-1">
+            <select class="form-select form-control custom-input" id="Diniyah">
+                
+            </select>
+
+            <label for="Diniyah">Diniyah</label>
+        </div>
+
         <h2 style="margin-top: 35px;">Ijin Akses</h2>
         <div class="d-flex gap-2" id="Kelas" style="margin-top: 20px;">
             <ul class="list-group">
                 <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" id="kelas1" onclick="updateKelasMD()">
+                  <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas1" onclick="updateKelasMD()">
                   <label class="form-check-label" for="kelas1">Kelas 1</label>
                 </li>
                 <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" id="kelas2" onclick="updateKelasMD()">
+                  <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas2" onclick="updateKelasMD()">
                   <label class="form-check-label" for="kelas2">Kelas 2</label>
                 </li>
                 <li class="list-group-item">
-                  <input class="form-check-input me-1" type="checkbox" id="kelas3" onclick="updateKelasMD()">
+                  <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas3" onclick="updateKelasMD()">
                   <label class="form-check-label" for="kelas3">Kelas 3</label>
                 </li>
             </ul>
@@ -390,43 +399,43 @@
         <div class="d-flex gap-2" id="Kelas" style="margin-top: 20px;">
           <ul class="list-group" id="Kelompok">
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="A" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="A" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="A">A</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="B" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="B" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="B">B</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="C" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="C" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="C">C</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="D" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="D" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="D">D</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="E" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="E" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="E">E</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="F" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="F" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="F">F</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="G" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="G" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="G">G</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="H" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="H" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="H">H</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="I" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="I" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="I">I</label>
             </li>
             <li class="list-group-item">
-              <input class="form-check-input me-1" type="checkbox" id="J" onChange="updateKelMD()">
+              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="J" onChange="updateKelMD()">
               <label class="form-check-label stretched-link" for="J">J</label>
             </li>
           </ul>

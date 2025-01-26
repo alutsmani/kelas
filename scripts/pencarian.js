@@ -219,7 +219,7 @@ async function DownloadDiniyahCari() {
     
     try {
       // Menunggu data selesai didapat
-      const data = await GetData(url, filters);
+      const data = await GetDataCari(urlLogin, filters, "db", 2, 1000);
       console.log("Data received for saving:", data); // Log the data before saving
   
       // Menyimpan data ke IndexedDB dan menunggu hingga selesai
@@ -239,4 +239,66 @@ async function DownloadDiniyahCari() {
       LabelDownload.style.display = 'block';
       LoadingDownload.style.display = 'none';
     }
+}
+
+async function GetDataCari(url, json, sheetType = 'default', page = 1, pageSize = 1000) {
+  try {
+    // Tambahkan parameter ke URL untuk menentukan sheetType, page, pageSize, dan filters
+    const fullUrl = `${url}?action=alldata&sheetType=${sheetType}&page=${page}&pageSize=${pageSize}&filters=${encodeURIComponent(JSON.stringify(json))}`;
+
+    // Ambil data dari URL
+    const response = await fetch(fullUrl);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+}
+
+
+
+
+
+
+
+
+//----------------------------- 
+async function DownloadDiniyahCariMultiple() {
+  // Menampilkan indikator loading
+  const LabelDownload = document.getElementById('LabelDownloadCari');
+  const LoadingDownload = document.getElementById('LoadingDownloadCari');
+
+  LabelDownload.style.display = 'none';
+  LoadingDownload.style.display = 'block';
+
+  const filterDiniyah = document.getElementById('CariDiniyah').value;
+  const filters = { db: { Diniyah: filterDiniyah } }; // Kriteria filter
+
+  try {
+    // Loop untuk mengulang fungsi hingga mencapai page 4000
+    for (let page = 2; page <= 5; page++) {
+      // Menunggu data selesai didapat
+      const data = await GetDataCari(urlLogin, filters, "db", page, 1000);
+      console.log(`Data received for page ${page}:`, data); // Log the data before saving
+
+      // Menyimpan data ke IndexedDB dan menunggu hingga selesai
+      await saveDataToIndexedDB("db", data, "IDS");
+
+      // Menampilkan data setelah selesai disimpan
+      await CariData();
+    }
+
+    // Mengubah tampilan indikator loading setelah selesai
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+  } catch (error) {
+    console.error("Terjadi kesalahan:", error);
+    
+    // Menyembunyikan indikator loading jika terjadi error
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+  }
 }
