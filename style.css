@@ -610,6 +610,8 @@ body {
   align-items: center;
   padding: 4px 8px;
   font-size: 12px;
+  word-wrap: break-word;
+
 }
 
 .status:before {
@@ -662,7 +664,7 @@ body {
 .tableView .product-cell.category,
 .tableView .product-cell.sales {
   flex: 1; /* Kolom price dan status sama lebar */
-  white-space: nowrap; /* Mencegah teks membungkus */
+  word-wrap: break-word;
   overflow: hidden; /* Menyembunyikan teks yang melebihi batas */
   text-overflow: ellipsis; /* Menambahkan elipsis pada teks yang terpotong */
 }

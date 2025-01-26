@@ -25,7 +25,7 @@ function addProductRowAsatidz(nama, ids, akses, diniyah, formal, status, imageUr
         <span class="cell-label">Formal:</span>${formal || '-'}</div>
       <div class="product-cell status-cell">
         <span class="cell-label">Status:</span>
-        <span class="status ${status.startsWith('Wali') ? 'Wali Kelas' : status === 'Admin' ? 'disabled' : 'active'}">${status || '-'}</span>
+        <span class="status ${status.startsWith('Admin') ? 'kurang' : status === 'Wali Kelas' ? 'disabled' : 'active'}">${status || '-'}</span>
       </div>
     `;
 
@@ -62,7 +62,7 @@ function tampilkanAsatidz() {
             item.KelasMD + ' ' + '.' + item.KelMD || '', // Diniyah (jika ada)
             item.Akses || '', // Akses (jika ada)
             item.KelasFormal + ' ' + '.' + item.KelFormal || '', // Ikhtibar (jika ada)
-            item.Jabatan1 || '', // Jabatan (jika ada)
+            item.Status || '', // Jabatan (jika ada)
             imageUrl // URL gambar berdasarkan IDS
           );
         });
@@ -75,6 +75,8 @@ function tampilkanAsatidz() {
 
 function PilihTampilanData() {
   const listItems = document.querySelectorAll('.sidebar-list-item');
+  const naikkelas = document.getElementById('NaikKelas');
+
   listItems.forEach(function (item) {
     if (item.classList.contains('active')) {
       const itemName = item.querySelector('span').textContent;
@@ -83,11 +85,16 @@ function PilihTampilanData() {
         moveHtmlContent('./halaman/halaman.html', 'ofcanvassCariAsatidz', 'ofcanvassCari');
         moveHtmlContent('./halaman/halaman.html', 'formDataModalAsatidz', 'formDataModal');
         
+        naikkelas.style.display = 'none';
+
         tampilkanAsatidz();
+        
       } else if (itemName === 'Santri') {
         moveHtmlContent('./halaman/halaman.html', 'formData', 'formData');
         moveHtmlContent('./halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
         moveHtmlContent('./halaman/halaman.html', 'formDataModal', 'formDataModal');
+        
+        naikkelas.style.display = 'block';
 
         tampilkanData();
       }
@@ -166,7 +173,7 @@ function CariSemuaAsatidz(storeName) {
                 item.KelasMD + ' ' + '.' + item.KelMD || '', // Diniyah (jika ada)
                 item.Akses || '', // Akses (jika ada)
                 item.KelasFormal + ' ' + '.' + item.KelFormal || '', // Ikhtibar (jika ada)
-                item.Jabatan1 || '', // Jabatan (jika ada)
+                item.Status || '', // Jabatan (jika ada)
                 imageUrl // URL gambar berdasarkan IDS
                 );
             
@@ -198,9 +205,9 @@ function addCariRowAsatidz(nama, ids, akses, diniyah, formal, status, imageUrl) 
         <img src="${imageUrl || 'https://via.placeholder.com/150'}" alt="product">
         <span>${nama || ''}</span>
       </div>
+      <div class="product-cell price">
+        <span class="cell-label">Akses Ke:</span>${status || '-'}</div>
       <div class="product-cell stock">
-        <span class="cell-label">Akses Ke:</span>${akses || '-'}</div>
-      <div class="product-cell category">
         <span class="cell-label">Diniyah:</span>${diniyah || '-'}</div>
       <div class="product-cell sales">
         <span class="cell-label">Formal:</span>${formal || '-'}</div>

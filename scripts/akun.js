@@ -28,9 +28,10 @@ function clearSiteCache() {
     if (localStorage.getItem('IDS') === null || localStorage.getItem('IDS') === '') {
       window.location.href = 'login.html';
       } else {
-      moveHtmlContent('/halaman/halaman.html', 'formData', 'formData');
-      moveHtmlContent('/halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
-      
+      moveHtmlContent('./halaman/halaman.html', 'formData', 'formData');
+      moveHtmlContent('./halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
+      moveHtmlContent('./halaman/halaman.html', 'formDataModal', 'formDataModal');
+
       selectUser();
       tampilkanData();
       disableBackButton();

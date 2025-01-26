@@ -58,3 +58,54 @@ textarea.custom-input {
   transform: translateY(-1em) scale(0.85); /* Ubah nilai translateY untuk lebih tinggi */
   opacity: 0.65;
 }
+
+
+
+
+
+
+
+
+
+.list-group {
+  background-color: var(--app-content-secondary-color);
+  border: 1px solid var(--table-border);
+  border-radius: 8px;
+  overflow: hidden;
+
+
+  max-height: calc(4 * 2.5rem); /* Tinggi maksimal untuk 3 checkbox */
+  overflow-y: auto; /* Tambahkan scrollbar jika tinggi melebihi max-height */
+  padding: 0;
+
+  width: 50%;
+}
+
+.list-group-item {
+  background-color: var(--sidebar);
+  color: var(--sidebar-main-color);
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--table-border);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.list-group-item:hover {
+  background-color: var(--sidebar-hover-link);
+  color: var(--sidebar-link);
+}
+
+.list-group-item input[type="checkbox"] {
+  accent-color: var(--action-color);
+}
+
+.list-group-item input[type="checkbox"]:hover {
+  accent-color: var(--action-color-hover);
+}
+
+.list-group-item .form-check-label {
+  cursor: pointer;
+}

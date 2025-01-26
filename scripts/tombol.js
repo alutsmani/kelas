@@ -1,12 +1,27 @@
-async function simpan() {
-    const jsonData = BuatJson('db', 'formData');
+document.getElementById('SimpanData').addEventListener('click', function () {
+  const listItems = document.querySelectorAll('.sidebar-list-item');
+  listItems.forEach(function (item) {
+    if (item.classList.contains('active')) {
+        const itemName = item.querySelector('span').textContent;
+        if (itemName === 'Asatidz') {
+          simpan('Asatidz');
+        } else if (itemName === 'Santri') {
+          simpan('db');
+        }
+      }
+    });
+    
+});
+
+async function simpan(data) {
+    const jsonData = BuatJson(data, 'formData');
     console.log(jsonData);
-    const storeName = 'db'; // Nama tabel (object store)
+    const storeName = data; // Nama tabel (object store)
   
     try {
       const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
       console.log(result);
-      tampilkanData();
+      PilihTampilanData();
       //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
     } catch (error) {
       console.error(error);

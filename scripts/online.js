@@ -146,7 +146,7 @@ async function sendPostWithGet(jsonData) {
           json: JSON.stringify(jsonData)
       });
 
-      const response = await fetch(`${url}?${encodedData}`, {
+      const response = await fetch(`${urlLogin}?${encodedData}`, {
           method: "GET"
       });
 

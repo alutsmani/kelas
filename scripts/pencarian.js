@@ -152,28 +152,25 @@ function addHeaderCari() {
     const listItems = document.querySelectorAll('.sidebar-list-item');
 
     let kelas = 'Kelas';
-let kamar = 'Kamar';
+    let kamar = 'Kamar';
 
-const activeItem = document.querySelector('.sidebar-list-item.active');
-if (activeItem) {
-  const itemName = activeItem.querySelector('span')?.textContent; // Safe navigation operator
-  switch (itemName) {
-    case 'Asatidz': {
-      const listItems = document.querySelectorAll('.sidebar-list-item'); // Ensure listItems is defined
-      if (listItems.length > 0) {
-        kelas = activeItem === listItems[0] ? 'Akses' : 'Kelas';
-        kamar = activeItem === listItems[0] ? 'Status' : 'Kamar';
+    const activeItem = document.querySelector('.sidebar-list-item.active');
+    if (activeItem) {
+      const itemName = activeItem.querySelector('span')?.textContent; // Safe navigation operator
+      switch (itemName) {
+        case 'Asatidz': {
+          const listItems = document.querySelectorAll('.sidebar-list-item'); // Ensure listItems is defined
+          if (listItems.length > 0) {
+            kelas = activeItem === listItems[0] ? 'Akses' : 'Kelas';
+            kamar = activeItem === listItems[0] ? 'Status' : 'Kamar';
+          }
+          break;
+        }
+        default:
+          // Default case to handle other values
+          break;
       }
-      break;
     }
-    default:
-      // Default case to handle other values
-      break;
-  }
-}
-
-
-
 
     if (!existingHeader) { // Prevent adding duplicate headers
         const newRow = document.createElement('div');
