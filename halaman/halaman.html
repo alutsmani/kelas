@@ -106,8 +106,6 @@
           </div>
         </div>
         
-      
-
     </form>
 
 
@@ -275,7 +273,7 @@
 
     <h1>Form data Modal</h1>
     <form id="formDataModalAsatidz">
-        
+        <!--
         <dl class="row">
           
           <dt class="col-sm-3">IDS</dt>
@@ -283,46 +281,125 @@
 
           
         </dl>
+        -->
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control custom-input" id="IDS" placeholder="ID" disabled>
+          <label for="IDS">ID</label>
+        </div>
         
-
         <!-- Input Nama  -->
         <div class="form-floating mb-3">
           <input type="text" class="form-control custom-input" id="Nama" placeholder="Masukkan Nama">
           <label for="Nama">Nama</label>
         </div>
-        
-        <br>
+
+
         <div class="form-floating mb-3">
-            <select class="form-select form-control custom-input" id="Gender">
-              <option value="Laki-Laki">Laki-Laki</option>
-              <option value="Perempuan">Perempuan</option>
-            </select>
-            <label for="Gender">Gender</label>
+          <select class="form-select form-control custom-input" id="Gender">
+            <option value="Laki-Laki">Laki-Laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+          <label for="Gender">Gender</label>
         </div>
 
-        <br>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button name="buatIDSbtn" class="btn btn-primary" type="button" onclick="buatIDS()" style="display: none; margin-bottom: 30px;">
+            <span id="spinIDS" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+            <span id="kontenIDS" role="status">Buat ID</span>
+          </button>
+        </div>
+        
         <div class="form-floating mb-3">
           <select class="form-select form-control custom-input" id="Status">
+            <option value="Super Admin" disabled>Super Admin</option>
             <option value="Admin">Admin</option>
             <option value="Guru">Guru</option>
           </select>
           <label for="Status">Status</label>
         </div>
         
-        <!-- Diniyah, Kelas, Kel -->
-        <div class="d-flex gap-2" style="padding-top: 30px;">
-          <div class="form-floating flex-grow-1">
-            <select class="form-select form-control custom-input" id="Diniyah" onchange="SelectDiniyah()">
-              <option value="Isti'dadiyah">Isti'dadiyah</option>
-              <option value="Ula">Ula</option>
-              <option value="Wustha">Wustha</option>
-              <option value="Ulya">Ulya</option>
-              <option value="Tidak">Tidak Sekolah</option>
-            </select>
-            <label for="Diniyah">Diniyah</label>
-          </div>
-          <button type="button" class="btn btn-primary btn-sm">Tambah</button>
+        
+
+        <h2 style="margin-top: 35px;">Ijin Akses</h2>
+        <div class="d-flex gap-2" id="Kelas" style="margin-top: 20px;">
+            <ul class="list-group">
+                <li class="list-group-item">
+                  <input class="form-check-input me-1 diniyah-checkbox diniyah-modal" type="checkbox" id="Isti'dadiyah" onclick="updateDiniyah('#formDataModal')">
+                  <label class="form-check-label" for="Isti'dadiyah">Isti'dadiyah</label>
+                </li>
+                <li class="list-group-item">
+                  <input class="form-check-input me-1 diniyah-checkbox diniyah-modal" type="checkbox" id="Ula" onclick="updateDiniyah('#formDataModal')">
+                  <label class="form-check-label" for="Ula">Ula</label>
+                </li>
+                <li class="list-group-item">
+                  <input class="form-check-input me-1 diniyah-checkbox diniyah-modal" type="checkbox" id="Wustha" onclick="updateDiniyah('#formDataModal')">
+                  <label class="form-check-label" for="Wustha">Wustha</label>
+                </li>
+                <li class="list-group-item">
+                  <input class="form-check-input me-1 diniyah-checkbox diniyah-modal" type="checkbox" id="Ulya" onclick="updateDiniyah('#formDataModal')">
+                  <label class="form-check-label" for="Ulya">Ulya</label>
+                </li>
+                <li class="list-group-item">
+                  <input class="form-check-input me-1 diniyah-checkbox diniyah-modal" type="checkbox" id="GuruTugas" onclick="updateDiniyah('#formDataModal')">
+                  <label class="form-check-label" for="GuruTugas">Guru Tugas</label>
+                </li>
+            </ul>
+            <div class="form-floating">
+                <input type="text" class="form-control custom-input diniyah-modal" id="Diniyah" placeholder="Diniyah">
+                <label for="Diniyah">Diniyah</label>
+            </div>
+              
         </div>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample" style="margin-top: 20px;">
+          <div class="accordion-item">
+              <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                      Alamat
+                  </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                      <div class="card card-body">
+                          <div class="d-flex gap-2" style="padding-top: 20px; padding-bottom: 20px;">
+                              <div class="form-floating flex-grow-1">
+                                  <input type="text" class="form-control custom-input" id="Dusun" placeholder="Dusun">
+                                  <label for="Dusun">Dusun</label>
+                              </div>
+                              <div class="form-floating" style="max-width: 50px;">
+                                  <input type="text" class="form-control custom-input" id="RT" placeholder="RT">
+                                  <label for="RT">RT</label>
+                              </div>
+                              <div class="form-floating" style="max-width: 50px;">
+                                  <input type="text" class="form-control custom-input" id="RW" placeholder="RW">
+                                  <label for="RW">RW</label>
+                              </div>
+                          </div>
+                          <div class="form-floating mb-3">
+                              <input type="text" class="form-control custom-input" id="Desa" placeholder="Desa">
+                              <label for="Desa">Desa</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                              <input type="text" class="form-control custom-input" id="Kecamatan" placeholder="Kecamatan">
+                              <label for="Kecamatan">Kecamatan</label>
+                          </div>
+                          <div class="d-flex gap-2">
+                              <div class="form-floating flex-grow-1">
+                                  <input type="text" class="form-control custom-input" id="Kabupaten" placeholder="Kabupaten">
+                                  <label for="Kabupaten">Kabupaten</label>
+                              </div>
+                              <div class="form-floating" style="max-width: 100px;">
+                                  <input type="text" class="form-control custom-input" id="KodePos" placeholder="Kode Pos">
+                                  <label for="KodePos">Kode Pos</label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
     </form>
 
 
@@ -344,19 +421,12 @@
             <label for="Nama">Nama</label>
         </div>
         
-        <!--<dl class="row">
-            <dt class="col-sm-3">Nama</dt>
-            <dd id="Nama" class="col-sm-9">Percobaan</dd>
-            
-            <dt class="col-sm-3">IDS</dt>
-            <dd id="IDS" class="col-sm-9">Percobaan</dd>
         
-            <hr style="border: 1px solid #ccc; margin: 10px 10px; max-width: 40%;">
-        </dl>-->
         <br>
         <div class="form-floating flex-grow-1">
             <select class="form-select form-control custom-input" id="Status">
-                <option value="Admin">Admin</option>
+              <option value="Super Admin" disabled>Super Admin</option>  
+              <option value="Admin">Admin</option>
                 <option value="Guru">Guru</option>
             </select>
 
@@ -364,89 +434,103 @@
         </div>
         
         <br>
-        <div class="form-floating flex-grow-1">
-            <select class="form-select form-control custom-input" id="Diniyah">
-                
-            </select>
-
-            <label for="Diniyah">Diniyah</label>
-        </div>
+        
 
         <h2 style="margin-top: 35px;">Ijin Akses</h2>
-        <div class="d-flex gap-2" id="Kelas" style="margin-top: 20px;">
-            <ul class="list-group">
-                <li class="list-group-item">
-                  <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas1" onclick="updateKelasMD()">
-                  <label class="form-check-label" for="kelas1">Kelas 1</label>
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas2" onclick="updateKelasMD()">
-                  <label class="form-check-label" for="kelas2">Kelas 2</label>
-                </li>
-                <li class="list-group-item">
-                  <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas3" onclick="updateKelasMD()">
-                  <label class="form-check-label" for="kelas3">Kelas 3</label>
-                </li>
-            </ul>
-            <div class="form-floating">
-                <input type="text" class="form-control custom-input" id="KelasMD" placeholder="Kelas">
-                <label for="KelasMD">Kelas</label>
-            </div>
-              
-        </div>
 
+        <dl class="row">
+          <dt class="col-sm-3">Diniyah</dt>
+          <dd id="Diniyah" class="col-sm-9">Lembaga</dd>
+          
+          <hr style="border: 1px solid #ccc; margin: 10px 10px; max-width: 40%;">
+      </dl>
 
         <div class="d-flex gap-2" id="Kelas" style="margin-top: 20px;">
-          <ul class="list-group" id="Kelompok">
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="A" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="A">A</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="B" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="B">B</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="C" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="C">C</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="D" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="D">D</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="E" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="E">E</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="F" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="F">F</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="G" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="G">G</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="H" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="H">H</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="I" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="I">I</label>
-            </li>
-            <li class="list-group-item">
-              <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="J" onChange="updateKelMD()">
-              <label class="form-check-label stretched-link" for="J">J</label>
-            </li>
+          <ul class="list-group">
+              <li class="list-group-item">
+                <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas1" onclick="updateKelasMD('#formData')">
+                <label class="form-check-label" for="kelas1">Kelas 1</label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas2" onclick="updateKelasMD('#formData')">
+                <label class="form-check-label" for="kelas2">Kelas 2</label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas3" onclick="updateKelasMD('#formData')">
+                <label class="form-check-label" for="kelas3">Kelas 3</label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas4" onclick="updateKelasMD('#formData')">
+                <label class="form-check-label" for="kelas4">Kelas 4</label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas5" onclick="updateKelasMD('#formData')">
+                <label class="form-check-label" for="kelas5">Kelas 5</label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input me-1 kelas-checkbox" type="checkbox" id="kelas6" onclick="updateKelasMD('#formData')">
+                <label class="form-check-label" for="kelas6">Kelas 6</label>
+              </li>
           </ul>
-        
           <div class="form-floating">
-            <input type="text" class="form-control custom-input" id="KelMD" placeholder="Kel">
-            <label for="KelMD">Kel</label>
+              <input type="text" class="form-control custom-input" id="KelasMD" placeholder="Kelas">
+              <label for="KelasMD">Kelas</label>
           </div>
+            
+      </div>
+
+
+      <div class="d-flex gap-2" id="Kelompok" style="margin-top: 20px;">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="A" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="A">A</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="B" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="B">B</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="C" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="C">C</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="D" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="D">D</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="E" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="E">E</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="F" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="F">F</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="G" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="G">G</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="H" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="H">H</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="I" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="I">I</label>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1 kel-checkbox" type="checkbox" id="J" onclick="updateKelMD('#formData')">
+            <label class="form-check-label stretched-link" for="J">J</label>
+          </li>
+        </ul>
+      
+        <div class="form-floating">
+          <input type="text" class="form-control custom-input" id="KelMD" placeholder="Kel">
+          <label for="KelMD">Kel</label>
         </div>
+      </div>
         
-        
+        <!--
         <div class="d-flex gap-2" style="padding-top: 30px;">
             <div class="form-floating flex-grow-1">
                 <input type="text" class="form-control custom-input" id="Formal" placeholder="Formal">
@@ -461,7 +545,7 @@
                 <label for="KelFormal">Kel</label>
             </div>
         </div>
-        
+        -->
         <br>
 
         <div class="accordion accordion-flush" id="accordionFlushExample">

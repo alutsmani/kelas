@@ -13,6 +13,44 @@ document.getElementById('SimpanData').addEventListener('click', function () {
     
 });
 
+document.getElementById('TambahkanData').addEventListener('click', function () {
+  const listItems = document.querySelectorAll('.sidebar-list-item');
+  listItems.forEach(function (item) {
+    if (item.classList.contains('active')) {
+        const itemName = item.querySelector('span').textContent;
+        if (itemName === 'Asatidz') {
+          tambahkan('Asatidz');
+        } else if (itemName === 'Santri') {
+          tambahkan('db');
+        }
+      }
+    });
+});
+
+async function tambahkan(data) {
+  const jsonData = BuatJson(data, 'formDataModal');
+  console.log(jsonData);
+  const storeName = data; // Nama tabel (object store)
+
+  try {
+    const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
+    console.log(result);
+    PilihTampilanData();
+    
+    //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
+  } catch (error) {
+    console.error(error);
+  }
+
+  try {
+    const response = await sendPostWithGet(jsonData);
+    console.log("Respons dari server:", response);
+  } catch (error) {
+      console.error("Kesalahan saat memproses data:", error);
+  }
+}
+
+
 async function simpan(data) {
     const jsonData = BuatJson(data, 'formData');
     console.log(jsonData);
@@ -60,9 +98,9 @@ async function naikkelas() {
 
 
 function SelectDiniyah() {
-  const Diniyah = document.getElementById('Diniyah');
-  const Kelas = document.getElementById('KelasMD');
-  const Kel = document.getElementById('KelMD');
+  const Diniyah = document.getElementById('filterDiniyah');
+  const Kelas = document.getElementById('filterKelas');
+  const Kel = document.getElementById('filterKel');
 
   ComboDiniyah(Diniyah, Kelas, Kel);
 }

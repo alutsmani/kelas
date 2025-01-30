@@ -215,3 +215,84 @@ async function sendPost(jsonData) {
     throw error;
   }
 }
+
+
+
+
+async function buatIDS() {
+  try {
+    console.log("Memulai proses pembuatan ID...");
+    
+    const button = document.querySelector("[name='buatIDSbtn']");
+    const spinner = document.getElementById("spinIDS");
+    const statusText = document.getElementById("kontenIDS");
+    const inputIDS = document.getElementById("IDS");
+    
+    if (!button || !spinner || !statusText || !inputIDS) {
+      console.error("Elemen yang dibutuhkan tidak ditemukan!");
+      return;
+    }
+
+    // Tampilkan loading
+    button.disabled = true;
+    spinner.style.display = "inline-block";
+    statusText.textContent = "Membuat ID...";
+    console.log("Loading ditampilkan");
+
+    const genderSelect = document.getElementById("Gender");
+    if (!genderSelect) {
+      console.error("Elemen Gender tidak ditemukan!");
+      return;
+    }
+
+    const genderValue = genderSelect.value.toLowerCase();
+    const genderCode = genderValue === "laki-laki" ? "3" : "4";
+    const idPrefix = genderCode + "46";
+    console.log(`Gender: ${genderValue}, ID Awal: ${idPrefix}`);
+
+    const admin = localStorage.getItem("Admin") || "Unknown";
+    console.log(`Admin: ${admin}`);
+
+    
+    const jsonData = JSON.stringify({
+      Asatidz: {
+        ID: idPrefix,
+        Admin: admin,
+        Gender: genderValue
+      }
+    });
+    
+    const url = `https://script.google.com/macros/s/AKfycbwj1K6lkk5qU6BNPgIU1svQn8aqFQpZS8TvdxuigmkR37CunuZ-ataXIjPv0VnXs9M0/exec?action=buatIDS&json=${encodeURIComponent(jsonData)}`;
+    
+    console.log(`Memanggil API: ${url}`);
+
+    const response = await fetch(url, { method: "GET" });
+    console.log("Respon diterima dari server");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Data diterima:", data);
+
+    if (data.Asatidz && data.Asatidz.IDS) {
+      inputIDS.value = data.Asatidz.IDS;
+      button.style.display = "none";
+      console.log(`ID berhasil dibuat: ${data.Asatidz.IDS}`);
+    } else {
+      console.error("Gagal mendapatkan ID dari server");
+    }
+  } catch (error) {
+    console.error("Terjadi kesalahan:", error);
+  } finally {
+    // Sembunyikan loading
+    const button = document.querySelector("[name='buatIDSbtn']");
+    if (button) button.disabled = false;
+    const spinner = document.getElementById("spinIDS");
+    if (spinner) spinner.style.display = "none";
+    const statusText = document.getElementById("kontenIDS");
+    if (statusText) statusText.textContent = "Buat ID";
+    console.log("Proses selesai, loading disembunyikan");
+  }
+}

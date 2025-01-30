@@ -79,28 +79,6 @@ function CariData() {
 }
 
 
-async function tambahkan() {
-  const jsonData = BuatJson('db', 'formDataModal');
-  console.log(jsonData);
-  const storeName = 'db'; // Nama tabel (object store)
-
-  try {
-    const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
-    console.log(result);
-    tampilkanData();
-    CariData();
-    //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
-  } catch (error) {
-    console.error(error);
-  }
-
-  try {
-    const response = await sendPostWithGet(jsonData);
-    console.log("Respons dari server:", response);
-  } catch (error) {
-      console.error("Kesalahan saat memproses data:", error);
-  }
-}
 
 function addCariRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
     const productsArea = document.getElementById('CariArea');
@@ -143,6 +121,34 @@ function addCariRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
 
     productsArea.appendChild(newRow);
 }
+
+function tambahManual() {
+  var modalElement = document.getElementById('ModalKonfirmasi');
+  
+  if (!modalElement) {
+    console.error("Modal tidak ditemukan!");
+    return;
+  }
+
+  var modal = new bootstrap.Modal(modalElement);
+
+  // Kosongkan semua input dan select dalam modal
+  var inputs = modalElement.querySelectorAll('input');
+  var selects = modalElement.querySelectorAll('select');
+  var buatIDSbtn = modalElement.querySelector('[name="buatIDSbtn"]'); // Ambil berdasarkan name
+
+  if (buatIDSbtn) {
+    buatIDSbtn.style.display = 'block';
+  } else {
+    console.warn('Tombol dengan name="buatIDSbtn" tidak ditemukan dalam modal!');
+  }
+
+  inputs.forEach(input => input.value = '');
+  selects.forEach(select => select.selectedIndex = 0);
+
+  modal.show();
+}
+
 
 
 function addHeaderCari() {
@@ -260,11 +266,6 @@ async function GetDataCari(url, json, sheetType = 'default', page = 1, pageSize 
 
 
 
-
-
-
-
-
 //----------------------------- 
 async function DownloadDiniyahCariMultiple() {
   // Menampilkan indikator loading
@@ -279,7 +280,7 @@ async function DownloadDiniyahCariMultiple() {
 
   try {
     // Loop untuk mengulang fungsi hingga mencapai page 4000
-    for (let page = 2; page <= 5; page++) {
+    for (let page = 1; page <= 5; page++) {
       // Menunggu data selesai didapat
       const data = await GetDataCari(urlLogin, filters, "db", page, 1000);
       console.log(`Data received for page ${page}:`, data); // Log the data before saving

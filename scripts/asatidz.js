@@ -25,7 +25,7 @@ function addProductRowAsatidz(nama, ids, akses, diniyah, formal, status, imageUr
         <span class="cell-label">Formal:</span>${formal || '-'}</div>
       <div class="product-cell status-cell">
         <span class="cell-label">Status:</span>
-        <span class="status ${status.startsWith('Admin') ? 'kurang' : status === 'Wali Kelas' ? 'disabled' : 'active'}">${status || '-'}</span>
+        <span class="status ${status.startsWith('Admin') ? 'kurang' : status === 'Guru' ? 'disabled' : 'active'}">${status || '-'}</span>
       </div>
     `;
 
@@ -55,7 +55,7 @@ function tampilkanAsatidz() {
   
         // Loop melalui data dan tampilkan menggunakan addProductRow
         limitedData.forEach(function (item) {
-          const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
+          const imageUrl = item.IDS.startsWith('3') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
           addProductRowAsatidz(
             item.Nama, // IDS
             item.IDS, // Nama
@@ -77,6 +77,7 @@ function PilihTampilanData() {
   const listItems = document.querySelectorAll('.sidebar-list-item');
   const naikkelas = document.getElementById('NaikKelas');
   const filterGrupInput = document.getElementById('filterGrupInput')
+  const tambahManual = document.getElementById('tambahManual')
 
   listItems.forEach(function (item) {
     if (item.classList.contains('active')) {
@@ -88,6 +89,7 @@ function PilihTampilanData() {
         
         naikkelas.style.display = 'none';
         filterGrupInput.style.display = 'none';
+        tambahManual.style.display = 'block';
 
         tampilkanAsatidz();
         
@@ -98,8 +100,10 @@ function PilihTampilanData() {
         
         naikkelas.style.display = 'block';
         filterGrupInput.style.display = 'flex';
+        tambahManual.style.display = 'none';
 
         tampilkanData();
+        
       }
     }
   });
@@ -173,7 +177,7 @@ function CariSemuaAsatidz(storeName) {
         limitedData.forEach(function (item) {
           
   
-            const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
+            const imageUrl = item.IDS.startsWith('3') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
             addCariRowAsatidz(
                 item.Nama, // IDS
                 item.IDS, // Nama
@@ -237,6 +241,28 @@ function addCariRowAsatidz(nama, ids, akses, diniyah, formal, status, imageUrl) 
 
 
 
+async function tambahkanAsatidz() {
+  const jsonData = BuatJson('Asatidz', 'formDataModal');
+  console.log(jsonData);
+  const storeName = 'Asatidz'; // Nama tabel (object store)
+
+  try {
+    const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
+    console.log(result);
+    tampilkanAsatidz();
+    CariDataAsatidz();
+    //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
+  } catch (error) {
+    console.error(error);
+  }
+
+  try {
+    const response = await sendPostWithGet(jsonData);
+    console.log("Respons dari server:", response);
+  } catch (error) {
+      console.error("Kesalahan saat memproses data:", error);
+  }
+}
 
 
 

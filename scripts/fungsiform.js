@@ -29,35 +29,37 @@ async function selectDiniyah() {
   }
 }
 
-function updateKelasMD() {
-  // Ambil checkbox khusus untuk kelas
-  const checkboxes = document.querySelectorAll('#formData .kelas-checkbox');
-
-  // Filter checkbox yang dicentang dan proses ID-nya
+function updateDiniyah(formId) {
+  const checkboxes = document.querySelectorAll(`${formId} .diniyah-checkbox`);
   const selectedValues = Array.from(checkboxes)
     .filter((checkbox) => checkbox.checked)
-    .map((checkbox) => checkbox.id.replace('kelas', '')) // Hapus kata 'kelas'
+    .map((checkbox) => checkbox.id)
     .join(', ');
+  const inputDiniyah = document.querySelector(`${formId} #Diniyah`);
+  if (inputDiniyah) {
+    inputDiniyah.value = selectedValues;
+  }
+}
 
-  // Tampilkan hasil ke textbox dengan id KelasMD
-  const inputKelasMD = document.querySelector('#formData #KelasMD');
+function updateKelasMD(formId) {
+  const checkboxes = document.querySelectorAll(`${formId} .kelas-checkbox`);
+  const selectedValues = Array.from(checkboxes)
+    .filter((checkbox) => checkbox.checked)
+    .map((checkbox) => checkbox.id.replace('kelas', ''))
+    .join(', ');
+  const inputKelasMD = document.querySelector(`${formId} #KelasMD`);
   if (inputKelasMD) {
     inputKelasMD.value = selectedValues;
   }
 }
 
-function updateKelMD() {
-  // Ambil checkbox khusus untuk kelompok
-  const checkboxes = document.querySelectorAll('#formData .kel-checkbox');
-
-  // Filter checkbox yang dicentang dan proses ID-nya
+function updateKelMD(formId) {
+  const checkboxes = document.querySelectorAll(`${formId} .kel-checkbox`);
   const selectedValues = Array.from(checkboxes)
     .filter((checkbox) => checkbox.checked)
-    .map((checkbox) => checkbox.id) // Ambil langsung ID
+    .map((checkbox) => checkbox.id)
     .join(', ');
-
-  // Tampilkan hasil ke textbox dengan id KelMD
-  const inputKelMD = document.querySelector('#formData #KelMD');
+  const inputKelMD = document.querySelector(`${formId} #KelMD`);
   if (inputKelMD) {
     inputKelMD.value = selectedValues;
   }
