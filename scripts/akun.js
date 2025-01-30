@@ -1,28 +1,39 @@
 
 
-// Fungsi untuk menghapus semua cache dari situs ini
 function clearSiteCache() {
-    // Hapus semua data dari localStorage
-    localStorage.clear();
-  
-    // Hapus semua data dari sessionStorage jika Anda menggunakannya
-    sessionStorage.clear();
-  
-    // Jika Anda menyimpan data di IndexedDB atau tempat lain, Anda perlu menghapusnya juga
-  
-    // Opsi tambahan: Hapus cookie jika diperlukan
-    // JavaScript memiliki keterbatasan dalam menghapus cookie dengan domain dan path tertentu
-    // Berikut adalah contoh untuk menghapus semua cookie yang dapat dijangkau oleh JavaScript
-    document.cookie.split(";").forEach(function(c) { 
-        document.cookie = c.replace(/^ +/, "")
-                           .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+  // Hapus semua data dari localStorage
+  localStorage.clear();
+
+  // Hapus semua data dari sessionStorage jika digunakan
+  sessionStorage.clear();
+
+  // Hapus semua cookie yang dapat diakses oleh JavaScript
+  document.cookie.split(";").forEach(function(c) { 
+      document.cookie = c.replace(/^ +/, "")
+                         .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+  });
+
+  // Tampilkan pesan konfirmasi dan reload halaman
+  alert("Semua cache dan IndexedDB telah dihapus. Halaman akan dimuat ulang.");
+  location.reload();
+}
+
+function clearData() {
+  // Hapus semua IndexedDB
+  if (window.indexedDB) {
+    indexedDB.databases().then((databases) => {
+        databases.forEach((db) => {
+            indexedDB.deleteDatabase(db.name);
+        });
+    }).then(() => {
+        console.log("Semua database IndexedDB telah dihapus.");
+    }).catch((error) => {
+        console.error("Gagal menghapus IndexedDB:", error);
     });
-  
-    // Tampilkan pesan konfirmasi atau reload halaman
-    alert("Halaman akan dimuat ulang.");
-    location.reload();
   }
-  
+
+  clearSiteCache();
+}
   
   window.addEventListener('load', function() {
     if (localStorage.getItem('IDS') === null || localStorage.getItem('IDS') === '') {
