@@ -265,9 +265,15 @@ async function GetDataCari(url, json, sheetType = 'default', page = 1, pageSize 
 }
 
 
-
-//----------------------------- 
+//------------------- Download Multiple -------------------
 async function DownloadDiniyahCariMultiple() {
+  const LabelDownload = document.getElementById('LabelDownloadCari');
+  const LoadingDownload = document.getElementById('LoadingDownloadCari');
+
+  LabelDownload.style.display = 'none';
+  LoadingDownload.style.display = 'block';
+
+
   const loadingContainer = document.getElementById('loadingContainer');
   const progressBar = document.getElementById('progressBar');
 
@@ -277,11 +283,10 @@ async function DownloadDiniyahCariMultiple() {
   try {
     for (let page = 1; page <= 5; page++) {
       let finalTarget = page * 20; // Milestone setelah fetch selesai (20%, 40%, 60%, dst.)
-      let progressRunning = true;
-
+      
       // Progress bertambah 1% setiap ~333ms (3x per detik)
       let progressInterval = setInterval(() => {
-        let currentValue = parseInt(progressBar.style.width);
+        let currentValue = parseInt(progressBar.style.width, 10) || 0; // Pastikan nilai valid
         if (currentValue < finalTarget - 3) { // Batasi sebelum milestone
           progressBar.style.width = `${currentValue + 1}%`;
           progressBar.textContent = `${currentValue + 1}%`;
@@ -290,8 +295,13 @@ async function DownloadDiniyahCariMultiple() {
 
       // Ambil data
       const data = await GetDataCari(urlLogin, { db: { Diniyah: document.getElementById('CariDiniyah').value } }, "db", page, 1000);
-
+      
       clearInterval(progressInterval); // Hentikan pertumbuhan lambat
+
+      if (!data || data.length === 0) {
+        console.warn("Data tidak ditemukan untuk halaman:", page);
+        continue; // Jika tidak ada data, lanjutkan ke halaman berikutnya
+      }
 
       await saveDataToIndexedDB("db", data, "IDS");
       await CariData();
@@ -304,6 +314,11 @@ async function DownloadDiniyahCariMultiple() {
     // Sembunyikan loading setelah selesai
     setTimeout(() => {
       loadingContainer.style.top = '-50px';
+
+      // Menyembunyikan indikator loading jika terjadi error
+      LabelDownload.style.display = 'block';
+      LoadingDownload.style.display = 'none';
+
       setTimeout(() => {
         progressBar.style.width = '0%';
       }, 500);
@@ -312,13 +327,18 @@ async function DownloadDiniyahCariMultiple() {
     console.error("Terjadi kesalahan:", error);
     alert("Terjadi kesalahan saat mengunduh data. Silakan coba lagi.");
     loadingContainer.style.top = '-50px';
+
+    // Menyembunyikan indikator loading jika terjadi error
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+    
   }
 }
 
 async function updateProgress(target) {
   const progressBar = document.getElementById('progressBar');
   return new Promise((resolve) => {
-    let currentValue = parseInt(progressBar.style.width);
+    let currentValue = parseInt(progressBar.style.width, 10) || 0; // Pastikan nilai valid
     let step = (target - currentValue) / 10; // Naik lebih cepat setelah fetch selesai
 
     function animate() {
@@ -330,7 +350,7 @@ async function updateProgress(target) {
       if (currentValue < target) {
         requestAnimationFrame(animate);
       } else {
-        resolve();
+ resolve();
       }
     }
 

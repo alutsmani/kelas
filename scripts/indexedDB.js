@@ -275,6 +275,13 @@ function getFilteredFromIndexedDB(storeName) {
 
     request.onsuccess = function (event) {
       const db = event.target.result;
+      
+      if (!db.objectStoreNames.contains(storeName)) {
+        console.log(`Store "${storeName}" tidak ditemukan dalam IndexedDB.`);
+        resolve([]); // Kembalikan array kosong jika store tidak ada
+        return;
+      }
+      
       const transaction = db.transaction(storeName, 'readonly');
       const store = transaction.objectStore(storeName);
       const getAllRequest = store.getAll();
@@ -282,35 +289,34 @@ function getFilteredFromIndexedDB(storeName) {
       getAllRequest.onsuccess = function (event) {
         const data = event.target.result;
 
-        const filterDiniyah = document.getElementById('filterDiniyah').value;
-        const filterKelas = document.getElementById('filterKelas').value;
-        const filterKel = document.getElementById('filterKel').value;
-        const filterStatusSantri = document.getElementById('filterStatusSantri').value;
-
-        const filterCariNama = document.getElementById('filterCariNama').value;
+        const filterDiniyah = document.getElementById('filterDiniyah').value.toLowerCase();
+        const filterKelas = document.getElementById('filterKelas').value.toLowerCase();
+        const filterKel = document.getElementById('filterKel').value.toLowerCase();
+        const filterStatusSantri = document.getElementById('filterStatusSantri').value.toLowerCase();
+        const filterCariNama = document.getElementById('filterCariNama').value.toLowerCase();
 
         const filteredData = data.filter(item => {
-        return (filterDiniyah === '' || item.Diniyah.toLowerCase().includes(filterDiniyah.toLowerCase())) &&
-                (filterKelas === '' || item.KelasMD.toLowerCase().includes(filterKelas.toLowerCase())) &&
-                (filterKel === '' || item.KelMD.toLowerCase().includes(filterKel.toLowerCase())) &&
-                (filterStatusSantri === '' || item.StatusSantri.toLowerCase().includes(filterStatusSantri.toLowerCase())) &&
-                
-                (filterCariNama === '' || item.Nama.toLowerCase().includes(filterCariNama.toLowerCase()));
+          return (!filterDiniyah || (item.Diniyah && item.Diniyah.toLowerCase().includes(filterDiniyah))) &&
+                 (!filterKelas || (item.KelasMD && item.KelasMD.toLowerCase().includes(filterKelas))) &&
+                 (!filterKel || (item.KelMD && item.KelMD.toLowerCase().includes(filterKel))) &&
+                 (!filterStatusSantri || (item.StatusSantri && item.StatusSantri.toLowerCase().includes(filterStatusSantri))) &&
+                 (!filterCariNama || (item.Nama && item.Nama.toLowerCase().includes(filterCariNama)));
         });
 
         resolve(filteredData);
       };
 
-      getAllRequest.onerror = function (event) {
+      getAllRequest.onerror = function () {
         reject('Error fetching data from IndexedDB');
       };
     };
 
-    request.onerror = function (event) {
+    request.onerror = function () {
       reject('Error opening database');
     };
   });
 }
+
 
 
 

@@ -72,45 +72,44 @@ function tampilkanAsatidz() {
       });
   }
 
-
-function PilihTampilanData() {
-  const listItems = document.querySelectorAll('.sidebar-list-item');
-  const naikkelas = document.getElementById('NaikKelas');
-  const filterGrupInput = document.getElementById('filterGrupInput')
-  const tambahManual = document.getElementById('tambahManual')
-
-  listItems.forEach(function (item) {
-    if (item.classList.contains('active')) {
-      const itemName = item.querySelector('span').textContent;
-      if (itemName === 'Asatidz') {
-        moveHtmlContent('./halaman/halaman.html', 'formDataAsatidz', 'formData');
-        moveHtmlContent('./halaman/halaman.html', 'ofcanvassCariAsatidz', 'ofcanvassCari');
-        moveHtmlContent('./halaman/halaman.html', 'formDataModalAsatidz', 'formDataModal');
-        
-        naikkelas.style.display = 'none';
-        filterGrupInput.style.display = 'none';
-        tambahManual.style.display = 'block';
-
-        tampilkanAsatidz();
-        CariDataAsatidz();
-        
-      } else if (itemName === 'Santri') {
-        moveHtmlContent('./halaman/halaman.html', 'formData', 'formData');
-        moveHtmlContent('./halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
-        moveHtmlContent('./halaman/halaman.html', 'formDataModal', 'formDataModal');
-        
-        naikkelas.style.display = 'block';
-        filterGrupInput.style.display = 'flex';
-        tambahManual.style.display = 'none';
-
-        tampilkanData();
-        CariData();
-        
+  function PilihTampilanData() {
+    const listItems = document.querySelectorAll('.sidebar-list-item');
+    const naikkelas = document.getElementById('NaikKelas');
+    const filterGrupInput = document.getElementById('filterGrupInput');
+    const tambahManual = document.getElementById('tambahManual');
+  
+    listItems.forEach(function (item) {
+      if (item.classList.contains('active')) {
+        const spanElement = item.querySelector('span');
+        const itemName = spanElement ? spanElement.textContent.trim() : '';
+  
+        if (itemName === 'Asatidz') {
+          moveHtmlContent('./halaman/halaman.html', 'formDataAsatidz', 'formData');
+          moveHtmlContent('./halaman/halaman.html', 'ofcanvassCariAsatidz', 'ofcanvassCari');
+          moveHtmlContent('./halaman/halaman.html', 'formDataModalAsatidz', 'formDataModal');
+          
+          naikkelas.style.display = 'none';
+          filterGrupInput.style.display = 'none';
+          tambahManual.style.display = 'block';
+  
+          tampilkanAsatidz();
+          CariDataAsatidz();
+        } else if (itemName === 'Santri') {
+          moveHtmlContent('./halaman/halaman.html', 'formData', 'formData');
+          moveHtmlContent('./halaman/halaman.html', 'ofcanvassCari', 'ofcanvassCari');
+          moveHtmlContent('./halaman/halaman.html', 'formDataModal', 'formDataModal');
+          
+          naikkelas.style.display = 'block';
+          filterGrupInput.style.display = 'flex';
+          tambahManual.style.display = 'none';
+  
+          tampilkanData();
+          CariData();
+        }
       }
-    }
-  });
-}
-
+    });
+  }
+  
 
 
 
@@ -315,6 +314,13 @@ async function DownloadDiniyahAsatidz() {
   }
 
   async function DownloadAsatidz() {
+    // Menampilkan indikator loading
+    const LabelDownload = document.getElementById('LabelDownload');
+    const LoadingDownload = document.getElementById('LoadingDownload');
+  
+    LabelDownload.style.display = 'none';
+    LoadingDownload.style.display = 'block';
+    
     const loadingContainer = document.getElementById('loadingContainer');
     const progressBar = document.getElementById('progressBar');
 
@@ -353,6 +359,10 @@ async function DownloadDiniyahAsatidz() {
         // Sembunyikan progress bar setelah selesai
         setTimeout(() => {
             loadingContainer.style.top = '-50px';
+                  // Menyembunyikan indikator loading jika terjadi error
+            LabelDownload.style.display = 'block';
+            LoadingDownload.style.display = 'none';
+            
             setTimeout(() => {
                 progressBar.style.width = '0%';
             }, 500);
@@ -363,6 +373,10 @@ async function DownloadDiniyahAsatidz() {
 
         // Sembunyikan progress bar jika terjadi error
         loadingContainer.style.top = '-50px';
+
+              // Menyembunyikan indikator loading jika terjadi error
+        LabelDownload.style.display = 'block';
+        LoadingDownload.style.display = 'none';
     }
 }
 
