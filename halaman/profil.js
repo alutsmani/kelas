@@ -17,6 +17,8 @@ function toggleEditMode() {
     }
 }
 
+
+
 var modeSwitch = document.querySelector('.mode-switch');
 modeSwitch.addEventListener('click', function () {
   document.documentElement.classList.toggle('light');
@@ -133,20 +135,20 @@ function updateAccordionButton() {
   const accordionButton = document.querySelector("#accordionFlushExample .accordion-button");
   const inputFields = document.querySelectorAll("#flush-collapseOne input");
 
-let addressParts = [];
-inputFields.forEach(input => {
-  if (input.value.trim() !== "") {
-    if (input.id === "Dusun") {
-      addressParts.push(`${input.value} RT ${document.getElementById('RT').value}/RW ${document.getElementById('RW').value}`);
-    } else if (input.id === "RT" || input.id === "RW") {
-      return;
-    } else {
-      addressParts.push(input.value);
+  let addressParts = [];
+  inputFields.forEach(input => {
+    if (input.value.trim() !== "") {
+      if (input.id === "Dusun") {
+        addressParts.push(`${input.value} RT ${document.getElementById('RT').value}/RW ${document.getElementById('RW').value}`);
+      } else if (input.id === "RT" || input.id === "RW") {
+        return;
+      } else {
+        addressParts.push(input.value);
+      }
     }
-  }
-});
+  });
 
-accordionButton.textContent = addressParts.length > 0 ? addressParts.join(', ') : "Alamat";
+  accordionButton.textContent = addressParts.length > 0 ? addressParts.join(', ') : "Alamat";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
