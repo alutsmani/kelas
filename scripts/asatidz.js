@@ -92,6 +92,7 @@ function PilihTampilanData() {
         tambahManual.style.display = 'block';
 
         tampilkanAsatidz();
+        CariDataAsatidz();
         
       } else if (itemName === 'Santri') {
         moveHtmlContent('./halaman/halaman.html', 'formData', 'formData');
@@ -103,6 +104,7 @@ function PilihTampilanData() {
         tambahManual.style.display = 'none';
 
         tampilkanData();
+        CariData();
         
       }
     }
@@ -313,35 +315,51 @@ async function DownloadDiniyahAsatidz() {
   }
 
   async function DownloadAsatidz() {
-    // Menampilkan indikator loading
-    const LabelDownload = document.getElementById('LabelDownloadCari');
-    const LoadingDownload = document.getElementById('LoadingDownloadCari');
-  
-    LabelDownload.style.display = 'none';
-    LoadingDownload.style.display = 'block';
-  
-    const filters = { Asatidz: {} }; // Kriteria filter
-    
+    const loadingContainer = document.getElementById('loadingContainer');
+    const progressBar = document.getElementById('progressBar');
+
+    // Tampilkan progress bar dengan animasi turun ke 10px
+    loadingContainer.style.top = '10px';
+
     try {
-      // Menunggu data selesai didapat
-      const data = await GetData(urlLogin, filters);
-      console.log("Data received for saving:", data); // Log the data before saving
-  
-      // Menyimpan data ke IndexedDB dan menunggu hingga selesai
-      await saveDataToIndexedDB("Asatidz", data, "IDS");
-  
-      // Menampilkan data setelah selesai disimpan
-      await CariDataAsatidz();
-  
-      // Mengubah tampilan indikator loading
-      LabelDownload.style.display = 'block';
-      LoadingDownload.style.display = 'none';
-  
+        const filters = { Asatidz: {} };
+
+        // Progress naik perlahan saat proses berjalan
+        let progressValue = 0;
+        let progressInterval = setInterval(() => {
+            if (progressValue < 80) { // Batasi agar tidak langsung ke 100%
+                progressValue += 5;
+                progressBar.style.width = `${progressValue}%`;
+                progressBar.textContent = `${progressValue}%`;
+            }
+        }, 100); // Update setiap 100ms agar terlihat berjalan
+
+        // Mengambil data
+        const data = await GetData(urlLogin, filters);
+        console.log("Data received for saving:", data);
+
+        // Hentikan progress lambat
+        clearInterval(progressInterval);
+
+        // Simpan ke IndexedDB
+        await saveDataToIndexedDB("Asatidz", data, "IDS");
+
+        // Menampilkan data setelah selesai
+        await CariDataAsatidz();
+
+        // Progress langsung ke 100% dengan animasi cepat
+        await updateProgress(100);
+
+        // Sembunyikan progress bar setelah selesai
+        setTimeout(() => {
+            loadingContainer.style.top = '-50px';
+        }, 500);
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
-      
-      // Menyembunyikan indikator loading jika terjadi error
-      LabelDownload.style.display = 'block';
-      LoadingDownload.style.display = 'none';
+        console.error("Terjadi kesalahan:", error);
+        alert("Terjadi kesalahan saat mengunduh data. Silakan coba lagi.");
+
+        // Sembunyikan progress bar jika terjadi error
+        loadingContainer.style.top = '-50px';
     }
 }
+

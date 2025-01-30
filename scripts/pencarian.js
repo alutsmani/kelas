@@ -268,38 +268,69 @@ async function GetDataCari(url, json, sheetType = 'default', page = 1, pageSize 
 
 //----------------------------- 
 async function DownloadDiniyahCariMultiple() {
-  // Menampilkan indikator loading
-  const LabelDownload = document.getElementById('LabelDownloadCari');
-  const LoadingDownload = document.getElementById('LoadingDownloadCari');
+  const loadingContainer = document.getElementById('loadingContainer');
+  const progressBar = document.getElementById('progressBar');
 
-  LabelDownload.style.display = 'none';
-  LoadingDownload.style.display = 'block';
-
-  const filterDiniyah = document.getElementById('CariDiniyah').value;
-  const filters = { db: { Diniyah: filterDiniyah } }; // Kriteria filter
+  // Tampilkan loading dengan animasi turun ke 10px
+  loadingContainer.style.top = '10px';
 
   try {
-    // Loop untuk mengulang fungsi hingga mencapai page 4000
     for (let page = 1; page <= 5; page++) {
-      // Menunggu data selesai didapat
-      const data = await GetDataCari(urlLogin, filters, "db", page, 1000);
-      console.log(`Data received for page ${page}:`, data); // Log the data before saving
+      let finalTarget = page * 20; // Milestone setelah fetch selesai (20%, 40%, 60%, dst.)
+      let progressRunning = true;
 
-      // Menyimpan data ke IndexedDB dan menunggu hingga selesai
+      // Progress bertambah 1% setiap ~333ms (3x per detik)
+      let progressInterval = setInterval(() => {
+        let currentValue = parseInt(progressBar.style.width);
+        if (currentValue < finalTarget - 5) { // Batasi sebelum milestone
+          progressBar.style.width = `${currentValue + 1}%`;
+          progressBar.textContent = `${currentValue + 1}%`;
+        }
+      }, 333);
+
+      // Ambil data
+      const data = await GetDataCari(urlLogin, { db: { Diniyah: document.getElementById('CariDiniyah').value } }, "db", page, 1000);
+
+      clearInterval(progressInterval); // Hentikan pertumbuhan lambat
+
       await saveDataToIndexedDB("db", data, "IDS");
-
-      // Menampilkan data setelah selesai disimpan
       await CariData();
+      await tampilkanData();
+
+      // Naik cepat ke milestone berikutnya
+      await updateProgress(finalTarget);
     }
 
-    // Mengubah tampilan indikator loading setelah selesai
-    LabelDownload.style.display = 'block';
-    LoadingDownload.style.display = 'none';
+    // Sembunyikan loading setelah selesai
+    setTimeout(() => {
+      loadingContainer.style.top = '-50px';
+    }, 500);
   } catch (error) {
     console.error("Terjadi kesalahan:", error);
-    
-    // Menyembunyikan indikator loading jika terjadi error
-    LabelDownload.style.display = 'block';
-    LoadingDownload.style.display = 'none';
+    alert("Terjadi kesalahan saat mengunduh data. Silakan coba lagi.");
+    loadingContainer.style.top = '-50px';
   }
+}
+
+async function updateProgress(target) {
+  const progressBar = document.getElementById('progressBar');
+  return new Promise((resolve) => {
+    let currentValue = parseInt(progressBar.style.width);
+    let step = (target - currentValue) / 10; // Naik lebih cepat setelah fetch selesai
+
+    function animate() {
+      currentValue += step;
+      if (currentValue >= target) currentValue = target;
+      progressBar.style.width = `${currentValue}%`;
+      progressBar.textContent = `${Math.round(currentValue)}%`;
+
+      if (currentValue < target) {
+        requestAnimationFrame(animate);
+      } else {
+        resolve();
+      }
+    }
+
+    animate();
+  });
 }
