@@ -272,7 +272,7 @@ async function DownloadDiniyahCariMultiple() {
   const progressBar = document.getElementById('progressBar');
 
   // Tampilkan loading dengan animasi turun ke 10px
-  loadingContainer.style.top = '10px';
+  loadingContainer.style.top = '5px';
 
   try {
     for (let page = 1; page <= 5; page++) {
@@ -282,7 +282,7 @@ async function DownloadDiniyahCariMultiple() {
       // Progress bertambah 1% setiap ~333ms (3x per detik)
       let progressInterval = setInterval(() => {
         let currentValue = parseInt(progressBar.style.width);
-        if (currentValue < finalTarget - 5) { // Batasi sebelum milestone
+        if (currentValue < finalTarget - 3) { // Batasi sebelum milestone
           progressBar.style.width = `${currentValue + 1}%`;
           progressBar.textContent = `${currentValue + 1}%`;
         }
@@ -304,6 +304,9 @@ async function DownloadDiniyahCariMultiple() {
     // Sembunyikan loading setelah selesai
     setTimeout(() => {
       loadingContainer.style.top = '-50px';
+      setTimeout(() => {
+        progressBar.style.width = '0%';
+      }, 500);
     }, 500);
   } catch (error) {
     console.error("Terjadi kesalahan:", error);

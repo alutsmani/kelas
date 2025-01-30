@@ -319,7 +319,7 @@ async function DownloadDiniyahAsatidz() {
     const progressBar = document.getElementById('progressBar');
 
     // Tampilkan progress bar dengan animasi turun ke 10px
-    loadingContainer.style.top = '10px';
+    loadingContainer.style.top = '5px';
 
     try {
         const filters = { Asatidz: {} };
@@ -353,6 +353,9 @@ async function DownloadDiniyahAsatidz() {
         // Sembunyikan progress bar setelah selesai
         setTimeout(() => {
             loadingContainer.style.top = '-50px';
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+            }, 500);
         }, 500);
     } catch (error) {
         console.error("Terjadi kesalahan:", error);
