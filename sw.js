@@ -13,7 +13,7 @@ const ASSETS_TO_CACHE = [
     './gambar/iconpr.webp',
 
     './gambar/logo/icon-48x48.png',
-    './gambar/logo/icon-796x96.png',
+    './gambar/logo/icon-796x796.png',
     './gambar/logo/icon-192x192.png',
     './gambar/logo/icon-512x512.png',
 
@@ -34,7 +34,7 @@ const ASSETS_TO_CACHE = [
     './scripts/indexedDB.js',
     './scripts/login.js',
     './scripts/online.js',
-    './scripts/pencairan.js',
+    './scripts/pencarian.js',
     './scripts/tombol.js',
 
 
