@@ -123,3 +123,41 @@ self.addEventListener('fetch', (event) => {
             })
     );
 });
+
+
+function reloadCache() {
+    caches.open(CACHE_NAME).then((cache) => {
+        cache.keys().then((keys) => {
+            keys.forEach((request) => {
+                cache.delete(request);
+            });
+        });
+    });
+    location.reload();
+}
+
+function reinstallCache() {
+    caches.open(CACHE_NAME).then((cache) => {
+        cache.keys().then((keys) => {
+            keys.forEach((request) => {
+                cache.delete(request);
+            });
+        });
+    });
+    self.clients.openWindow('/');
+}
+
+function updateCache() {
+    reloadCache();
+    reinstallCache();
+}
+
+self.addEventListener('message', (event) => {
+    if (event.data === 'reload') {
+        reloadCache();
+    } else if (event.data === 'reinstall') {
+        reinstallCache();
+    } else if (event.data === 'update') {
+        updateCache();
+    }
+});

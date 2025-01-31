@@ -3,6 +3,16 @@ document.querySelector(".jsFilter").addEventListener("click", function (e) {
   document.querySelector(".filter-menu").classList.toggle("active");
 });
 
+document.querySelector(".reset").addEventListener("click", function (e) {
+  e.stopPropagation();
+  document.querySelector(".filter-menu").classList.toggle("active");
+});
+
+document.querySelector(".apply").addEventListener("click", function (e) {
+  e.stopPropagation();
+  document.querySelector(".filter-menu").classList.toggle("active");
+});
+
 document.addEventListener("click", function (e) {
   if (!e.target.closest(".filter-menu") && !e.target.classList.contains("jsFilter")) {
     document.querySelector(".filter-menu").classList.remove("active");
