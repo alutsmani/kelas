@@ -405,25 +405,33 @@
 
 </div>
 
-  <script>
+<script>
+  (async function registerServiceWorker() {
       // Cek dukungan Service Worker
-      if ('serviceWorker' in navigator) {
-        // Pastikan HTTPS atau localhost
-        if (location.protocol === 'https:' || location.hostname === 'localhost') {
-            navigator.serviceWorker.register('sw.js?v=2.0') // Versi untuk mencegah cache
-                .then(() => console.log('Service Worker berhasil didaftarkan.'))
-                .catch((error) => {
-                    console.error('Pendaftaran Service Worker gagal:', error.message);
-                    console.error('Detail error:', error);
-                });
-        } else {
-            console.warn('Service Worker hanya didukung di HTTPS atau localhost.');
-        }
-    } else {
-        console.warn('Browser Anda tidak mendukung Service Worker.');
-    }
+      if (!('serviceWorker' in navigator)) {
+          console.warn('Browser Anda tidak mendukung Service Worker.');
+          return;
+      }
 
-  </script>
+      // Pastikan dijalankan di HTTPS atau localhost
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+          console.warn('Service Worker hanya didukung di HTTPS atau localhost.');
+          return;
+      }
+
+      try {
+          // Gunakan timestamp untuk mencegah cache lama
+          const version = new Date().getTime();
+          const registration = await navigator.serviceWorker.register(`sw.js?v=${version}`);
+
+          console.log('✅ Service Worker berhasil didaftarkan:', registration);
+      } catch (error) {
+          console.error('❌ Pendaftaran Service Worker gagal:', error.message);
+          console.error('Detail error:', error);
+      }
+  })();
+</script>
+
 
  
 <!-- partial -->
