@@ -3,17 +3,27 @@ let isEditMode = false;
 function toggleEditMode() {
     isEditMode = !isEditMode;
     const inputs = document.querySelectorAll('.profile-content input');
+    const selects = document.querySelectorAll('.profile-content select');
     const editBtn = document.querySelector('.edit-btn');
+
+    document.querySelectorAll('.gelar').forEach(gelar => gelar.style.display = 'block');
 
     inputs.forEach(input => {
         input.disabled = !isEditMode;
     });
 
+    selects.forEach(select => {
+      select.disabled = !isEditMode;
+    });
+
     editBtn.innerHTML = isEditMode ? '<i class="fas fa-save"></i>' : '<i class="fas fa-pen"></i>';
+    
     if (isEditMode) {
       editBtn.addEventListener('click', function() {
         simpanData('Asatidz');
       });
+    } else {
+      document.querySelectorAll('.gelar').forEach(gelar => gelar.style.display = 'none');
     }
 }
 
@@ -67,10 +77,13 @@ async function selectUserProfil() {
         }
 
         // ---------- Menampilkan akses ke asatidz ----------
+        if (userData.Gender.startsWith('P')) {
+          document.querySelector('img').src = '../gambar/iconpr.webp';
+        }
 
-        document.querySelectorAll('#profile-form input').forEach(input => {
-            input.value = userData[input.id] || '-';
-        });
+       document.querySelectorAll('#profile-form input, #profile-form select, #akses-form input').forEach(input => {
+          input.value = userData[input.id] || '-';
+      });
 
         ubahNama();
         updateAccordionButton();
@@ -103,6 +116,8 @@ async function selectUserProfil() {
 
 //------------------------- Tombol ---------------------------
 async function simpanData(data) {
+  ubahNama();
+
   const jsonData = BuatJson(data, 'profile-form');
   console.log(jsonData);
   const storeName = data; // Nama tabel (object store)
@@ -124,10 +139,13 @@ async function simpanData(data) {
 }
 
 function ubahNama() {
+  const awal = document.getElementById('GelarAwal').value;
+  const akhir = document.getElementById('GelarAkhir').value;
+
   const nama = document.getElementById('Nama').value;
   const ids = document.getElementById('IDS').value;
 
-  document.querySelector('h1').textContent = nama;
+  document.querySelector('h1').textContent = `${awal}  ${nama}, ${akhir}`;
   document.querySelector('p').textContent = "ID : " + ids;
 }
 

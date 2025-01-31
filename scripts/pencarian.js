@@ -111,13 +111,43 @@ function addCariRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
         
     `;
 
-    newRow.addEventListener('click', () => {
-        
+    newRow.addEventListener('click', async () => {
         MasukkanData('db', ids, 'formDataModal');
-        
-        var modal = new bootstrap.Modal(document.getElementById('ModalKonfirmasi'));
+    
+        var modalElement = document.getElementById('ModalKonfirmasi');
+    
+        if (!modalElement) {
+            console.error('ModalKonfirmasi tidak ditemukan di DOM');
+            return;
+        }
+    
+        var modal = new bootstrap.Modal(modalElement);
+    
+        // Tunggu modal muncul jika di-load async
+        modalElement.addEventListener('shown.bs.modal', () => {
+            setTimeout(() => {
+                // Ambil ulang elemen karena bisa berubah
+                const selectDiniyah = modalElement.querySelector('select[name="Diniyah"]');
+                const inputKelas = modalElement.querySelector('input[name="Kelas"]');
+                const inputKel = modalElement.querySelector('input[name="Kel"]');
+    
+                // Ambil nilai dari filter
+                const diniyah = document.getElementById('filterDiniyah')?.value || '';
+                const kelas = document.getElementById('filterKelas')?.value || '';
+                const kel = document.getElementById('filterKel')?.value || '';
+    
+                console.log(diniyah + ' ' + kelas + '.' + kel);
+    
+                if (selectDiniyah) selectDiniyah.value = diniyah;
+                if (inputKelas) inputKelas.value = kelas;
+                if (inputKel) inputKel.value = kel;
+            }, 10); // Delay untuk memastikan elemen telah dimuat
+        });
+    
         modal.show();
     });
+  
+  
 
     productsArea.appendChild(newRow);
 }
@@ -353,7 +383,6 @@ async function updateProgress(target) {
  resolve();
       }
     }
-
     animate();
   });
 }
