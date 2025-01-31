@@ -83,7 +83,7 @@ function clearData() {
         // ---------- Menampilkan akses ke Super Admin ----------
         if (userData.Status.includes("Super Admin")) {
           console.log("Super Admin");
-          document.getElementById('filterDiniyah').addEventListener('change', SelectDiniyah);
+          document.getElementById('filterDiniyah').addEventListener('change', SelectFilterDiniyah);
 
         } else {
           let select = document.getElementById('filterDiniyah');

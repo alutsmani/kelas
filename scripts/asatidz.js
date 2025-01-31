@@ -1,4 +1,4 @@
-function addProductRowAsatidz(nama, ids, akses, diniyah, formal, status, imageUrl) {
+function addProductRowAsatidz(nomor, nama, ids, akses, diniyah, formal, status, imageUrl) {
     const productsArea = document.getElementById('SantriArea');
     const newRow = document.createElement('div');
     newRow.classList.add('products-row');
@@ -13,7 +13,7 @@ function addProductRowAsatidz(nama, ids, akses, diniyah, formal, status, imageUr
       </button>
       <div class="product-cell image">
         <img src="${imageUrl || 'https://via.placeholder.com/150'}" alt="product">
-        <span>${nama || ''}</span>
+        <span>${nomor}. ${nama || ''}</span>
       </div>
       <div class="product-cell stock">
         <span class="cell-label">IDS:</span>${ids || '-'}</div>
@@ -54,9 +54,10 @@ function tampilkanAsatidz() {
         const limitedData = data.slice(0, 100);
   
         // Loop melalui data dan tampilkan menggunakan addProductRow
-        limitedData.forEach(function (item) {
+        limitedData.forEach(function (item, index) {
           const imageUrl = item.IDS.startsWith('3') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
           addProductRowAsatidz(
+            index + 1, // Nomor
             item.Nama, // IDS
             item.IDS, // Nama
             item.KelasMD + ' ' + '.' + item.KelMD || '', // Diniyah (jika ada)

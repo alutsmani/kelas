@@ -97,7 +97,7 @@ async function naikkelas() {
 
 
 
-function SelectDiniyah() {
+function SelectFilterDiniyah() {
   const Diniyah = document.getElementById('filterDiniyah');
   const Kelas = document.getElementById('filterKelas');
   const Kel = document.getElementById('filterKel');

@@ -1,4 +1,4 @@
-function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
+function addProductRow(nomor, ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
     const productsArea = document.getElementById('SantriArea');
     const newRow = document.createElement('div');
     newRow.classList.add('products-row');
@@ -13,7 +13,7 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
       </button>
       <div class="product-cell image">
         <img src="${imageUrl || 'https://via.placeholder.com/150'}" alt="product">
-        <span>${nama || ''}</span>
+        <span>${nomor}. ${nama || ''}</span>
       </div>
       <div class="product-cell stock">
         <span class="cell-label">IDS:</span>${ids || '-'}</div>
@@ -30,8 +30,6 @@ function addProductRow(ids, nama, kelas, status, ikhtibar, kamar, imageUrl) {
     `;
 
     newRow.addEventListener('click', () => {
-        SelectDiniyah();
-        SelectFormal();
         MasukkanData('db', ids, 'formData');
 
         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));

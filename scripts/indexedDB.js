@@ -185,7 +185,7 @@ function tampilkanData() {
       const limitedData = data.slice(0, 100);
 
       // Loop melalui data dan tampilkan menggunakan addProductRow
-      limitedData.forEach(function (item) {
+      limitedData.forEach(function (item, index) {
         getDataByIDSantri(item.IDS, ikhtibarStoreName, 'ID')
           .then(function (ikhtibarData) {
             if (ikhtibarData) {
@@ -198,6 +198,7 @@ function tampilkanData() {
 
             const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
             addProductRow(
+              index + 1, // Nomor urut
               item.IDS, // IDS
               item.Nama, // Nama
               item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
@@ -211,6 +212,7 @@ function tampilkanData() {
             console.error('Error fetching Ikhtibar data:', error);
           });
       });
+
     })
     .catch(function (error) {
       console.error('Error fetching data from IndexedDB:', error);

@@ -26,7 +26,7 @@
   --app-content-secondary-color: #f3f6fd;
   --app-content-main-color: #1f1c2e;
   --sidebar-link: #1f1c2e;
-  --sidebar-hover-link: rgba(195, 207, 244, 0.5);
+  --sidebar-hover-link: rgb(195, 207, 244);
   --sidebar-active-link: rgba(195, 207, 244, 1);
   --sidebar-main-color: #1f1c2e;
   --filter-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -147,8 +147,8 @@ body {
 .menu-akun {
   display: none; /* Default disembunyikan */
   position: absolute; /* Agar bisa diatur posisi relatif terhadap parent */
-  top: -90px;
-  right: 10px; /* Geser ke kanan */
+  top: -130px;
+  right: -20%; /* Geser ke kanan */
   background-color: var(--sidebar-hover-link); /* Warna latar belakang menu */
   color: var(--sidebar-main-color); /* Warna teks */
   border: 0px solid var(--table-border); /* Garis pembatas */
