@@ -13,7 +13,7 @@ const ASSETS_TO_CACHE = [
     './gambar/iconpr.webp',
 
     './gambar/logo/icon-48x48.png',
-    './gambar/logo/icon-796x796.png',
+    './gambar/logo/icon-96x96.png',
     './gambar/logo/icon-192x192.png',
     './gambar/logo/icon-512x512.png',
 
