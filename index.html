@@ -405,6 +405,25 @@
 
 </div>
 
+  <script>
+      // Cek dukungan Service Worker
+      if ('serviceWorker' in navigator) {
+        // Pastikan HTTPS atau localhost
+        if (location.protocol === 'https:' || location.hostname === 'localhost') {
+            navigator.serviceWorker.register('sw.js?v=2.0') // Versi untuk mencegah cache
+                .then(() => console.log('Service Worker berhasil didaftarkan.'))
+                .catch((error) => {
+                    console.error('Pendaftaran Service Worker gagal:', error.message);
+                    console.error('Detail error:', error);
+                });
+        } else {
+            console.warn('Service Worker hanya didukung di HTTPS atau localhost.');
+        }
+    } else {
+        console.warn('Browser Anda tidak mendukung Service Worker.');
+    }
+
+  </script>
 
  
 <!-- partial -->
@@ -413,7 +432,7 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-
+  <script  src="./sw.js"></script>
   <script  src="./script.js"></script>
   <script  src="./scripts/akun.js"></script>
   <script  src="./scripts/online.js"></script>
