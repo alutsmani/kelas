@@ -48,18 +48,26 @@ self.addEventListener('install', (event) => {
     console.log('[Service Worker] Installing...');
 
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('[Service Worker] Cache opened:', CACHE_NAME);
-                return cache.addAll(ASSETS_TO_CACHE)
-                    .then(() => console.log('[Service Worker] Assets cached successfully'))
-                    .catch((error) => {
-                        console.error('[Service Worker] Error caching assets:', error);
-                    });
-            })
-            .catch((error) => {
-                console.error('[Service Worker] Error opening cache:', error);
-            })
+        caches.open(CACHE_NAME).then(async (cache) => {
+            console.log('[Service Worker] Cache opened:', CACHE_NAME);
+            try {
+                const cachePromises = ASSETS_TO_CACHE.map(async (asset) => {
+                    try {
+                        const response = await fetch(asset, { cache: 'no-store' });
+                        if (!response.ok) {
+                            throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+                        }
+                        return cache.put(asset, response);
+                    } catch (err) {
+                        console.error(`[Service Worker] Failed to cache ${asset}:`, err);
+                    }
+                });
+                await Promise.all(cachePromises);
+                console.log('[Service Worker] All assets cached successfully');
+            } catch (err) {
+                console.error('[Service Worker] Error during caching:', err);
+            }
+        })
     );
 });
 
