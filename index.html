@@ -290,15 +290,16 @@
 
 
               <label style="display: none;">Status Santri</label>
-              <select id="filterStatusSantri" style="display: none;">
+              <select id="filterStatusSantri">
                 <option value="">All</option>
                 <option value="Mukim">Mukim / Mondok</option>
-                <option value="Khoriji">Khoriji / Nyulok</option>                     
+                <option value="Khoriji">Khoriji / Nyulok</option>
+                <option value="Boyong">Boyong</option>                       
               </select>
 
               <div class="filter-menu-buttons">
-                <button class="filter-button" onclick="clearSiteCache()">
-                
+                <button class="filter-button reset" ondblclick="location.reload()">
+                  Reload
                 </button>
                 
                 <button class="filter-button apply" onclick="tampilkanData()">

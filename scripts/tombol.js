@@ -74,12 +74,19 @@ async function simpan(data) {
 }
 
 async function naikkelas() {
+  const formData = document.getElementById('formData');
+  const inputs = formData.querySelectorAll('input');
+
+  inputs.forEach(function(input) {
+    if (input.id === 'KelasMD' || input.id === 'KelMD') {
+      input.value = '';
+    }
+  });
+
   const jsonData = BuatJson('db', 'formData');
   console.log(jsonData);
   const storeName = 'db'; // Nama tabel (object store)
 
-  jsonData.KelasMD = "";
-  jsonData.KelMD = "";
 
   try {
     const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
