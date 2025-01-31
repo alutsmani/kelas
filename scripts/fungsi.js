@@ -195,12 +195,20 @@ function BuatJson(header, idForm) {
     const elements = form.querySelectorAll('input, select');
     elements.forEach((el) => {
         const key = el.id; // Gunakan ID sebagai header
-        const value = el.value; // Ambil nilai dari input atau select
+        let value = el.value; // Ambil nilai dari input atau select
+
+        if (key.startsWith("Tanggal") && value) {
+            const date = new Date(value);
+            if (!isNaN(date)) {
+                value = date.toISOString().split("T")[0]; // Format yyyy-mm-dd
+            }
+        }
 
         if (key) {
             formData[key] = value || ""; // Jika nilai kosong, isi dengan string kosong
         }
     });
+
 
     // Tambahkan objek hasil form ke dalam array
     jsonResult[header].push(formData);

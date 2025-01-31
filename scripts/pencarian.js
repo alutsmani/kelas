@@ -311,8 +311,8 @@ async function DownloadDiniyahCariMultiple() {
   loadingContainer.style.top = '5px';
 
   try {
-    for (let page = 1; page <= 5; page++) {
-      let finalTarget = page * 20; // Milestone setelah fetch selesai (20%, 40%, 60%, dst.)
+    for (let page = 1; page <= 6; page++) {
+      let finalTarget = page * 16; // Milestone setelah fetch selesai (20%, 40%, 60%, dst.)
       
       // Progress bertambah 1% setiap ~333ms (3x per detik)
       let progressInterval = setInterval(() => {
@@ -324,7 +324,7 @@ async function DownloadDiniyahCariMultiple() {
       }, 333);
 
       // Ambil data
-      const data = await GetDataCari(urlLogin, { db: { Diniyah: document.getElementById('CariDiniyah').value } }, "db", page, 1000);
+      const data = await GetDataCari(urlLogin, { db: { Diniyah: document.getElementById('CariDiniyah').value } }, "db", page, 600);
       
       clearInterval(progressInterval); // Hentikan pertumbuhan lambat
 
@@ -380,7 +380,7 @@ async function updateProgress(target) {
       if (currentValue < target) {
         requestAnimationFrame(animate);
       } else {
- resolve();
+        resolve();
       }
     }
     animate();

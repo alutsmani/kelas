@@ -147,7 +147,7 @@ body {
 .menu-akun {
   display: none; /* Default disembunyikan */
   position: absolute; /* Agar bisa diatur posisi relatif terhadap parent */
-  top: calc(100% - 130px);
+  top: -90px;
   right: 10px; /* Geser ke kanan */
   background-color: var(--sidebar-hover-link); /* Warna latar belakang menu */
   color: var(--sidebar-main-color); /* Warna teks */
