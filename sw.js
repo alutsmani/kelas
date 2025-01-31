@@ -44,20 +44,25 @@ const ASSETS_TO_CACHE = [
     './styles/ofcanvass.css',
 ];
 
-// Install event - Cache semua resource
 self.addEventListener('install', (event) => {
     console.log('[Service Worker] Installing...');
+
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('[Service Worker] Caching all assets');
-                return cache.addAll(ASSETS_TO_CACHE);
+                console.log('[Service Worker] Cache opened:', CACHE_NAME);
+                return cache.addAll(ASSETS_TO_CACHE)
+                    .then(() => console.log('[Service Worker] Assets cached successfully'))
+                    .catch((error) => {
+                        console.error('[Service Worker] Error caching assets:', error);
+                    });
             })
             .catch((error) => {
-                console.error('[Service Worker] Error during install:', error);
+                console.error('[Service Worker] Error opening cache:', error);
             })
     );
 });
+
 
 // Activate event - Hapus cache lama dan force update
 self.addEventListener('activate', (event) => {
