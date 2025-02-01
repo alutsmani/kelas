@@ -13,14 +13,13 @@ function CariSemuaSantri(storeName) {
         getAllRequest.onsuccess = function (event) {
           const data = event.target.result;
   
-          const filterDiniyah = document.getElementById('CariDiniyah').value;
+          //const filterDiniyah = document.getElementById('CariDiniyah').value;
           const filterStatusSantri = document.getElementById('CariStatusSantri').value;
   
           const filterCariNama = document.getElementById('CariNama').value;
   
           const filteredData = data.filter(item => {
-          return (filterDiniyah === '' || item.Diniyah.toLowerCase().includes(filterDiniyah.toLowerCase())) &&
-                  (filterStatusSantri === '' || item.StatusSantri.toLowerCase().includes(filterStatusSantri.toLowerCase())) &&
+          return (filterStatusSantri === '' || item.StatusSantri.toLowerCase().includes(filterStatusSantri.toLowerCase())) &&
                   
                   (filterCariNama === '' || item.Nama.toLowerCase().includes(filterCariNama.toLowerCase()));
           });
@@ -60,14 +59,14 @@ function CariData() {
           
   
             const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
-            addCariRow(
-            item.IDS, // IDS
-            item.Nama, // Nama
-            item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
-            item.Status || '', // Status (jika ada)
-            item.Ikhtibar || '', // Ikhtibar (jika ada)
-            item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
-            imageUrl // URL gambar berdasarkan IDS
+              addCariRow(
+              item.IDS, // IDS
+              item.Nama, // Nama
+              item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
+              item.Status || '', // Status (jika ada)
+              item.Ikhtibar || '', // Ikhtibar (jika ada)
+              item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
+              imageUrl // URL gambar berdasarkan IDS
             );
             
             

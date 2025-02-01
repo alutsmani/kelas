@@ -74,22 +74,41 @@ async function simpan(data) {
 }
 
 async function naikkelas() {
-  const formData = document.getElementById('formData');
-  const inputs = formData.querySelectorAll('input');
 
-  inputs.forEach(function(input) {
-    if (input.id === 'KelasMD' || input.id === 'KelMD') {
-      input.value = '';
-    }
-  });
-
-  const jsonData = BuatJson('db', 'formData');
+  const jsonData = BuatJson('Diniyah', 'formData');
   console.log(jsonData);
-  const storeName = 'db'; // Nama tabel (object store)
+  const storeName = 'Diniyah'; // Nama tabel (object store)
 
+  jsonData.Diniyah[0].SampaiMasehi = new Date().toISOString().slice(0, 10);
+  jsonData.Diniyah[0].KetSampai = "Lulus";
+
+  const Lembaga = ['Isti\'dadiyah', 'Ula', 'Wustha', 'Ulya', 'Guru Tugas'].indexOf(jsonData.Diniyah[0].Diniyah);
+  jsonData.Diniyah[0].ID = `${jsonData.Diniyah[0].IDS}-${Lembaga}-${jsonData.Diniyah[0].KelasMD}-${jsonData.Diniyah[0].KelMD}`;
 
   try {
-    const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
+    const result = await saveOrUpdateData(storeName, jsonData, 'ID');
+    console.log(result);
+    tampilkanData();
+    //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
+  } catch (error) {
+    console.error(error);
+  }
+
+  try {
+    const response = await sendPostWithGet(jsonData);
+    console.log("Respons dari server:", response);
+  } catch (error) {
+      console.error("Kesalahan saat memproses data:", error);
+  }
+
+  const jsonDB = BuatJson('db', 'formData');
+  console.log(jsonDB);
+
+  jsonData.db[0].KelasMD = "";
+  jsonData.db[0].KelMD = "";
+
+  try {
+    const result = await saveOrUpdateData('db', jsonDB, 'IDS');
     console.log(result);
     tampilkanData();
     //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
@@ -98,8 +117,6 @@ async function naikkelas() {
   }
 
 }
-
-
 
 
 

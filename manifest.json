@@ -1,7 +1,8 @@
 {
     "name": "Al-Utsmani",
     "short_name": "Al-Utsmani",
-    "description": "Aplikasi PWA untuk Update data Asatidz dan Santri Al-Utsmani.",
+    "categories": ["education", "reference"],
+    "description": "Aplikasi PWA Al-Utsmani adalah platform digital yang memungkinkan pengguna untuk mengupdate data Asatidz dan Santri Al-Utsmani dengan mudah dan efisien.",
     "start_url": "./",
     "display": "standalone",
     "orientation": "portrait",
@@ -32,6 +33,11 @@
     ],
 
     "screenshots": [
+        {
+            "src": "./gambar/ss/ss4.png",
+            "sizes": "640x1136",
+            "type": "image/png"
+        },
         {
             "src": "./gambar/ss/ss1.png",
             "sizes": "640x1136",

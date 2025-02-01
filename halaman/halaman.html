@@ -23,7 +23,7 @@
             <option value="Khoriji">Khoriji / Nyulok</option>                     
           </select>
 
-          <select class="action-button" id="CariDiniyah" onchange="CariData()">
+          <select class="action-button" id="CariDiniyah" onchange="CariData()" style="display: none;"">
             <option value="Tidak">Tidak Sekolah *</option>
             <option value="Isti'dadiyah">Isti'dadiyah</option>
             <option value="Ula">Ula</option>
@@ -31,7 +31,7 @@
             <option value="Ulya">Ulya</option>
           </select>
           
-          <button id="btnDownloadCari" onclick="DownloadDiniyahCariMultiple()" class="action-button" type="button" style="margin-left: -20px;">
+          <button id="btnDownloadCari" onclick="DownloadDiniyahCariMultiple()" class="action-button" type="button">
             <svg id="LabelDownloadCari" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download" style="display: flex;">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
@@ -109,8 +109,8 @@
     <h1>Form Untuk santri</h1>
     <form id="formData">
         <dl class="row">
-            <div class="form-floating flex-grow-1">
-                <input type="text" class="form-control custom-input" id="IDS" placeholder="IDS" disabled>
+            <div class="form-floating flex-grow-1" style="display: none;">
+                <input type="text" class="form-control custom-input" id="IDS" placeholder="IDS">
                 <label for="IDS">IDS</label>
             </div>
           
@@ -156,7 +156,7 @@
                 <label for="NoKamar">No Kamar</label>
             </div>
         </div>
-        
+
         <div class="d-flex gap-2" style="padding-top: 30px;">
             <div class="form-floating flex-grow-1">
                 <select class="form-select form-control custom-input" id="Diniyah">
@@ -164,6 +164,7 @@
                     <option value="Ula">Ula</option>
                     <option value="Wustha">Wustha</option>
                     <option value="Ulya">Ulya</option>
+                    <option value="Guru Tugas">Guru Tugas</option>
                     <option value="Tidak Sekolah">Tidak Sekolah</option>
                 </select>
                 <label for="Diniyah">Diniyah</label>
@@ -406,12 +407,11 @@
     </form>
 
 
-    <h1>Form Untuk Guru</h1>
-    
+    <h1>Form Untuk Guru</h1>    
     <form id="formDataAsatidz">
         <div class="d-flex gap-2">
             <div class="form-floating flex-grow-1">
-                <input type="text" class="form-control custom-input" id="IDS" placeholder="Daerah" disabled>
+                <input type="text" class="form-control custom-input" id="IDS" disabled>
                 <label for="IDS">IDS</label>
             </div>
             <!--
@@ -420,7 +420,7 @@
         </div>
         <br>
         <div class="form-floating flex-grow-1">
-            <input type="text" class="form-control custom-input" id="Nama" placeholder="Daerah">
+            <input type="text" class="form-control custom-input" id="Nama">
             <label for="Nama">Nama</label>
         </div>
         

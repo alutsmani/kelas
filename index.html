@@ -20,6 +20,8 @@
   <!-- Mendeklarasikan warna yang muncul pada address bar Chrome versi seluler -->
   <meta name="theme-color" content="#414f57" />
   <!-- Mendeklarasikan ikon untuk iOS -->
+  <meta name="mobile-web-app-capable" content="yes">
+  
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Nama Situs" />
@@ -267,13 +269,22 @@
               </div>
 
               <div class="filter-menu-buttons">
-                <label for="filterKelas" class="form-label" style="padding-right: 30%;">Ikhtibar</label>
+                <label for="DownloadIkhtibar" class="form-label" style="padding-right: 30%;">Ikhtibar</label>
                 
                 <button class="app-content-headerButton action-button" onclick="DownloadIkhtibar()">
                   <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
                   <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
                 </button>
-            </div>
+              </div>
+
+              <div class="filter-menu-buttons">
+                <label for="DownloadKelas" class="form-label" style="padding-right: 30%;">Kelas</label>
+                
+                <button class="app-content-headerButton action-button" onclick="DownloadKelas()">
+                  <i id="ReloadIconKelas" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
+                  <span id="LoadingReloadKelas" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                </button>
+              </div>
 
               <label style="margin-top: 20px;">Filter Data</label>
 
@@ -405,10 +416,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body" id="canvasBawahBody">
+        
         <form id="formData">
-
         </form>
-
 
       </div>
       <div class="offcanvas-footer d-flex justify-content-end gap-2">

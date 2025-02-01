@@ -176,8 +176,7 @@ function tampilkanData() {
   addHeader(); // Tambahkan header tabel
 
   const storeName = 'db'; // Nama tabel (object store)
-  const ikhtibarStoreName = 'Ikhtibar'; // Nama tabel Ikhtibar
-
+  
   // Ambil semua data dari IndexedDB
   getFilteredFromIndexedDB(storeName)
     .then(function (data) {
@@ -186,38 +185,140 @@ function tampilkanData() {
 
       // Loop melalui data dan tampilkan menggunakan addProductRow
       limitedData.forEach(function (item, index) {
-        getDataByIDSantri(item.IDS, ikhtibarStoreName, 'ID')
-          .then(function (ikhtibarData) {
-            if (ikhtibarData) {
-              item.Ikhtibar = ikhtibarData.Ikhtibar.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
-              item.Status = ikhtibarData.Ket;
-            } else {
-              item.Ikhtibar = '-';
-              item.Status = 'Belum';
-            }
-
-            const imageUrl = item.IDS.startsWith('1') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
-            addProductRow(
-              index + 1, // Nomor urut
-              item.IDS, // IDS
-              item.Nama, // Nama
-              item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
-              item.Status || '', // Status (jika ada)
-              item.Ikhtibar || '', // Ikhtibar (jika ada)
-              item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
-              imageUrl // URL gambar berdasarkan IDS
-            );
-          })
-          .catch(function (error) {
-            console.error('Error fetching Ikhtibar data:', error);
-          });
+        const imageUrl = item.Gender.startsWith('L') ? './gambar/iconlk.webp' : './gambar/iconpr.webp';
+        addProductRow(
+          index + 1, // Nomor urut
+          item.IDS, // IDS
+          item.Nama, // Nama
+          item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
+          item.IkhtibarKet || 'Belum', // Status (jika ada)
+          item.Ikhtibar || '-', // Ikhtibar (jika ada)
+          item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
+          imageUrl // URL gambar berdasarkan IDS
+        );
       });
-
     })
+
+
     .catch(function (error) {
       console.error('Error fetching data from IndexedDB:', error);
     });
 }
+
+
+async function ambilDataIkhtibar() {
+
+  const storeNameIkhtibar = 'Ikhtibar'; // Nama tabel (object store) Ikhtibar
+  const storeNamedb = 'db'; // Nama tabel (object store) db
+
+  try {
+    // Pastikan OpenDatabase ada
+    if (typeof openDatabase !== 'function') {
+      throw new Error('OpenDatabase function is not defined');
+    }
+
+    // Memastikan database dibuka dengan store yang benar
+    const db = await openDatabase(storeNameIkhtibar, 'ID');
+
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeNameIkhtibar, 'readonly');
+      const store = transaction.objectStore(storeNameIkhtibar);
+      const getAllRequest = store.getAll();
+
+      getAllRequest.onsuccess = async function (event) {
+        const dataIkhtibar = event.target.result;
+
+        if (dataIkhtibar) {
+          // Ambil data dari store db
+          const dbData = await getAllDataFromIndexedDB(storeNamedb);
+
+          // Loop melalui data Ikhtibar dan masukkan ke store db
+          dataIkhtibar.forEach(item => {
+            const existingData = dbData.find(data => data.IDS === item.IDSantri);
+
+            if (existingData) {
+              existingData.Ikhtibar = item.Ikhtibar;
+              existingData.IkhtibarKet = item.Ket;
+            }
+          });
+
+          // Simpan data ke store db
+          await saveDataToIndexedDB(storeNamedb, { db: dbData });
+
+          resolve('Data Ikhtibar berhasil diambil dan dimasukkan ke store db');
+        } else {
+          reject('No data found in store Ikhtibar');
+        }
+      };
+
+      getAllRequest.onerror = function () {
+        reject('Error fetching data from IndexedDB');
+      };
+    });
+  } catch (error) {
+    console.error('Error: ', error);  // Untuk debugging lebih lanjut
+    throw new Error('Error opening or ensuring database: ' + error.message);
+  }
+}
+
+async function ambilDataKelas() {
+
+  const storeNameIkhtibar = 'Diniyah'; // Nama tabel (object store) Ikhtibar
+  const storeNamedb = 'db'; // Nama tabel (object store) db
+
+  try {
+    // Pastikan OpenDatabase ada
+    if (typeof openDatabase !== 'function') {
+      throw new Error('OpenDatabase function is not defined');
+    }
+
+    // Memastikan database dibuka dengan store yang benar
+    const db = await openDatabase(storeNameIkhtibar, 'ID');
+
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeNameIkhtibar, 'readonly');
+      const store = transaction.objectStore(storeNameIkhtibar);
+      const getAllRequest = store.getAll();
+
+      getAllRequest.onsuccess = async function (event) {
+        const dataIkhtibar = event.target.result;
+
+        if (dataIkhtibar) {
+          // Ambil data dari store db
+          const dbData = await getAllDataFromIndexedDB(storeNamedb);
+
+          // Loop melalui data Ikhtibar dan masukkan ke store db
+          dataIkhtibar.forEach(item => {
+            const existingData = dbData.find(data => data.IDS === item.IDSantri);
+
+            if (existingData) {
+              existingData.Diniyah = item.Diniyah;
+              existingData.KelasMD = item.Kelas;
+              existingData.KelMD = item.Kel;
+            }
+          });
+
+          // Simpan data ke store db
+          await saveDataToIndexedDB(storeNamedb, { db: dbData });
+
+          resolve('Data Ikhtibar berhasil diambil dan dimasukkan ke store db');
+        } else {
+          reject('No data found in store Ikhtibar');
+        }
+      };
+
+      getAllRequest.onerror = function () {
+        reject('Error fetching data from IndexedDB');
+      };
+    });
+  } catch (error) {
+    console.error('Error: ', error);  // Untuk debugging lebih lanjut
+    throw new Error('Error opening or ensuring database: ' + error.message);
+  }
+}
+
+
+
 
 //storeName, jsonData, primaryKey = 'IDS'
 async function getDataByIDSantri(IDSantri, storeName, primaryKey = 'IDS') {

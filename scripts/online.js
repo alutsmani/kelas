@@ -108,6 +108,7 @@ async function DownloadIkhtibar() {
     await saveDataToIndexedDB("Ikhtibar", data, "ID");
 
     // Menampilkan data setelah selesai disimpan
+    await ambilDataIkhtibar();
     await tampilkanData();
     
     // Mengubah tampilan indikator loading
@@ -122,6 +123,42 @@ async function DownloadIkhtibar() {
     LoadingDownload.style.display = 'none';
   }
 }
+
+async function DownloadKelas() {
+  // Menampilkan indikator loading
+  const LabelDownload = document.getElementById('ReloadIconKelas');
+  const LoadingDownload = document.getElementById('LoadingReloadKelas');
+
+  LabelDownload.style.display = 'none';
+  LoadingDownload.style.display = 'block';
+
+  const filterDiniyah = document.getElementById('filterDiniyah').value;
+  const filters = { Diniyah: { Diniyah: filterDiniyah, KetSampai: "Sekarang" } }; // Kriteria filter
+  
+  try {
+    const data = await GetData(urlLogin, filters); // Menunggu data selesai didapat
+    console.log("Data received for saving:", data); // Log the data before saving
+
+    // Menyimpan data ke IndexedDB dan menunggu hingga selesai
+    await saveDataToIndexedDB("Diniyah", data, "ID");
+
+    // Menampilkan data setelah selesai disimpan
+    await ambilDataKelas();
+    await tampilkanData();
+    
+    // Mengubah tampilan indikator loading
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+
+  } catch (error) {
+    console.error("Terjadi kesalahan:", error);
+    
+    // Menyembunyikan indikator loading jika terjadi error
+    LabelDownload.style.display = 'block';
+    LoadingDownload.style.display = 'none';
+  }
+}
+
 
 const urlLogin = 'https://script.google.com/macros/s/AKfycbwj1K6lkk5qU6BNPgIU1svQn8aqFQpZS8TvdxuigmkR37CunuZ-ataXIjPv0VnXs9M0/exec';
 
