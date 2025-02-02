@@ -127,7 +127,7 @@ body {
   background-color: var(--sidebar);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 350px;
+  /*max-width: 350px;*/
   padding: 0px;
 }
 
@@ -199,7 +199,7 @@ body {
 .akses-content {
   background-color: var(--sidebar);
   overflow-y: auto;
-  max-height: calc(100vh - 260px);
+  /*max-height: calc(100vh - 260px);*/
   padding: 20px;
   border-radius: 10px;
   scrollbar-width: thin;
