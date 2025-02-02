@@ -127,9 +127,30 @@
         <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
       </button>
     -->
-      <button type="button" class="btn btn-warning btn-sm app-content-headerButton" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
-        Saving > <span class="badge rounded-pill text-bg-info">4</span>
-      </button>
+    <button type="button" class="btn btn-warning btn-sm app-content-headerButton" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
+      <i class="bi bi-save"></i> <span class="badge rounded-pill text-bg-info">0</span>
+    </button>
+
+
+      <div class="modal modal-sm" tabindex="-1" id="ModalNotifikasi" style="position: fixed; top: 0; right: 20px;">
+        <div class="modal-dialog" style="position: absolute; top: 0; right: 20px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title">Proses</h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Proses data yg belum tersimpan akan muncul di sini.</p>
+            </div>
+            <div class="modal-footer modal-footer-sm">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+              <button type="button" id="SimpanSemuaLocal" class="btn btn-primary btn-sm" onclick="simpanSemua()" disabled>Simpan Ulang</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
     
     

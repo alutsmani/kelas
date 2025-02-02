@@ -190,10 +190,10 @@ function tampilkanData() {
           index + 1, // Nomor urut
           item.IDS, // IDS
           item.Nama, // Nama
-          item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
+          item.Diniyah ? item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD : '', // Kelas (jika ada)
           item.IkhtibarKet || 'Belum', // Status (jika ada)
           item.Ikhtibar || '-', // Ikhtibar (jika ada)
-          item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
+          item.Daerah ? item.Daerah + '.' + item.NoKamar : '', // Kamar (jika ada)
           imageUrl // URL gambar berdasarkan IDS
         );
       });
@@ -450,8 +450,10 @@ function MasukkanData(storeName, IDS, formId) {
 
           // Iterate through the keys of the data object
           Object.keys(data).forEach((key) => {
-            const inputElement = form.querySelector(`#${key}`);
-
+            // Menggunakan escape character untuk ID yang mengandung spasi
+            const escapedKey = key.replace(/ /g, '\\ ');
+            const inputElement = form.querySelector(`#${escapedKey}`);
+          
             if (inputElement) {
               // Jika elemen adalah input atau textarea
               if (inputElement.tagName === 'INPUT' || inputElement.tagName === 'TEXTAREA') {

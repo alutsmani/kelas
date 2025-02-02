@@ -172,6 +172,14 @@ const urlUWATA = 'https://script.google.com/macros/s/AKfycbwf3kFQ7rAgZf9g8gZDg6H
  * @returns {Promise<Object>} Respons JSON dari server.
  */
 async function sendPostWithGet(jsonData) {
+
+  if (jsonData.db && jsonData.db[0] && jsonData.db[0].IDS) {
+    localStorage.setItem(jsonData.db[0].IDS, JSON.stringify(jsonData));
+  } else if (jsonData.Asatidz && jsonData.Asatidz[0] && jsonData.Asatidz[0].IDS) {
+    localStorage.setItem(jsonData.Asatidz[0].IDS, JSON.stringify(jsonData));
+  }
+  updateBadgeCount();
+
   try {
       // Cek koneksi internet
       if (!navigator.onLine) {
@@ -192,12 +200,139 @@ async function sendPostWithGet(jsonData) {
       }
 
       const data = await response.json();
+      
+      if (jsonData.db && jsonData.db[0] && jsonData.db[0].IDS) {
+        localStorage.removeItem(jsonData.db[0].IDS);
+      } else if (jsonData.Asatidz && jsonData.Asatidz[0] && jsonData.Asatidz[0].IDS) {
+        localStorage.removeItem(jsonData.Asatidz[0].IDS);
+      }
+
+      updateBadgeCount();
+      updateModalContent();
+
       return data;
   } catch (error) {
       console.error("Kesalahan saat mengirim data:", error);
       throw error;
   }
 }
+
+function updateBadgeCount() {
+  let count = 0;
+  
+  // Loop melalui semua item di localStorage
+  for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      
+      // Lewati key yang bernama 'IDS'
+      if (key !== 'IDS') {
+          count++;
+      }
+  }
+  
+  // Update angka dalam badge
+  const badge = document.querySelector(".app-content-headerButton .badge");
+  if (badge) {
+      badge.textContent = count;
+  }
+}
+
+// Panggil fungsi saat halaman dimuat
+document.addEventListener("DOMContentLoaded", updateBadgeCount);
+
+function updateBadgeCount() {
+  let count = 0;
+  
+  // Loop melalui semua item di localStorage
+  for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      
+      // Lewati key yang bernama 'IDS'
+      if (key !== 'IDS') {
+          count++;
+      }
+  }
+  
+  // Update angka dalam badge
+  const badge = document.querySelector(".app-content-headerButton .badge");
+  const simpan = document.getElementById('SimpanSemuaLocal')
+  
+
+    if (badge) {
+      badge.textContent = count;
+      if (simpan) {
+        simpan.disabled = count === 0;
+      }
+    }
+  }
+
+
+// Panggil fungsi saat halaman dimuat
+document.addEventListener("DOMContentLoaded", updateBadgeCount);
+
+function updateModalContent() {
+  const modalBody = document.querySelector("#ModalNotifikasi .modal-body");
+  if (!modalBody) return;
+
+  let list = document.createElement("ul");
+  list.classList.add("list-group");
+  
+  for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      
+      // Lewati key yang bernama 'IDS'
+      if (key !== 'IDS') {
+          let listItem = document.createElement("li");
+          listItem.classList.add("list-group-item");
+          listItem.style.width = "auto";
+          listItem.textContent = `${key}`;
+          list.appendChild(listItem);
+      }
+  }
+  
+  modalBody.innerHTML = ""; // Hapus konten lama
+  if (list.children.length === 0) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = "Proses simpan akan tampil di sini.";
+    paragraph.style.fontSize = "small";
+    modalBody.appendChild(paragraph);
+  } else {
+    modalBody.appendChild(list);
+  }
+}
+
+// Tambahkan event listener agar fungsi dipanggil saat modal dibuka
+document.querySelector("#ModalNotifikasi").addEventListener("show.bs.modal", updateModalContent);
+
+
+
+async function simpanSemua() {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key !== 'IDS') {
+        const jsonData = JSON.parse(localStorage.getItem(key));
+        await sendPostWithGet(jsonData);
+      }
+    }
+  } catch (error) {
+    console.error("Terjadi kesalahan:", error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Fungsi untuk encode data ke URL-encoded format.

@@ -134,10 +134,12 @@ sidebarItems.forEach(item => {
 
 
 
-
-function disableBackButton() {
-  //window.history.pushState(null, "", window.location.href);
-  window.onpopstate = function () {
-    window.location.reload();
-  };
-}
+// Event listener untuk mendeteksi tombol "kembali"
+window.onpopstate = () => {
+  console.log('Back button clicked');
+  if (confirm('Apakah Anda yakin ingin keluar aplikasi?')) {
+    window.close();
+  } else {
+    history.go(-1);
+  }
+};

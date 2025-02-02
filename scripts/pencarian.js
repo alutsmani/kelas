@@ -62,10 +62,10 @@ function CariData() {
               addCariRow(
               item.IDS, // IDS
               item.Nama, // Nama
-              item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD || '', // Kelas (jika ada)
+              item.Diniyah ? item.Diniyah + ' ' + item.KelasMD + '.' + item.KelMD : '',
               item.Status || '', // Status (jika ada)
               item.Ikhtibar || '', // Ikhtibar (jika ada)
-              item.Daerah + '.' + item.NoKamar || '', // Kamar (jika ada)
+              item.Daerah ? item.Daerah + '.' + item.NoKamar : '', // Kamar (jika ada)
               imageUrl // URL gambar berdasarkan IDS
             );
             
@@ -339,6 +339,11 @@ async function DownloadDiniyahCariMultiple() {
       // Naik cepat ke milestone berikutnya
       await updateProgress(finalTarget);
     }
+
+    await DownloadKelas();
+    await DownloadIkhtibar();
+
+    CariData();
 
     // Sembunyikan loading setelah selesai
     setTimeout(() => {

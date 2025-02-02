@@ -119,6 +119,30 @@ function addHeader() {
 }
 
 
+function HapusIDS(IDS) {
+  const idsToDelete = IDS; // Ambil IDS dari JSON
+  
+  if (!idsToDelete) {
+      console.error("IDS tidak ditemukan dalam JSON");
+      return;
+  }
+  
+  const productsArea = document.getElementById('SantriArea');
+  const rows = productsArea.getElementsByClassName('products-row');
+  
+  for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const idsCell = row.querySelector('.product-cell.stock'); // Kolom IDS
+      
+      if (idsCell && idsCell.textContent.includes(idsToDelete)) {
+          productsArea.removeChild(row);
+          break; // Keluar setelah menghapus satu elemen
+      }
+  }
+}
+
+
+
 function Buat() {
 
   moveHtmlContent('./form/biodata.html', 'offcanvasBottom', 'TempatEdit');

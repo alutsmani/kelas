@@ -45,7 +45,7 @@ function clearData() {
 
       selectUser();
       tampilkanData();
-      disableBackButton();
+      
     }
     
   });
