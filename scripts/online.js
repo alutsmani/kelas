@@ -245,26 +245,24 @@ function updateBadgeCount() {
   
   // Loop melalui semua item di localStorage
   for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
+    let key = localStorage.key(i);
       
-      // Lewati key yang bernama 'IDS'
-      if (key !== 'IDS') {
-          count++;
-      }
+    if (!isNaN(key) && key !== 'IDS') {
+        count++;
+    }
   }
   
   // Update angka dalam badge
   const badge = document.querySelector(".app-content-headerButton .badge");
   const simpan = document.getElementById('SimpanSemuaLocal')
-  
 
-    if (badge) {
-      badge.textContent = count;
-      if (simpan) {
-        simpan.disabled = count === 0;
-      }
+  if (badge) {
+    badge.textContent = count;
+    if (simpan) {
+      simpan.disabled = count === 0;
     }
   }
+}
 
 
 // Panggil fungsi saat halaman dimuat
@@ -278,16 +276,16 @@ function updateModalContent() {
   list.classList.add("list-group");
   
   for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      
-      // Lewati key yang bernama 'IDS'
-      if (key !== 'IDS') {
-          let listItem = document.createElement("li");
-          listItem.classList.add("list-group-item");
-          listItem.style.width = "auto";
-          listItem.textContent = `${key}`;
-          list.appendChild(listItem);
-      }
+    let key = localStorage.key(i);
+    
+    // Lewati key yang bernama 'IDS'
+    if (!isNaN(key)) {
+      let listItem = document.createElement("li");
+      listItem.classList.add("list-group-item");
+      listItem.style.width = "auto";
+      listItem.textContent = `${key}`;
+      list.appendChild(listItem);
+    }
   }
   
   modalBody.innerHTML = ""; // Hapus konten lama
@@ -310,7 +308,7 @@ async function simpanSemua() {
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key !== 'IDS') {
+      if (!isNaN(key)) {
         const jsonData = JSON.parse(localStorage.getItem(key));
         await sendPostWithGet(jsonData);
       }

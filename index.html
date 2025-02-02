@@ -127,8 +127,8 @@
         <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
       </button>
     -->
-    <button type="button" class="btn btn-warning btn-sm app-content-headerButton" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
-      <i class="bi bi-save"></i> <span class="badge rounded-pill text-bg-info">0</span>
+    <button type="button" class="btn btn-sm app-content-headerButton btnBadge" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
+      <i class="bi bi-save"></i> <span class="badge rounded-pill">0</span>
     </button>
 
 
@@ -144,7 +144,12 @@
             </div>
             <div class="modal-footer modal-footer-sm">
               <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-              <button type="button" id="SimpanSemuaLocal" class="btn btn-primary btn-sm" onclick="simpanSemua()" disabled>Simpan Ulang</button>
+
+              <button class="btn btn-primary btn-sm" id="SimpanSemuaLocal" onclick="simpanSemua()" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" id="loadingSimpanUlang" style="display: none;" aria-hidden="true"></span>
+                <span class="visually-hidden" role="status">Loading ...</span>
+                Simpan Ulang
+              </button>
             </div>
           </div>
         </div>

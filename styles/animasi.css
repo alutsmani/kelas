@@ -22,7 +22,10 @@
     font-size: 10px;
 }
 
-
+.badge,
+.btnBadge {
+    color: var(--app-content-main-color);
+}
 
 
 
