@@ -69,6 +69,7 @@ async function simpan(data, form) {
       jsonData.Diniyah[0].Kelas = jsonData.db[0].KelasMD;
       jsonData.Diniyah[0].Kel = jsonData.db[0].KelMD;
 
+
       jsonData.Diniyah[0].TanggalDibuat = new Date().toISOString().replace('T', '.').slice(0, 19).replace('Z', '').replace(/:/g, '.');
       
       jsonData.Diniyah[0].DariMasehi = new Date().toISOString().slice(0, 10);
@@ -76,16 +77,22 @@ async function simpan(data, form) {
       jsonData.Diniyah[0].KetDari = "Baru";
       jsonData.Diniyah[0].KetSampai = "Sekarang";
     
+      jsonData.Diniyah[0].TahunHijriyah = "1445-1446";
+      jsonData.Diniyah[0].TahunMasehi = "2024-2025";
+
+      jsonData.Diniyah[0].Admin = localStorage.getItem('IDS');
+
       const Lembaga = ['Isti\'dadiyah', 'Ula', 'Wustha', 'Ulya', 'Guru Tugas'].indexOf(jsonData.Diniyah[0].Diniyah);
       jsonData.Diniyah[0].ID = `${jsonData.Diniyah[0].IDS}-${Lembaga}-${jsonData.Diniyah[0].KelasMD}-${jsonData.Diniyah[0].KelMD}`;
       console.log(jsonData);
 
       jsonData.db[0].TanggalUpdate = new Date().toISOString().replace('T', '.').slice(0, 19).replace('Z', '').replace(/:/g, '.');
-    
+      jsonData.db[0].Admin = localStorage.getItem('IDS');
+
       try {
         const result = await saveOrUpdateData('Diniyah', jsonData, 'ID');
         console.log(result);
-        PilihTampilanData();
+        
         //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
       } catch (error) {
         console.error(error);
@@ -96,6 +103,7 @@ async function simpan(data, form) {
     try {
       const result = await saveOrUpdateData(storeName, jsonData, 'IDS');
       console.log(result);
+      PilihTampilanData();
       //document.getElementById('offcanvasBottom').classList.remove('show'); document.getElementById('offcanvasBottom').dispatchEvent(new Event('hide.bs.offcanvas'));
     } catch (error) {
       console.error(error);
