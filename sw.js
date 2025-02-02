@@ -125,39 +125,25 @@ self.addEventListener('fetch', (event) => {
 });
 
 
-function reloadCache() {
-    caches.open(CACHE_NAME).then((cache) => {
-        cache.keys().then((keys) => {
-            keys.forEach((request) => {
-                cache.delete(request);
-            });
+function forceUpdateServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistration().then((registration) => {
+            if (registration) {
+                registration.update().then(() => {
+                    console.log('[PWA] Service Worker updated, reloading page...');
+                    alert('Updating ...')
+                    window.location.reload();
+                }).catch((error) => {
+                    console.error('[PWA] Service Worker update failed:', error);
+                    alert('Failed Update ...')
+                });
+            } else {
+                console.warn('[PWA] No Service Worker registered.');
+                alert('Failed PWA ...')
+            }
         });
-    });
-    location.reload();
-}
-
-function reinstallCache() {
-    caches.open(CACHE_NAME).then((cache) => {
-        cache.keys().then((keys) => {
-            keys.forEach((request) => {
-                cache.delete(request);
-            });
-        });
-    });
-    self.clients.openWindow('/');
-}
-
-function updateCache() {
-    reloadCache();
-    reinstallCache();
-}
-
-self.addEventListener('message', (event) => {
-    if (event.data === 'reload') {
-        reloadCache();
-    } else if (event.data === 'reinstall') {
-        reinstallCache();
-    } else if (event.data === 'update') {
-        updateCache();
+    } else {
+        console.warn('[PWA] Service Worker not supported in this browser.');
+        alert('Aplikasi Not Suported ...')
     }
-});
+}
