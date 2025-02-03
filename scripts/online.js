@@ -15,43 +15,6 @@ async function GetData(url, json) {
     }
 }
   
-async function DownloadDiniyah() {
-  // Menampilkan indikator loading
-  const LabelDownload = document.getElementById('LabelDownload');
-  const LoadingDownload = document.getElementById('LoadingDownload');
-
-  LabelDownload.style.display = 'none';
-  LoadingDownload.style.display = 'block';
-
-  const filterDiniyah = document.getElementById('filterDiniyah').value;
-  const filterKelas = document.getElementById('filterKelas').value;
-  const filterKel = document.getElementById('filterKel').value;
-
-  const filters = { db: { Diniyah: filterDiniyah, KelasMD: filterKelas, KelMD: filterKel } }; // Kriteria filter
-  
-  try {
-    // Menunggu data selesai didapat
-    const data = await GetData(urlLogin, filters);
-    console.log("Data received for saving:", data); // Log the data before saving
-
-    // Menyimpan data ke IndexedDB dan menunggu hingga selesai
-    await saveDataToIndexedDB("db", data, "IDS");
-
-    // Menampilkan data setelah selesai disimpan
-    await tampilkanData();
-
-    // Mengubah tampilan indikator loading
-    LabelDownload.style.display = 'block';
-    LoadingDownload.style.display = 'none';
-
-  } catch (error) {
-    console.error("Terjadi kesalahan:", error);
-    
-    // Menyembunyikan indikator loading jika terjadi error
-    LabelDownload.style.display = 'block';
-    LoadingDownload.style.display = 'none';
-  }
-}
 
 async function DownloadIDS(IDSValue) {
   // Menampilkan indikator loading
@@ -132,8 +95,7 @@ async function DownloadKelas() {
   LabelDownload.style.display = 'none';
   LoadingDownload.style.display = 'block';
 
-  const filterDiniyah = document.getElementById('filterDiniyah').value;
-  const filters = { Diniyah: { Diniyah: filterDiniyah, KetSampai: "Sekarang" } }; // Kriteria filter
+  const filters = { Diniyah: { KetSampai: "Sekarang" } }; // Kriteria filter
   
   try {
     const data = await GetData(urlLogin, filters); // Menunggu data selesai didapat

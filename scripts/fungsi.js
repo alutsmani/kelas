@@ -493,3 +493,11 @@ function ComboFormal(Formal, Kelas, Kel) {
   }
 }
 
+
+function SelectFilterDiniyah() {
+  const Diniyah = document.getElementById('filterDiniyah');
+  const Kelas = document.getElementById('filterKelas');
+  const Kel = document.getElementById('filterKel');
+
+  ComboDiniyah(Diniyah, Kelas, Kel);
+}

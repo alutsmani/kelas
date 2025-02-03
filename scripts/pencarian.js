@@ -323,7 +323,7 @@ async function DownloadDiniyahCariMultiple() {
       }, 333);
 
       // Ambil data
-      const data = await GetDataCari(urlLogin, { db: { Diniyah: document.getElementById('CariDiniyah').value } }, "db", page, 600);
+      const data = await GetDataCari(urlLogin, { db: { } }, "db", page, 600);
       
       clearInterval(progressInterval); // Hentikan pertumbuhan lambat
 
@@ -343,7 +343,7 @@ async function DownloadDiniyahCariMultiple() {
     await DownloadKelas();
     await DownloadIkhtibar();
 
-    CariData();
+    await CariData();
 
     // Sembunyikan loading setelah selesai
     setTimeout(() => {

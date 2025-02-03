@@ -171,13 +171,6 @@ async function naikkelas() {
 
 
 
-function SelectFilterDiniyah() {
-  const Diniyah = document.getElementById('filterDiniyah');
-  const Kelas = document.getElementById('filterKelas');
-  const Kel = document.getElementById('filterKel');
-
-  ComboDiniyah(Diniyah, Kelas, Kel);
-}
 
 function SelectFormal() {
   const Formal = document.getElementById('Formal').value;

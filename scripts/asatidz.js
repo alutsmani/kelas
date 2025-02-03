@@ -1,4 +1,4 @@
-function addProductRowAsatidz(nomor, nama, ids, akses, diniyah, formal, status, imageUrl) {
+function addProductRowAsatidz(nomor, nama, akses, ids, diniyah, formal, status, imageUrl) {
     const productsArea = document.getElementById('SantriArea');
     const newRow = document.createElement('div');
     newRow.classList.add('products-row');
@@ -16,9 +16,9 @@ function addProductRowAsatidz(nomor, nama, ids, akses, diniyah, formal, status, 
         <span>${nomor}. ${nama || ''}</span>
       </div>
       <div class="product-cell stock">
-        <span class="cell-label">Akses:</span>${ids || '-'}</div>
+        <span class="cell-label">Akses:</span>${akses || '-'}</div>
       <div class="product-cell price">
-        <span class="cell-label">IDS:</span>${akses || '-'}</div>
+        <span class="cell-label">IDS:</span>${ids || '-'}</div>
       <div class="product-cell category">
         <span class="cell-label">Diniyah:</span>${diniyah || '-'}</div>
       <div class="product-cell sales">

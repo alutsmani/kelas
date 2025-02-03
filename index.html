@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="./styles/tema.css">
     <link href="./styles/profil.css" rel="stylesheet"/>
     <link href="./styles/collapse.css" rel="stylesheet"/>
+    <link href="./styles/animasi.css" rel="stylesheet"/>
     <link rel="icon" href="./logo.png" type="image/x-icon">
 
  </head>
@@ -61,7 +62,7 @@
                 <div class="flex mt-4 md:mt-0">
                     <button class="home-btn" style="margin-right: 20px;" 
                         onclick="location.href='db.html'">
-                        <i class="fas fa-home"></i>
+                        <i class="fas fa-database"></i>
                     </button>
 
                     <button class="mode-switch" 
@@ -72,8 +73,9 @@
                         </svg>
                     </button>
 
-                    <button type="button" class="btn-sm home-btn" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
-                        <i class="bi bi-save"></i> <span class="badge rounded-pill">0</span>
+                    <button type="button" class="btn-sm home-btn position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
+                        <i class="bi bi-upload"></i> 
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">0</span>
                     </button>
                   
                   
@@ -105,10 +107,127 @@
 
 
         <div class="g-3 d-md-flex align-items-start gap-5">
+            <div class="col-md-4 d-flex flex-column">
+                <form class="row g-3" id="santri" style="margin-top: 10px;">
+                    <div class="d-flex gap-2">
+                        <h1><i class="fas fa-user-graduate"></i> Santri</h1>
+
+                        <button id="btnDownloadCari" onclick="DownloadSantriProfil()" class="row-btn" type="button">
+                            <i id="LabelDownloadCari" class="fas fa-download"></i>
+                            <span id="LoadingDownloadCari" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                        </button>
+                        
+                    </div>
+
+                    <div id="loadingContainer" class="container">
+                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuemin="0" aria-valuemax="100">
+                            <div id="progressBar" class="progress-bar" style="width: 0%;">0%</div>
+                        </div>    
+                    </div>
+
+                    <div class="akses-content mt-6" style="margin-top: -10px">
+                        <div class="mb-3">
+                            <label for="totalSantri" class="form-label"><i class="fas fa-users"></i> Total Santri:</label>
+                            <input disabled type="text" class="form-control" id="totalSantri" value=""/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mukim" class="form-label"><i class="fas fa-building"></i> Mukim:</label>
+                            <input disabled type="text" class="form-control" id="mukim" value=""/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="khoriji" class="form-label"><i class="fas fa-university"></i> Khoriji:</label>
+                            <input disabled type="text" class="form-control" id="khoriji" value=""/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="boyong" class="form-label"><i class="fas fa-sign-out-alt"></i> Boyong:</label>
+                            <input disabled type="text" class="form-control" id="boyong" value=""/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="gurutugas" class="form-label"><i class="fas fa-graduation-cap"></i> Guru Tugas:</label>
+                            <input disabled type="text" class="form-control" id="gurutugas" value=""/>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="gurutugas" class="form-label"><i class="fas fa-school"></i> Diniyah:</label>
+                            <select class="form-control form-select form-filter" id="filterDiniyah" disabled>
+                                <option value="">Semua</option>
+                                <option value="Tidak Sekolah">Tidak Sekolah</option>
+                                <option value="Isti'dadiyah">Isti'dadiyah</option>
+                                <option value="Ula">Ula</option>
+                                <option value="Wustha">Wustha</option>
+                                <option value="Ulya">Ulya</option>
+                                <option value="Guru Tugas">Guru Tugas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kelas" class="form-label"><i class="fas fa-graduation-cap"></i> Kelas:</label>
+                            <div class="d-flex gap-2">
+                                <select id="filterKelas" class="form-control form-select form-filter" disabled>
+                                </select>
+              
+                                <select id="filterKel" class="form-control form-select form-filter" disabled>
+                                </select>
+
+                                <button id="editFilter" class="row-btn" style="height: fit-content; width:fit-content;" sty onclick="toggleEditFilter(); return false;">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" style="display: none;">
+                            <div class="input-group">
+                                <button class="app-content-headerButton action-button" onclick="DownloadIkhtibar()" type="button">
+                                    <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
+                                    <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                                </button>
+                                <label for="DownloadIkhtibar" class="form-label">Ikhtibar</label>
+                              </div>
+                
+                              <div class="input-group">
+                                <button class="app-content-headerButton action-button" onclick="DownloadKelas()" type="button">
+                                    <i id="ReloadIconKelas" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
+                                    <span id="LoadingReloadKelas" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                                </button>
+
+                                <label for="DownloadKelas" class="form-label">Kelas</label>
+                                
+                                
+                              </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="jumlahmurid" class="form-label"><i class="fas fa-users"></i> Jumlah Murid:</label>
+                            <input disabled type="text" class="form-control" id="jumlahmurid" value=""/>
+                        </div>
+                    </div>
+                </form>
+            
+                <form class="row g-3" id="asatidz" style="margin-top: 10px;">
+                    <div class="d-flex gap-2">
+                        <h1><i class="fas fa-user-tie"></i> Asatidz</h1>
+                        <button style="visibility: hidden;" id="pengaturan" class="row-btn float-right" onclick="return false;">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </div>
+
+                    <div class="akses-content mt-6" style="margin-top: -10px">
+                        
+                        
+                    </div>
+
+                </form>
+            </div>
+
+
+
             <form class="row g-3" id="profile-form" style="margin-top: 10px;">
                 <div class="d-flex gap-2">
                     <h1><i class="fas fa-user-circle"></i> Biodata</h1>
-                    <button id="Edit" class="edit-btn float-right" onclick="toggleEditMode(); return false;">
+                    <button id="Edit" class="row-btn float-right" onclick="toggleEditMode(); return false;">
                         <i class="fas fa-pen"></i>
                     </button>
                 </div>
@@ -257,7 +376,7 @@
                 <form class="row g-3" id="akses-form" style="margin-top: 10px;">
                     <div class="d-flex gap-2">
                         <h1><i class="fas fa-lock"></i> Akses</h1>
-                        <button style="visibility: hidden;" id="Edit" class="edit-btn float-right" onclick="return false;">
+                        <button style="visibility: hidden;" id="aksesbutton" class="row-btn float-right" onclick="return false;">
                             <i class="fas fa-pen"></i>
                         </button>
                     </div>
@@ -286,7 +405,7 @@
                 <form class="row g-3" id="setting-form" style="margin-top: 10px;">
                     <div class="d-flex gap-2">
                         <h1><i class="fas fa-cog"></i> Pengaturan Akun</h1>
-                        <button style="visibility: hidden;" id="Edit" class="edit-btn float-right" onclick="return false;">
+                        <button style="visibility: hidden;" id="Edit" class="row-btn float-right" onclick="return false;">
                             <i class="fas fa-pen"></i>
                         </button>
                     </div>
@@ -340,7 +459,9 @@
     <script src="./scripts/indexedDB.js"></script>
     <script src="./scripts/online.js"></script>
     <script src="./scripts/profil.js"></script>
-    
+    <script src="./scripts/hitung.js"></script>
+    <script src="./scripts/pencarian.js"></script>
+
 </body>
  
 </html>

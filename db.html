@@ -128,12 +128,13 @@
         <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
       </button>
     -->
-    <button type="button" class="btn btn-sm app-content-headerButton btnBadge" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
-      <i class="bi bi-save"></i> <span class="badge rounded-pill">0</span>
+    <button type="button" class="btn btn-sm app-content-headerButton btnBadge position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
+      <i class="bi bi-upload"></i> 
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">0</span>
     </button>
 
 
-      <div class="modal modal-sm" tabindex="-1" id="ModalNotifikasi" style="position: fixed; top: 0; right: 20px;">
+      <div class="modal fade small" tabindex="-1" id="ModalNotifikasi" style="position: fixed; top: 0; right: 20px;">
         <div class="modal-dialog" style="position: absolute; top: 0; right: 20px;">
           <div class="modal-content">
             <div class="modal-header">
@@ -187,6 +188,104 @@
             <span id="LoadingDownload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
           </button>
           
+          <div class="filter-button-wrapper">
+            <button class="action-button filter jsFilter">
+              <span>Filter</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-down" viewBox="0 0 16 16">
+                <path d="M7.646.146a.5.5 0 0 1 .708 0L10.207 2H14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3.793zM1 7v3h14V7zm14-1V4a1 1 0 0 0-1-1h-3.793a1 1 0 0 1-.707-.293L8 1.207l-1.5 1.5A1 1 0 0 1 5.793 3H2a1 1 0 0 0-1 1v2zm0 5H1v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+              </svg>
+            </button>
+            
+            <!-- Menu Filter dan tampilan data -->
+            <div class="filter-menu">
+
+              <label style="margin-top: 0px; margin-left: 30%; color: var(--action-color-hover);">Filter Data</label>
+
+              <div class="input-group" style="max-width: 300px;" id="filterGrupInput">
+                  <!-- Kelas -->
+                  <label for="filterKelas" class="form-label" style="padding-right: 20px;">Kelas</label>
+                  
+                  <select id="filterKelas" class="filter-menu-select form-select">
+                  </select>
+
+                  <select id="filterKel" class="form-select">
+                  </select>
+              </div>
+
+
+              <label style="display: none;">Status Santri</label>
+              <select id="filterStatusSantri">
+                <option value="">All</option>
+                <option value="Mukim">Mukim / Mondok</option>
+                <option value="Khoriji">Khoriji / Nyulok</option>
+                <option value="Boyong">Boyong</option>                       
+              </select>
+
+              
+
+              <div class="filter-menu-buttons">
+                <label for="DownloadIkhtibar" class="form-label" style="padding-right: 30%;">Ikhtibar</label>
+                
+                <button class="app-content-headerButton action-button" onclick="DownloadIkhtibar()">
+                  <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
+                  <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                </button>
+              </div>
+
+              <div class="filter-menu-buttons">
+                <label for="DownloadKelas" class="form-label" style="padding-right: 30%;">Kelas</label>
+                
+                <button class="app-content-headerButton action-button" onclick="DownloadKelas()">
+                  <i id="ReloadIconKelas" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
+                  <span id="LoadingReloadKelas" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                </button>
+              </div>
+
+              <br>
+              <label style="margin-top: 0px; margin-left: 30%; color: var(--action-color-hover);">Pengaturan</label>
+
+              <div class="filter-menu-buttons">
+                <label for="filterKelas" class="form-label" style="padding-right: 20px;">Tema</label>
+                
+                <div class="input-group">
+                  <button class="mode-switch" title="Switch Theme">
+                    <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                      <defs></defs>
+                      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+                  </button>
+                  
+                </div>
+              </div>
+
+              <div class="filter-menu-buttons">
+                <label for="filterKelas" class="form-label" style="padding-right: 30%;">Tampilan</label>
+                
+                <div class="input-group">
+                  <button class="action-button list active" title="List View">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  </button>
+                  <button class="action-button grid" title="Grid View">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                  </button>
+                </div>
+
+              </div>
+
+              <div class="filter-menu-buttons" style="margin: 10px;">
+              
+                <button id="ApplyButton" class="filter-button reset">
+                  Close
+                </button>
+
+                <button class="filter-button apply" ondblclick="forceUpdateServiceWorker()">
+                  Update Apk
+                </button>
+              </div>
+
+
+            </div>
+          </div>
           
           <button class="action-button add jsAdd" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
             <span>Tambah</span>
@@ -256,98 +355,7 @@
 
 
 
-          <div class="filter-button-wrapper">
-            <button class="action-button filter jsFilter">
-              <span>Menu</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-down" viewBox="0 0 16 16">
-                <path d="M7.646.146a.5.5 0 0 1 .708 0L10.207 2H14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3.793zM1 7v3h14V7zm14-1V4a1 1 0 0 0-1-1h-3.793a1 1 0 0 1-.707-.293L8 1.207l-1.5 1.5A1 1 0 0 1 5.793 3H2a1 1 0 0 0-1 1v2zm0 5H1v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
-              </svg>
-            </button>
-            
-            <!-- Menu Filter dan tampilan data -->
-            <div class="filter-menu">
 
-              <div class="filter-menu-buttons">
-                <label for="filterKelas" class="form-label" style="padding-right: 20px;">Tema</label>
-                
-                <div class="input-group">
-                  <button class="mode-switch" title="Switch Theme">
-                    <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
-                      <defs></defs>
-                      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                    </svg>
-                  </button>
-                  
-                </div>
-              </div>
-
-              <div class="filter-menu-buttons">
-                <label for="filterKelas" class="form-label" style="padding-right: 30%;">Tampilan</label>
-                
-                <div class="input-group">
-                  <button class="action-button list active" title="List View">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                  </button>
-                  <button class="action-button grid" title="Grid View">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                  </button>
-                </div>
-
-              </div>
-
-              <div class="filter-menu-buttons">
-                <label for="DownloadIkhtibar" class="form-label" style="padding-right: 30%;">Ikhtibar</label>
-                
-                <button class="app-content-headerButton action-button" onclick="DownloadIkhtibar()">
-                  <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
-                  <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-                </button>
-              </div>
-
-              <div class="filter-menu-buttons">
-                <label for="DownloadKelas" class="form-label" style="padding-right: 30%;">Kelas</label>
-                
-                <button class="app-content-headerButton action-button" onclick="DownloadKelas()">
-                  <i id="ReloadIconKelas" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
-                  <span id="LoadingReloadKelas" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-                </button>
-              </div>
-
-              <label style="margin-top: 20px;">Filter Data</label>
-
-              <div class="input-group" style="max-width: 300px;" id="filterGrupInput">
-                  <!-- Kelas -->
-                  <label for="filterKelas" class="form-label" style="padding-right: 20px;">Kelas</label>
-                  
-                  <select id="filterKelas" class="filter-menu-select form-select">
-                  </select>
-
-                  <select id="filterKel" class="form-select">
-                  </select>
-              </div>
-
-
-              <label style="display: none;">Status Santri</label>
-              <select id="filterStatusSantri">
-                <option value="">All</option>
-                <option value="Mukim">Mukim / Mondok</option>
-                <option value="Khoriji">Khoriji / Nyulok</option>
-                <option value="Boyong">Boyong</option>                       
-              </select>
-
-              <div class="filter-menu-buttons">
-                <button class="filter-button reset" ondblclick="forceUpdateServiceWorker()">
-                  Update Apk
-                </button>
-                
-                <button style="display: none;" id="ApplyButton" class="filter-button apply" onclick="tampilkanData()">
-                  Apply
-                </button>
-              </div>
-
-
-            </div>
-          </div>
 
         </div>
 
