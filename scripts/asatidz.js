@@ -16,9 +16,9 @@ function addProductRowAsatidz(nomor, nama, ids, akses, diniyah, formal, status, 
         <span>${nomor}. ${nama || ''}</span>
       </div>
       <div class="product-cell stock">
-        <span class="cell-label">IDS:</span>${ids || '-'}</div>
+        <span class="cell-label">Akses:</span>${ids || '-'}</div>
       <div class="product-cell price">
-        <span class="cell-label">Akses Ke:</span>${akses || '-'}</div>
+        <span class="cell-label">IDS:</span>${akses || '-'}</div>
       <div class="product-cell category">
         <span class="cell-label">Diniyah:</span>${diniyah || '-'}</div>
       <div class="product-cell sales">
@@ -48,7 +48,7 @@ function tampilkanAsatidz() {
     const storeName = 'Asatidz'; // Nama tabel (object store)
   
     // Ambil semua data dari IndexedDB
-    getFilteredFromIndexedDB(storeName)
+    getFilteredAsatidzFromIndexedDB(storeName)
       .then(function (data) {
         // Batasi jumlah data yang ditampilkan
         const limitedData = data.slice(0, 100);
@@ -59,9 +59,9 @@ function tampilkanAsatidz() {
           addProductRowAsatidz(
             index + 1, // Nomor
             item.Nama, // IDS
-            item.IDS, // Nama
             item.KelasMD + ' ' + '.' + item.KelMD || '', // Diniyah (jika ada)
-            item.Akses || '', // Akses (jika ada)
+            item.IDS, // Nama
+            item.Diniyah || '', // Akses (jika ada)
             item.KelasFormal + ' ' + '.' + item.KelFormal || '', // Ikhtibar (jika ada)
             item.Status || '', // Jabatan (jika ada)
             imageUrl // URL gambar berdasarkan IDS
@@ -73,11 +73,58 @@ function tampilkanAsatidz() {
       });
   }
 
+  function getFilteredAsatidzFromIndexedDB(storeName) {
+    const dbName = 'Santri'; // Nama database tetap 'Santri'
+  
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(dbName);
+  
+      request.onsuccess = function (event) {
+        const db = event.target.result;
+        
+        if (!db.objectStoreNames.contains(storeName)) {
+          console.log(`Store "${storeName}" tidak ditemukan dalam IndexedDB.`);
+          resolve([]); // Kembalikan array kosong jika store tidak ada
+          return;
+        }
+        
+        const transaction = db.transaction(storeName, 'readonly');
+        const store = transaction.objectStore(storeName);
+        const getAllRequest = store.getAll();
+  
+        getAllRequest.onsuccess = function (event) {
+          const data = event.target.result;
+  
+          const filterDiniyah = document.getElementById('filterDiniyah').value.toLowerCase();
+          const filterCariNama = document.getElementById('filterCariNama').value.toLowerCase();
+  
+          const filteredData = data.filter(item => {
+            return (!filterDiniyah || (item.Diniyah && item.Diniyah.toLowerCase().includes(filterDiniyah))) &&
+                  (!filterCariNama || (item.Nama && item.Nama.toLowerCase().includes(filterCariNama)));
+          });
+  
+          resolve(filteredData);
+        };
+  
+        getAllRequest.onerror = function () {
+          reject('Error fetching data from IndexedDB');
+        };
+      };
+  
+      request.onerror = function () {
+        reject('Error opening database');
+      };
+    });
+  }
+
+
   function PilihTampilanData() {
     const listItems = document.querySelectorAll('.sidebar-list-item');
     const naikkelas = document.getElementById('NaikKelas');
     const filterGrupInput = document.getElementById('filterGrupInput');
+    const filterStatusSantri = document.getElementById('filterStatusSantri');
     const tambahManual = document.getElementById('tambahManual');
+    const Apply = document.getElementById('ApplyButton');
   
     listItems.forEach(function (item) {
       if (item.classList.contains('active')) {
@@ -91,6 +138,9 @@ function tampilkanAsatidz() {
           
           naikkelas.style.display = 'none';
           filterGrupInput.style.display = 'none';
+          filterStatusSantri.style.display = 'none';
+          Apply.display = 'none';
+
           tambahManual.style.display = 'block';
   
           tampilkanAsatidz();
@@ -102,6 +152,9 @@ function tampilkanAsatidz() {
           
           naikkelas.style.display = 'block';
           filterGrupInput.style.display = 'flex';
+          filterStatusSantri.style.display = 'flex';
+          Apply.display = 'block';
+
           tambahManual.style.display = 'none';
   
           tampilkanData();

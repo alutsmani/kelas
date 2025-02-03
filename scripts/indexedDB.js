@@ -121,12 +121,6 @@ async function saveOrUpdateData(storeName, jsonData, primaryKey = 'IDS') {
 async function saveDataToIndexedDB(storeName, jsonData, primaryKey = 'IDS') {
   const dbName = 'Santri'; // Nama database
 
-  /* Validasi: Pastikan jsonData memiliki storeName yang sesuai
-  if (!jsonData || jsonData.storeName !== storeName) {
-      console.error(`Invalid input: JSON data must include a matching 'storeName' (${storeName}).`);
-      return;
-  }*/
-
   console.log(`Data received for saving to store: ${storeName}`, jsonData);
 
   try {

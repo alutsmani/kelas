@@ -1,516 +1,346 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Al-Utsmani</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<html lang="en">
+ <head>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta property="og:title" content="Aplikasi Al-Utsmani">
+    <meta property="og:description" content="Aplikasi khusus untuk guru Al-Utsmani">
+    <meta property="og:image" content="./gambar/logo/icon-192x192.png">
+    <meta property="og:url" content="./gambar/logo/icon-192x192.png">
+    <meta property="og:type" content="website">
   
-  <meta property="og:title" content="Aplikasi Al-Utsmani">
-  <meta property="og:description" content="Aplikasi khusus untuk guru Al-Utsmani">
-  <meta property="og:image" content="./gambar/logo/icon-192x192.png">
-  <meta property="og:url" content="./gambar/logo/icon-192x192.png">
-  <meta property="og:type" content="website">
-
-
-
-  <link rel="icon" href="logo.png" type="image/x-icon">
-  <link rel="manifest" href="manifest.json">
-
-  <meta name="Description" content="Ini adalah aplikasi pwa Istidadiyah" />
-  <!-- Mendeklarasikan warna yang muncul pada address bar Chrome versi seluler -->
-  <meta name="theme-color" content="#414f57" />
-  <!-- Mendeklarasikan ikon untuk iOS -->
-  <meta name="mobile-web-app-capable" content="yes">
   
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Nama Situs" />
-  <link rel="apple-touch-icon" href="gambar/icon-192x192.png" />
-  <!-- Mendeklarasikan ikon untuk Windows -->
-  <meta name="msapplication-TileImage" content="gambar/icon-192x192.png" />
-  <meta name="msapplication-TileColor" content="#000000" />
-
-
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./styles/ofcanvass.css">
-  <link rel="stylesheet" href="./styles/collapse.css">
-  <link rel="stylesheet" href="./styles/animasi.css">
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
   
-
-</head>
-
-
-<body>
-
-  <div id="loadingContainer" class="container">
-    <div class="progress" role="progressbar" aria-label="Success example" aria-valuemin="0" aria-valuemax="100">
-      <div id="progressBar" class="progress-bar" style="width: 0%;">0%</div>
-    </div>    
-  </div>
-
-
-<!-- partial:index.partial.html -->
-<div class="app-container">
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <!--<div class="app-icon">
-        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M507.606 371.054a187.217 187.217 0 00-23.051-19.606c-17.316 19.999-37.648 36.808-60.572 50.041-35.508 20.505-75.893 31.452-116.875 31.711 21.762 8.776 45.224 13.38 69.396 13.38 49.524 0 96.084-19.286 131.103-54.305a15 15 0 004.394-10.606 15.028 15.028 0 00-4.395-10.615zM27.445 351.448a187.392 187.392 0 00-23.051 19.606C1.581 373.868 0 377.691 0 381.669s1.581 7.793 4.394 10.606c35.019 35.019 81.579 54.305 131.103 54.305 24.172 0 47.634-4.604 69.396-13.38-40.985-.259-81.367-11.206-116.879-31.713-22.922-13.231-43.254-30.04-60.569-50.039zM103.015 375.508c24.937 14.4 53.928 24.056 84.837 26.854-53.409-29.561-82.274-70.602-95.861-94.135-14.942-25.878-25.041-53.917-30.063-83.421-14.921.64-29.775 2.868-44.227 6.709-6.6 1.576-11.507 7.517-11.507 14.599 0 1.312.172 2.618.512 3.885 15.32 57.142 52.726 100.35 96.309 125.509zM324.148 402.362c30.908-2.799 59.9-12.454 84.837-26.854 43.583-25.159 80.989-68.367 96.31-125.508.34-1.267.512-2.573.512-3.885 0-7.082-4.907-13.023-11.507-14.599-14.452-3.841-29.306-6.07-44.227-6.709-5.022 29.504-15.121 57.543-30.063 83.421-13.588 23.533-42.419 64.554-95.862 94.134zM187.301 366.948c-15.157-24.483-38.696-71.48-38.696-135.903 0-32.646 6.043-64.401 17.945-94.529-16.394-9.351-33.972-16.623-52.273-21.525-8.004-2.142-16.225 2.604-18.37 10.605-16.372 61.078-4.825 121.063 22.064 167.631 16.325 28.275 39.769 54.111 69.33 73.721zM324.684 366.957c29.568-19.611 53.017-45.451 69.344-73.73 26.889-46.569 38.436-106.553 22.064-167.631-2.145-8.001-10.366-12.748-18.37-10.605-18.304 4.902-35.883 12.176-52.279 21.529 11.9 30.126 17.943 61.88 17.943 94.525.001 64.478-23.58 111.488-38.702 135.912zM266.606 69.813c-2.813-2.813-6.637-4.394-10.615-4.394a15 15 0 00-10.606 4.394c-39.289 39.289-66.78 96.005-66.78 161.231 0 65.256 27.522 121.974 66.78 161.231 2.813 2.813 6.637 4.394 10.615 4.394s7.793-1.581 10.606-4.394c39.248-39.247 66.78-95.96 66.78-161.231.001-65.256-27.511-121.964-66.78-161.231z"/></svg>
-      </div>-->
-      <br>
-    </div>
-    <br>
-    <br>
-    <ul class="sidebar-list">
-      <li class="sidebar-list-item" id="listAsatidz" style="display: none;">
-        <a href="javascript:void(0)">
-          <i class="bi bi-person-badge" style="margin-right: 10px;"></i>
-          <span>Asatidz</span>
-        </a>
-      </li>
-      <li class="sidebar-list-item active">
-        <a href="javascript:void(0)">
-          <i class="bi bi-person-fill-check" style="margin-right: 10px;"></i>
-          <span>Santri</span>
-        </a>
-      </li>
-    </ul>
+    <meta name="Description" content="Ini adalah aplikasi pwa Istidadiyah" />
+    <!-- Mendeklarasikan warna yang muncul pada address bar Chrome versi seluler -->
+    <meta name="theme-color" content="#414f57" />
+    <!-- Mendeklarasikan ikon untuk iOS -->
+    <meta name="mobile-web-app-capable" content="yes">
     
-    </ul>
-    <div class="account-info sidebar-list-item">
-      <div class="account-info-picture">
-        <img src="./logo.png" alt="Account">
-      </div>
-      <a href="halaman/profil.html" id="NamaAkun" class="account-info-name">Nama Akun</a>
-      <button class="account-info-more">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal">
-          <circle cx="12" cy="12" r="1"/>
-          <circle cx="19" cy="12" r="1"/>
-          <circle cx="5" cy="12" r="1"/>
-        </svg>
-      </button>
-
-      <!-- Menu Akun -->
-      <div class="menu-akun hidden">
-        <ul>
-          <!--<li><a href="#">Profil</a></li>-->
-          
-          <li><a href="#" onclick="clearData()" style="color: brown;font-weight: bold;">Hapus Data</a></li>
-          <li><a href="#" onclick="clearSiteCache()" style="color: brown;font-weight: bold;">Keluar</a></li>
-        </ul>
-      </div>
-    </div>
-    
-  </div>
-
-
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Nama Situs" />
+    <link rel="apple-touch-icon" href="./gambar/logo/icon-512x512.png" />
+    <!-- Mendeklarasikan ikon untuk Windows -->
+    <meta name="msapplication-TileImage" content="gambar/icon-192x192.png" />
+    <meta name="msapplication-TileColor" content="#000000" />
   
-  <div class="app-content">
-    <div class="app-content-header">
-      
-      <div style="display: flex;">
-        <button class="menu-sidebar app-content-headerButton action-button">
-          <i id="SidebarIcon" class="bi bi-layout-sidebar-inset" style="font-size: 24px;"></i>
-        </button>
-        <h1 class="app-content-headerText" style="margin-left: 10px;">
-          Al-Utsmani
-        </h1>
-      </div>
-      <!--
-      <button class="app-content-headerButton action-button" onclick="selectUser()">
-        <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
-        <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-      </button>
-    -->
-    <button type="button" class="btn btn-sm app-content-headerButton btnBadge" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
-      <i class="bi bi-save"></i> <span class="badge rounded-pill">0</span>
-    </button>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-
-      <div class="modal modal-sm" tabindex="-1" id="ModalNotifikasi" style="position: fixed; top: 0; right: 20px;">
-        <div class="modal-dialog" style="position: absolute; top: 0; right: 20px;">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h6 class="modal-title">Proses</h6>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>Proses data yg belum tersimpan akan muncul di sini.</p>
-            </div>
-            <div class="modal-footer modal-footer-sm">
-              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-
-              <button class="btn btn-primary btn-sm" id="SimpanSemuaLocal" onclick="simpanSemua()" type="button" disabled>
-                <span class="spinner-border spinner-border-sm" id="loadingSimpanUlang" style="display: none;" aria-hidden="true"></span>
-                <span class="visually-hidden" role="status">Loading ...</span>
-                Simpan Ulang
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-    
-    
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     
 
-    <div id="DataTabel">
-      <div class="app-content-actions">
-        <input id="filterCariNama" class="search-bar" placeholder="Search..." type="text">
-        
-        <div class="app-content-actions-wrapper">
-          
-          
-          <select class="action-button" id="filterDiniyah">
-            <option value="">Semua</option>
-            <option value="Tidak Sekolah">Tidak Sekolah</option>
-            <option value="Isti'dadiyah">Isti'dadiyah</option>
-            <option value="Ula">Ula</option>
-            <option value="Wustha">Wustha</option>
-            <option value="Ulya">Ulya</option>
-            <option value="Guru Tugas">Guru Tugas</option>
-          </select>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-          <button id="btnDownload" class="action-button" type="button" style="margin-left: -3px; display: none;" onclick="Download()">
-            <svg id="LabelDownload" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
-              <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
-            </svg>
-            <span id="LoadingDownload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-          </button>
-          
-          
-          <button class="action-button add jsAdd" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-            <span>Tambah</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="8.5" cy="7" r="4"></circle>
-              <line x1="20" y1="8" x2="20" y2="14"></line>
-              <line x1="17" y1="11" x2="23" y2="11"></line>
-            </svg>
-          </button>
-          
-          <!---------------------------- Offcanvass untuk pencarian data -------------------->
+    <link rel="stylesheet" href="./styles/tema.css">
+    <link href="./styles/profil.css" rel="stylesheet"/>
+    <link href="./styles/collapse.css" rel="stylesheet"/>
+    <link rel="icon" href="./logo.png" type="image/x-icon">
 
-          <div style="height:fit-content; max-height: 80vh;" class="offcanvas offcanvas-top small" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasTopLabel">Cari Data</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
+ </head>
+ <body>
 
-            <div class="offcanvas-body">
-              <div class="app-content-actions" id="ofcanvassCari">
-                
-              </div>
-
-              <div id="CariArea" style="max-height: 50vh; margin-bottom: 10px;" class="products-area-wrapper tableView">
-              </div>
-
-            </div>
-
-            <div class="offcanvas-footer d-flex justify-content-end gap-2">
-              
-              <button id="tambahManual" type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" onclick="tambahManual()" style="display: none;">
-                <i class="bi bi-person-plus"></i> Tambah Manual
-              </button>
-              
-            </div>
-          </div>
-
-          <!-- Modal -->
-           
-          <div class="modal fade small" id="ModalKonfirmasi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container mx-auto p-4">
+        <div class="profile-header flex flex-col md:flex-row justify-between">
+            <div class="flex items-center">
+                <img alt="Foto profil guru" 
+                    class="foto w-24 h-24 mr-4" 
+                    src="./gambar/iconlk.webp"/>
+                <div>
+                    <h1 class="text-2xl"></h1>
+                    <p class="profile-id">ID:</p>
                 </div>
-                <div class="modal-body">
+            </div>
+
+            <div class="menu d-flex justify-content-end">
+                <div class="flex mt-4 md:mt-0">
+                    <button class="home-btn" style="margin-right: 20px;" 
+                        onclick="location.href='db.html'">
+                        <i class="fas fa-home"></i>
+                    </button>
+
+                    <button class="mode-switch" 
+                        title="Switch Theme">
+                        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                            <defs></defs>
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                    </button>
+
+                    <button type="button" class="btn-sm home-btn" data-bs-toggle="modal" data-bs-target="#ModalNotifikasi">
+                        <i class="bi bi-save"></i> <span class="badge rounded-pill">0</span>
+                    </button>
                   
-                  <form id="formDataModal">
+                  
+                        <div class="modal modal-sm" tabindex="-1" id="ModalNotifikasi" style="position: fixed; top: 0; right: 20px;">
+                          <div class="modal-dialog" style="position: absolute; top: 0; right: 20px;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h6 class="modal-title">Proses</h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <p>Proses data yg belum tersimpan akan muncul di sini.</p>
+                              </div>
+                              <div class="modal-footer modal-footer-sm">
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                  
+                                <button class="btn btn-primary btn-sm" id="SimpanSemuaLocal" onclick="simpanSemua()" type="button" disabled>
+                                  <span class="spinner-border spinner-border-sm" id="loadingSimpanUlang" style="display: none;" aria-hidden="true"></span>
+                                  <span class="visually-hidden" role="status">Loading ...</span>
+                                  Simpan Ulang
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+            </div>
+        </div>  
+
+
+        <div class="g-3 d-md-flex align-items-start gap-5">
+            <form class="row g-3" id="profile-form" style="margin-top: 10px;">
+                <div class="d-flex gap-2">
+                    <h1><i class="fas fa-user-circle"></i> Biodata</h1>
+                    <button id="Edit" class="edit-btn float-right" onclick="toggleEditMode(); return false;">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                </div>
+
+
+                <div class="profile-content mt-6" style="margin-top: -10px">
                     
-   
-                  </form>
+                    <div class="mb-3" style="display: none;">
+                        <label for="IDS" class="form-label"><i class="fas fa-id-badge"></i> IDS:</label>
+                        <input disabled type="text" class="form-control" id="IDS" name="IDS" value=""/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Nama" class="form-label"><i class="fas fa-user"></i> Nama:</label>
+                        <div class="d-flex gap-2">
+                            <label for="GelarAwal" class="form-label gelar" style="width: 200px; display: none;">Gelar Awal:</label>
+                            <input disabled type="text" class="form-control gelar" id="GelarAwal" style="display: none;" value="GelarAwal"/>
+                        </div>
+                        <input disabled type="text" class="form-control" id="Nama" name="Nama" value=""/>
+                        <div class="d-flex gap-2">
+                            <label for="GelarAkhir" class="form-label gelar" style="width: 200px; display: none;">Gelar Akhir:</label>
+                            <input disabled type="text" class="form-control gelar" id="GelarAkhir" value="GelarAwal" style="display: none;"/>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="NIK" class="form-label"><i class="fas fa-id-card"></i> NIK:</label>
+                        <input disabled type="text" class="form-control" id="NIK" value=""/>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="TempatLahir" class="form-label"><i class="fas fa-map-marker-alt"></i> Tempat Lahir:</label>
+                        <input disabled type="text" class="form-control" id="TempatLahir" value=""/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="TanggalLahir" class="form-label"><i class="fas fa-calendar"></i> Tanggal Lahir:</label>
+                        <input disabled type="date" class="form-control" id="TanggalLahir" value=""/>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="Alamat" class="form-label"><i class="fas fa-map-marker-alt"></i> Alamat :</label>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Alamat
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="card card-body">
+                                            
+                                            <div class="d-flex gap-2">
+                                                <div class="mb-3">
+                                                    <label for="Dusun" class="form-label"><i class="fas fa-map-marker-alt"></i> Dusun</label>
+                                                    <input disabled type="text" class="form-control" id="Dusun" name="Dusun" value=""/>
+                                                </div>
+                                                <div class="mb-3" style="max-width: 40px;">
+                                                    <label for="RT" class="form-label">RT</label>
+                                                    <input disabled type="text" class="form-control" id="RT" name="RT" value=""/>
+                                                </div>
+                                                <div class="mb-3" style="max-width: 40px;">
+                                                    <label for="RW" class="form-label">RW</label>
+                                                    <input disabled type="text" class="form-control" id="RW" name="RW" value=""/>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex gap-2">
+                                                <div class="mb-3">
+                                                    <label for="Desa" class="form-label"><i class="fas fa-map-marker-alt"></i> Desa</label>
+                                                    <input disabled type="text" class="form-control" id="Desa" name="Desa" value=""/>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex gap-2">
+                                                <div class="mb-3">
+                                                    <label for="Kecamatan" class="form-label"><i class="fas fa-map-marker-alt"></i> Kecamatan</label>
+                                                    <input disabled type="text" class="form-control" id="Kecamatan" name="Kecamatan" value=""/>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex gap-2">
+                                                <div class="mb-3">
+                                                    <label for="Kabupaten" class="form-label"><i class="fas fa-map-marker-alt"></i> Kabupaten</label>
+                                                    <input disabled type="text" class="form-control" id="Kabupaten" name="Kabupaten" value=""/>
+                                                </div>
+                                                <div class="mb-3" style="max-width: 100px;">
+                                                    <label for="KodePos" class="form-label">Kode Pos</label>
+                                                    <input disabled type="text" class="form-control" id="KodePos" name="KodePos" value=""/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="width: 80%; margin: auto; height: 2px; background-color: var(--action-color); border: none; margin: 15px auto;"/>
+                    <div class="mb-3">
+                        <label for="NUPTK" class="form-label"><i class="fas fa-credit-card"></i> NUPTK:</label>
+                        <input disabled type="text" class="form-control" id="NUPTK" value=""/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="NPK" class="form-label"><i class="fa fa-address-card"></i> NPK:</label>
+                        <input disabled type="text" class="form-control" id="NPK" value=""/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email:</label>
+                        <input disabled type="email" class="form-control" id="email" value=""/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NoHP" class="form-label"><i class="fas fa-phone"></i> Telepon:</label>
+                        <input disabled type="text" class="form-control" id="NoHP" value=""/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="WhatsApp" class="form-label"><i class="fab fa-whatsapp"></i> WhatsApp:</label>
+                        <input disabled type="text" class="form-control" id="WhatsApp" value=""/>
+                    </div>
+                    <hr style="width: 80%; margin: auto; height: 2px; background-color: var(--action-color); border: none; margin: 25px auto;"/>
+                    
+                    <div class="mb-3">
+                        <label for="StatusNikah" class="form-label"><i class="fas fa-heart"></i> Status Nikah:</label>
+                        <select disabled class="form-control" id="StatusNikah">
+                            <option value="Belum Menikah">Belum Menikah</option>
+                            <option value="Menikah">Menikah</option>
+                            <option value="Cerai">Cerai</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Pekerjaan" class="form-label"><i class="fas fa-briefcase"></i> Pekerjaan:</label>
+                        <input disabled type="text" class="form-control" id="Pekerjaan" value=""/>
+                    </div>
+
+
 
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                  <button type="button" id="TambahkanData" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalKonfirmasi">
-                    Tambahkan
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
 
+            </form>
 
+            <div class="col-md-4 d-flex flex-column">
+                <form class="row g-3" id="akses-form" style="margin-top: 10px;">
+                    <div class="d-flex gap-2">
+                        <h1><i class="fas fa-lock"></i> Akses</h1>
+                        <button style="visibility: hidden;" id="Edit" class="edit-btn float-right" onclick="return false;">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </div>
 
+                    <div class="akses-content mt-6" style="margin-top: -10px">
+                        <div class="mb-3">
+                            <label for="Diniyah" class="form-label"><i class="fas fa-id-badge"></i> Diniyah:</label>
+                            <input disabled type="text" class="form-control" id="Diniyah" value=""/>
+                        </div>
 
+                        <div class="mb-3">
+                            <label for="KelasMD" class="form-label"><i class="fas fa-id-badge"></i> Kelas:</label>
+                            <input disabled type="text" class="form-control" id="KelasMD" value=""/>
+                        </div>
 
-          <div class="filter-button-wrapper">
-            <button class="action-button filter jsFilter">
-              <span>Menu</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-down" viewBox="0 0 16 16">
-                <path d="M7.646.146a.5.5 0 0 1 .708 0L10.207 2H14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3.793zM1 7v3h14V7zm14-1V4a1 1 0 0 0-1-1h-3.793a1 1 0 0 1-.707-.293L8 1.207l-1.5 1.5A1 1 0 0 1 5.793 3H2a1 1 0 0 0-1 1v2zm0 5H1v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
-              </svg>
-            </button>
+                        <div class="mb-3">
+                            <label for="KelMD" class="form-label"><i class="fas fa-id-badge"></i> Kelompok:</label>
+                            <input disabled type="text" class="form-control" id="KelMD" value=""/>
+                        </div>
+                        
+                        
+                    </div>
+
+                </form>
             
-            <!-- Menu Filter dan tampilan data -->
-            <div class="filter-menu">
+                <form class="row g-3" id="setting-form" style="margin-top: 10px;">
+                    <div class="d-flex gap-2">
+                        <h1><i class="fas fa-cog"></i> Pengaturan Akun</h1>
+                        <button style="visibility: hidden;" id="Edit" class="edit-btn float-right" onclick="return false;">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </div>
 
-              <div class="filter-menu-buttons">
-                <label for="filterKelas" class="form-label" style="padding-right: 20px;">Tema</label>
-                
-                <div class="input-group">
-                  <button class="mode-switch" title="Switch Theme">
-                    <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
-                      <defs></defs>
-                      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                    </svg>
-                  </button>
-                  
-                </div>
-              </div>
+                    <div class="akses-content mt-6" style="margin-top: -10px">
+                        
+                        
+                    </div>
 
-              <div class="filter-menu-buttons">
-                <label for="filterKelas" class="form-label" style="padding-right: 30%;">Tampilan</label>
-                
-                <div class="input-group">
-                  <button class="action-button list active" title="List View">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                  </button>
-                  <button class="action-button grid" title="Grid View">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                  </button>
-                </div>
-
-              </div>
-
-              <div class="filter-menu-buttons">
-                <label for="DownloadIkhtibar" class="form-label" style="padding-right: 30%;">Ikhtibar</label>
-                
-                <button class="app-content-headerButton action-button" onclick="DownloadIkhtibar()">
-                  <i id="ReloadIcon" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
-                  <span id="LoadingReload" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-                </button>
-              </div>
-
-              <div class="filter-menu-buttons">
-                <label for="DownloadKelas" class="form-label" style="padding-right: 30%;">Kelas</label>
-                
-                <button class="app-content-headerButton action-button" onclick="DownloadKelas()">
-                  <i id="ReloadIconKelas" class="bi bi-arrow-repeat" style="font-size: 24px;"></i>
-                  <span id="LoadingReloadKelas" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
-                </button>
-              </div>
-
-              <label style="margin-top: 20px;">Filter Data</label>
-
-              <div class="input-group" style="max-width: 300px;" id="filterGrupInput">
-                  <!-- Kelas -->
-                  <label for="filterKelas" class="form-label" style="padding-right: 20px;">Kelas</label>
-                  
-                  <select id="filterKelas" class="filter-menu-select form-select">
-                  </select>
-
-                  <select id="filterKel" class="form-select">
-                  </select>
-              </div>
-
-
-              <label style="display: none;">Status Santri</label>
-              <select id="filterStatusSantri">
-                <option value="">All</option>
-                <option value="Mukim">Mukim / Mondok</option>
-                <option value="Khoriji">Khoriji / Nyulok</option>
-                <option value="Boyong">Boyong</option>                       
-              </select>
-
-              <div class="filter-menu-buttons">
-                <button class="filter-button reset" ondblclick="forceUpdateServiceWorker()">
-                  Update Apk
-                </button>
-                
-                <button class="filter-button apply" onclick="tampilkanData()">
-                  Apply
-                </button>
-              </div>
-
-
+                </form>
             </div>
-          </div>
-
         </div>
 
-      </div>
 
-      <div id="SantriArea" class="products-area-wrapper tableView">
-        <div class="products-header">
-          <div class="product-cell image">
-            &nbsp;&nbsp;&nbsp;&nbsp;Nama
-            <button class="sort-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-            </button>
-          </div>
-
-          <div class="product-cell stock">IDS<button class="sort-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-            </button></div>
-
-          <div class="product-cell price">K<button class="sort-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-            </button></div>
-
-          <div class="product-cell category">Kelas<button class="sort-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-              </button></div>
-
-          <div class="product-cell sales">Ikhtibar<button class="sort-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-              </button></div>
-
-          <div class="product-cell status-cell">Status<button class="sort-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
-              </button></div>     
-
-        
-<!--
-        <div class="products-row">
-          <button class="cell-more-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-          </button>
-            <div class="product-cell image">
-              <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="product">
-              <span>Miftahul Anam aksjd kjasdk kjasd kja</span>
-            </div>
-
-            <div class="product-cell stock">
-              <span class="cell-label">IDS:</span>1450025</div>
-
-          <div class="product-cell category">
-            <span class="cell-label">Kelas:</span>Furniture</div>
-          
-          <div class="product-cell status-cell">
-            <span class="cell-label">Status:</span>
-            <span class="status disabled">Belum</span>
-          </div>
-
-          <div class="product-cell sales">
-            <span class="cell-label">Ikhtibar:</span>11</div>
-
-          <div class="product-cell price">
-            <span class="cell-label">Kamar:</span>Tahfidz</div>
-
-        </div>
-        
-
-        <div class="products-row">
-          <button class="cell-more-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-          </button>
-            <div class="product-cell image">
-              <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="product">
-              <span>Miftahul Anam</span>
-            </div>
-
-            <div class="product-cell stock"><span class="cell-label">IDS:</span>1450025</div>
-
-          <div class="product-cell category"><span class="cell-label">Kelas:</span>Furniture</div>
-          <div class="product-cell status-cell">
-            <span class="cell-label">Status:</span>
-            <span class="status disabled">Belum</span>
-          </div>
-          <div class="product-cell sales"><span class="cell-label">Ikhtibar:</span>11</div>
-          <div class="product-cell price"><span class="cell-label">Kamar:</span>36</div>
-
-        </div>-->
-
-      </div>
     </div>
-
-    <div class="offcanvas offcanvas-bottom small" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%; max-width: 400px;">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title offcanvas-title-sm" id="offcanvasBottomLabel">Formulir Data</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body" id="canvasBawahBody">
-        
-        <form id="formData">
-        </form>
-
-      </div>
-      <div class="offcanvas-footer d-flex justify-content-end gap-2">
-        <!-- Tombol Hapus -->
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-          <i class="bi bi-x"></i> Close
-        </button>
-        <button id="NaikKelas" type="button" class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="naikkelas()">
-          <i class="bi bi-arrow-up"></i> Naik Kelas
-        </button>
-        <!-- Tombol Simpan -->
-        <button id="SimpanData" type="submit" class="btn btn-sm btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-          <i class="bi bi-save"></i> Simpan
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-
-</div>
-
-<script>
-  (async function registerServiceWorker() {
-      // Cek dukungan Service Worker
-      if (!('serviceWorker' in navigator)) {
-          console.warn('Browser Anda tidak mendukung Service Worker.');
-          return;
-      }
-
-      // Pastikan dijalankan di HTTPS atau localhost
-      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-          console.warn('Service Worker hanya didukung di HTTPS atau localhost.');
-          return;
-      }
-
-      try {
-          // Gunakan timestamp untuk mencegah cache lama
-          const version = new Date().getTime();
-          const registration = await navigator.serviceWorker.register(`sw.js?v=${version}`);
-
-          console.log('✅ Service Worker berhasil didaftarkan:', registration);
-      } catch (error) {
-          console.error('❌ Pendaftaran Service Worker gagal:', error.message);
-          console.error('Detail error:', error);
-      }
-  })();
-</script>
+    
+    <script>
+        (async function registerServiceWorker() {
+            // Cek dukungan Service Worker
+            if (!('serviceWorker' in navigator)) {
+                console.warn('Browser Anda tidak mendukung Service Worker.');
+                return;
+            }
+      
+            // Pastikan dijalankan di HTTPS atau localhost
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                console.warn('Service Worker hanya didukung di HTTPS atau localhost.');
+                return;
+            }
+      
+            try {
+                // Gunakan timestamp untuk mencegah cache lama
+                const version = new Date().getTime();
+                const registration = await navigator.serviceWorker.register(`sw.js?v=${version}`);
+      
+                console.log('✅ Service Worker berhasil didaftarkan:', registration);
+            } catch (error) {
+                console.error('❌ Pendaftaran Service Worker gagal:', error.message);
+                console.error('Detail error:', error);
+            }
+        })();
+      </script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
- 
-<!-- partial -->
-  <!-- Bootstrap JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-  <script  src="./sw.js"></script>
-  <script  src="./script.js"></script>
-  <script  src="./scripts/akun.js"></script>
-  <script  src="./scripts/online.js"></script>
-  <script  src="./scripts/indexedDB.js"></script>
-  <script  src="./scripts/asatidz.js"></script>
-  <script  src="./scripts/fungsi.js"></script>
-  <script  src="./scripts/fungsiform.js"></script>
-  <script  src="./scripts/tombol.js"></script>
-  <script  src="./scripts/pencarian.js"></script>
+    <script  src="./sw.js"></script>
+    <script src="./scripts/fungsi.js"></script>
+    <script src="./scripts/indexedDB.js"></script>
+    <script src="./scripts/online.js"></script>
+    <script src="./scripts/profil.js"></script>
+    
 </body>
+ 
 </html>

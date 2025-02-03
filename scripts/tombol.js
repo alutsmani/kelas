@@ -133,7 +133,7 @@ async function naikkelas() {
   const Lembaga = ['Isti\'dadiyah', 'Ula', 'Wustha', 'Ulya', 'Guru Tugas'].indexOf(jsonData.Diniyah[0].Diniyah);
   jsonData.Diniyah[0].ID = `${jsonData.Diniyah[0].IDS}-${Lembaga}-${jsonData.Diniyah[0].KelasMD}-${jsonData.Diniyah[0].KelMD}`;
 
-  jsonData.Diniyah[0].Admin = localStorage.getItem('IDS');
+  jsonData.Diniyah[0].Admin = localStorage.getItem('IDS') !== null;
 
   try {
     const result = await saveOrUpdateData(storeName, jsonData, 'ID');
@@ -156,7 +156,7 @@ async function naikkelas() {
 
   jsonDB.db[0].KelasMD = "";
   jsonDB.db[0].KelMD = "";
-  jsonDB.db[0].Admin = localStorage.getItem('IDS');
+  jsonDB.db[0].Admin = localStorage.getItem('IDS') !== null;
 
   try {
     const result = await saveOrUpdateData('db', jsonDB, 'IDS');
@@ -189,6 +189,10 @@ function SelectFormal() {
 
 document.getElementById('filterCariNama').addEventListener('input', PilihTampilanData);
 document.getElementById('filterDiniyah').addEventListener('change', PilihTampilanData);
+
+document.getElementById('filterKelas').addEventListener('change', PilihTampilanData);
+document.getElementById('filterKel').addEventListener('change', PilihTampilanData);
+document.getElementById('filterStatusSantri').addEventListener('change', PilihTampilanData);
 
 
 
